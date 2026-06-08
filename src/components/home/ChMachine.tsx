@@ -82,7 +82,7 @@ export default function ChMachine() {
           {/* Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 w-full max-w-5xl px-6 md:px-12 items-center">
             {/* Panel */}
-            <div className="flex items-center justify-center h-[360px] md:h-[460px]">
+            <div className="flex items-center justify-center h-[220px] xs:h-[270px] sm:h-[320px] md:h-[460px]">
               <SolarPanel3D />
             </div>
 

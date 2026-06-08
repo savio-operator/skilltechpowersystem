@@ -1,82 +1,80 @@
 'use client'
-import { useRef } from 'react'
-import { motion, useScroll, useTransform, type MotionValue, useReducedMotion } from 'framer-motion'
-import { HOME } from '@/content/home'
+import { useEffect, useMemo, useState } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 
-/* Each word occupies 1/3 of the scroll range */
-function WordFrame({
-  word, bg, color, scrollYProgress, index, total,
-}: {
-  word: string; bg: string; color: string
-  scrollYProgress: MotionValue<number>; index: number; total: number
-}) {
-  const seg   = 1 / total
-  const start = index * seg
-  const end   = (index + 1) * seg
-
-  const opacity  = useTransform(scrollYProgress, [start, start + seg * 0.18, end - seg * 0.18, end], [0, 1, 1, 0])
-  const clipPath = useTransform(
-    scrollYProgress,
-    [start, start + seg * 0.28],
-    ['inset(0 100% 0 0)', 'inset(0 0% 0 0)']
-  )
-
-  return (
-    <motion.div
-      className="absolute inset-0 flex items-center justify-center"
-      style={{ opacity, backgroundColor: bg }}
-      aria-hidden={index > 0}
-    >
-      <motion.span
-        className="font-display font-black leading-none select-none px-8"
-        style={{
-          color,
-          clipPath,
-          fontSize: 'clamp(4.5rem, 18vw, 16rem)',
-          letterSpacing: '-0.03em',
-        }}
-      >
-        {word}
-      </motion.span>
-    </motion.div>
-  )
-}
+const WORDS = ['cleaner.', 'greener.', 'better.']
+const COLORS = ['#FBF8F0', '#FBF8F0', '#FBB034']
+const INTERVAL = 2200
 
 export default function ChPromise() {
-  const containerRef = useRef<HTMLDivElement>(null)
   const shouldReduce = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  })
+  const [index, setIndex] = useState(0)
+
+  const words  = useMemo(() => WORDS,  [])
+  const colors = useMemo(() => COLORS, [])
+
+  useEffect(() => {
+    if (shouldReduce) return
+    const id = setTimeout(() => {
+      setIndex((i) => (i + 1) % words.length)
+    }, INTERVAL)
+    return () => clearTimeout(id)
+  }, [index, words, shouldReduce])
 
   if (shouldReduce) {
     return (
       <section id="ch-promise" className="py-24 bg-navy-deep flex items-center justify-center min-h-[40vh]">
         <p className="font-display font-black text-4xl text-paper text-center leading-snug">
-          Greener.<br />Cleaner.<br /><span className="text-amber">Better.</span>
+          This is something<br /><span className="text-amber">better.</span>
         </p>
       </section>
     )
   }
 
   return (
-    /* Tall spacer creates the scroll space for the pinned stage */
-    <div ref={containerRef} id="ch-promise" className="relative h-[400vh]">
-      <div className="sticky top-0 h-screen overflow-hidden" aria-label="Greener. Cleaner. Better.">
-        <p className="sr-only">Greener. Cleaner. Better.</p>
-        {HOME.promise.map((item, i) => (
-          <WordFrame
-            key={item.word}
-            word={item.word}
-            bg={item.bg}
-            color={item.color}
-            scrollYProgress={scrollYProgress}
-            index={i}
-            total={HOME.promise.length}
-          />
-        ))}
+    <section
+      id="ch-promise"
+      className="relative flex min-h-screen items-center justify-center bg-navy-deep overflow-hidden"
+    >
+      {/* Subtle ambient glow */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(251,176,52,0.04) 0%, transparent 70%)',
+        }}
+      />
+
+      <div className="relative z-10 px-6 text-center">
+        <p
+          className="font-display font-black leading-[1.08] select-none"
+          style={{ fontSize: 'clamp(3.5rem, 10vw, 9rem)', letterSpacing: '-0.03em' }}
+          aria-label="This is something cleaner, greener, better."
+        >
+          {/* Static line */}
+          <span className="text-warm-grey block">This is something</span>
+
+          {/* Animated cycling word */}
+          <span
+            className="relative block overflow-hidden"
+            style={{ height: 'clamp(4rem, 11.5vw, 10.5rem)' }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={index}
+                className="absolute inset-x-0 flex justify-center"
+                style={{ color: colors[index] }}
+                initial={{ y: '100%', opacity: 0 }}
+                animate={{ y: '0%',   opacity: 1 }}
+                exit={{    y: '-100%', opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 60, damping: 18 }}
+              >
+                {words[index]}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+        </p>
       </div>
-    </div>
+    </section>
   )
 }

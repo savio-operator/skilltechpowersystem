@@ -17,6 +17,7 @@
     background-color: theme('colors.navy.deep');
     color: theme('colors.paper');
     overflow-x: hidden;
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   /* Lenis smooth scroll */
@@ -91,6 +92,10 @@
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
+
+  /* iOS safe area helpers */
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .pt-safe { padding-top:    env(safe-area-inset-top, 0px); }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {

@@ -70,7 +70,7 @@ export default function SavingsCalculator() {
             min={1000} max={20000} step={500}
             value={bill}
             onChange={handleChange}
-            className="absolute inset-0 w-full opacity-0 cursor-pointer h-7 -top-3"
+            className="absolute inset-0 w-full opacity-0 cursor-pointer h-11 -top-5"
             aria-valuetext={`₹${fmt(bill)} per month`}
           />
         </div>

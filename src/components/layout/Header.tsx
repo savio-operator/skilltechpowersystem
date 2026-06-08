@@ -102,7 +102,7 @@ export default function Header() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden ml-auto p-2 text-warm-grey"
+          className="md:hidden ml-auto p-3 min-h-[44px] min-w-[44px] flex flex-col items-center justify-center text-warm-grey"
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           onClick={() => setMobileOpen(!mobileOpen)}
         >
@@ -127,7 +127,7 @@ export default function Header() {
                 <Link
                   key={s.slug}
                   href={`/${s.slug}`}
-                  className="px-3 py-2 text-sm text-warm-grey hover:text-paper transition-colors rounded-lg"
+                  className="px-3 py-3 text-sm text-warm-grey hover:text-paper transition-colors rounded-lg"
                   onClick={() => setMobileOpen(false)}
                 >
                   {s.shortName}
@@ -138,7 +138,7 @@ export default function Header() {
                 <Link
                   key={l.href}
                   href={l.href}
-                  className="px-3 py-2 text-base text-warm-grey hover:text-paper transition-colors"
+                  className="px-3 py-3 text-base text-warm-grey hover:text-paper transition-colors"
                   onClick={() => setMobileOpen(false)}
                 >
                   {l.label}

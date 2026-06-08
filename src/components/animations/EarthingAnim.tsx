@@ -3,98 +3,208 @@ import { useReducedMotion } from 'framer-motion'
 
 export default function EarthingAnim() {
   const shouldReduce = useReducedMotion()
-  const animated = !shouldReduce
 
   return (
     <div className="relative w-full h-72 md:h-96 rounded-2xl overflow-hidden bg-navy-deep border border-amber/10 flex items-center justify-center">
+
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 55% 40% at 50% 50%, rgba(251,176,52,0.06) 0%, transparent 70%)',
+        }}
+      />
+
       <svg
-        viewBox="0 0 360 300"
-        className="w-full h-full"
-        aria-label="Earthing system animation"
+        viewBox="0 0 200 100"
+        width="100%"
+        height="100%"
+        className="text-amber/25"
+        aria-label="Earthing system circuit animation"
       >
-        {/* Ground layers */}
-        <rect x="0" y="220" width="360" height="20" fill="#2A1C05" opacity="0.7"/>
-        <rect x="0" y="238" width="360" height="22" fill="#221608" opacity="0.8"/>
-        <rect x="0" y="258" width="360" height="42" fill="#1A1105"/>
-        {/* Ground texture lines */}
-        {[0,1,2,3,4].map((i) => (
-          <line key={i} x1={20 + i*70} y1="240" x2={50 + i*70} y2="260"
-            stroke="#FBB034" strokeWidth="0.4" opacity="0.2"/>
-        ))}
+        {/* ── Circuit traces ── */}
+        <g
+          stroke="currentColor"
+          fill="none"
+          strokeWidth="0.3"
+          strokeDasharray="100 100"
+          pathLength="100"
+          markerStart="url(#eth-circle-marker)"
+        >
+          <path strokeDasharray="100 100" pathLength="100" d="M 10 20 h 79.5 q 5 0 5 5 v 30" />
+          <path strokeDasharray="100 100" pathLength="100" d="M 180 10 h -69.7 q -5 0 -5 5 v 30" />
+          <path d="M 130 20 v 21.8 q 0 5 -5 5 h -10" />
+          <path d="M 170 80 v -21.8 q 0 -5 -5 -5 h -50" />
+          <path strokeDasharray="100 100" pathLength="100" d="M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -20" />
+          <path d="M 94.8 95 v -36" />
+          <path d="M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 14" />
+          <path d="M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 20" />
 
-        {/* Building base */}
-        <rect x="120" y="110" width="120" height="112" fill="#221608" stroke="#7A5008" strokeWidth="1"/>
-        {/* Roof */}
-        <polygon points="110,112 180,60 250,112" fill="#2A1C05" stroke="#FBB034" strokeWidth="0.8"/>
-        {/* Window */}
-        <rect x="155" y="145" width="50" height="40" rx="2" fill="#1A1105" stroke="#7A5008" strokeWidth="0.8"/>
-        {/* Solar panel on roof */}
-        <rect x="150" y="68" width="60" height="36" rx="2" fill="#1a2a05" stroke="#FBB034" strokeWidth="0.8" opacity="0.9"/>
-        {[0,1,2].map(i => (
-          <line key={i} x1="150" y1={74 + i*10} x2="210" y2={74 + i*10} stroke="#D4920A" strokeWidth="0.5" opacity="0.6"/>
-        ))}
-        {[0,1,2,3].map(i => (
-          <line key={i} x1={157 + i*14} y1="68" x2={157 + i*14} y2="104" stroke="#D4920A" strokeWidth="0.5" opacity="0.6"/>
-        ))}
-
-        {/* Copper earthing rod */}
-        <rect x="174" y="113" width="12" height="140" rx="3"
-          fill="url(#copperGrad)" stroke="#D4920A" strokeWidth="0.5"/>
-
-        {/* Earthing plate at bottom */}
-        <rect x="148" y="250" width="64" height="8" rx="2"
-          fill="#D4920A" opacity="0.9"/>
-        <rect x="138" y="272" width="84" height="6" rx="2"
-          fill="#D4920A" opacity="0.7"/>
-
-        {/* Current flow dots — animated along the rod */}
-        {animated && [0,1,2,3].map((i) => (
-          <circle key={i} cx="180" cy="120" r="3" fill="#FBB034" opacity="0.9">
-            <animateTransform
-              attributeName="transform"
-              type="translate"
-              values="0,0; 0,140; 0,140"
-              dur="2s"
-              begin={`${i * 0.5}s`}
-              repeatCount="indefinite"
-            />
+          {!shouldReduce && (
             <animate
-              attributeName="opacity"
-              values="0; 0.9; 0.9; 0"
-              dur="2s"
-              begin={`${i * 0.5}s`}
-              repeatCount="indefinite"
+              attributeName="stroke-dashoffset"
+              from="100" to="0" dur="1s"
+              fill="freeze"
+              calcMode="spline"
+              keySplines="0.25,0.1,0.5,1"
+              keyTimes="0; 1"
             />
-          </circle>
-        ))}
+          )}
+        </g>
 
-        {/* Current spread at plate */}
-        {animated && (
+        {/* ── Particle lights ── */}
+        {!shouldReduce && (
           <>
-            <path d="M148 258 Q120 270 100 280" stroke="#FBB034" strokeWidth="1.2" fill="none" opacity="0" strokeDasharray="4,3">
-              <animate attributeName="opacity" values="0;0.7;0" dur="2s" begin="1.2s" repeatCount="indefinite"/>
-            </path>
-            <path d="M212 258 Q240 270 260 280" stroke="#FBB034" strokeWidth="1.2" fill="none" opacity="0" strokeDasharray="4,3">
-              <animate attributeName="opacity" values="0;0.7;0" dur="2s" begin="1.4s" repeatCount="indefinite"/>
-            </path>
-            <path d="M180 264 Q180 275 180 285" stroke="#FBB034" strokeWidth="1.5" fill="none" opacity="0" strokeDasharray="4,3">
-              <animate attributeName="opacity" values="0;0.9;0" dur="2s" begin="1.0s" repeatCount="indefinite"/>
-            </path>
+            <g mask="url(#eth-mask-1)">
+              <circle className="cpu-architecture cpu-line-1" cx="0" cy="0" r="8" fill="url(#eth-grad-amber)" />
+            </g>
+            <g mask="url(#eth-mask-2)">
+              <circle className="cpu-architecture cpu-line-2" cx="0" cy="0" r="8" fill="url(#eth-grad-gold)" />
+            </g>
+            <g mask="url(#eth-mask-3)">
+              <circle className="cpu-architecture cpu-line-3" cx="0" cy="0" r="8" fill="url(#eth-grad-white)" />
+            </g>
+            <g mask="url(#eth-mask-4)">
+              <circle className="cpu-architecture cpu-line-4" cx="0" cy="0" r="8" fill="url(#eth-grad-amber)" />
+            </g>
+            <g mask="url(#eth-mask-5)">
+              <circle className="cpu-architecture cpu-line-5" cx="0" cy="0" r="8" fill="url(#eth-grad-gold)" />
+            </g>
+            <g mask="url(#eth-mask-6)">
+              <circle className="cpu-architecture cpu-line-6" cx="0" cy="0" r="8" fill="url(#eth-grad-copper)" />
+            </g>
+            <g mask="url(#eth-mask-7)">
+              <circle className="cpu-architecture cpu-line-7" cx="0" cy="0" r="8" fill="url(#eth-grad-white)" />
+            </g>
+            <g mask="url(#eth-mask-8)">
+              <circle className="cpu-architecture cpu-line-8" cx="0" cy="0" r="8" fill="url(#eth-grad-amber)" />
+            </g>
           </>
         )}
 
-        {/* IS 3043 label */}
-        <rect x="220" y="155" width="90" height="38" rx="4" fill="#221608" stroke="#FBB034" strokeWidth="0.7" opacity="0.9"/>
-        <text x="265" y="172" textAnchor="middle" fill="#FBB034" fontSize="7" fontFamily="monospace">IS 3043</text>
-        <text x="265" y="184" textAnchor="middle" fill="#9A8870" fontSize="6" fontFamily="monospace">COMPLIANT</text>
+        {/* ── Central earthing chip ── */}
+        <g>
+          <g fill="url(#eth-pin-gradient)">
+            <rect x="93"    y="37"    width="2.5" height="5" rx="0.7" />
+            <rect x="104"   y="37"    width="2.5" height="5" rx="0.7" />
+            <rect x="116.3" y="44"    width="2.5" height="5" rx="0.7" transform="rotate(90 116.25 45.5)" />
+            <rect x="122.8" y="44"    width="2.5" height="5" rx="0.7" transform="rotate(90 116.25 45.5)" />
+            <rect x="104"   y="16"    width="2.5" height="5" rx="0.7" transform="rotate(180 105.25 39.5)" />
+            <rect x="114.5" y="16"    width="2.5" height="5" rx="0.7" transform="rotate(180 105.25 39.5)" />
+            <rect x="80"    y="-13.6" width="2.5" height="5" rx="0.7" transform="rotate(270 115.25 19.5)" />
+            <rect x="87"    y="-13.6" width="2.5" height="5" rx="0.7" transform="rotate(270 115.25 19.5)" />
+          </g>
 
+          {/* Chip body */}
+          <rect x="85" y="40" width="30" height="20" rx="2" fill="#1A1105" filter="url(#eth-shadow)" />
+
+          {/* Earthing symbol — horizontal ground bars */}
+          <line x1="94" y1="46" x2="106" y2="46" stroke="url(#eth-bolt-grad)" strokeWidth="0.8" strokeLinecap="round"/>
+          <line x1="96" y1="49" x2="104" y2="49" stroke="url(#eth-bolt-grad)" strokeWidth="0.8" strokeLinecap="round"/>
+          <line x1="98" y1="52" x2="102" y2="52" stroke="url(#eth-bolt-grad)" strokeWidth="0.8" strokeLinecap="round"/>
+          <line x1="100" y1="43" x2="100" y2="46" stroke="url(#eth-bolt-grad)" strokeWidth="0.8" strokeLinecap="round"/>
+
+          <text
+            x="89" y="57.5"
+            fontSize="4.2"
+            fill="url(#eth-text-gradient)"
+            fontWeight="600"
+            letterSpacing="0.05em"
+            fontFamily="monospace"
+          >
+            IS 3043
+          </text>
+        </g>
+
+        {/* ── Stats overlay ── */}
+        <g>
+          <rect x="2" y="2" width="50" height="20" rx="2" fill="#1A1105" stroke="#FBB034" strokeWidth="0.3" opacity="0.9"/>
+          <text x="6" y="10" fill="#9A8870" fontSize="4" fontFamily="monospace">RESISTANCE</text>
+          <text x="6" y="18" fill="#FBB034" fontSize="7" fontFamily="monospace" fontWeight="bold">{'< 1 Ω'}</text>
+        </g>
+
+        {/* ── Defs ── */}
         <defs>
-          <linearGradient id="copperGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%"   stopColor="#7A4A05"/>
-            <stop offset="40%"  stopColor="#D4920A"/>
-            <stop offset="60%"  stopColor="#FBB034"/>
-            <stop offset="100%" stopColor="#7A4A05"/>
+          <mask id="eth-mask-1">
+            <path d="M 10 20 h 79.5 q 5 0 5 5 v 24" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="eth-mask-2">
+            <path d="M 180 10 h -69.7 q -5 0 -5 5 v 24" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="eth-mask-3">
+            <path d="M 130 20 v 21.8 q 0 5 -5 5 h -10" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="eth-mask-4">
+            <path d="M 170 80 v -21.8 q 0 -5 -5 -5 h -50" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="eth-mask-5">
+            <path d="M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -20" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="eth-mask-6">
+            <path d="M 94.8 95 v -46" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="eth-mask-7">
+            <path d="M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 14" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="eth-mask-8">
+            <path d="M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 20" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+
+          <radialGradient id="eth-grad-amber" fx="1">
+            <stop offset="0%"   stopColor="#FBB034"/>
+            <stop offset="50%"  stopColor="#FBB034" stopOpacity="0.8"/>
+            <stop offset="100%" stopColor="transparent"/>
+          </radialGradient>
+          <radialGradient id="eth-grad-gold" fx="1">
+            <stop offset="0%"   stopColor="#FFD700"/>
+            <stop offset="50%"  stopColor="#D4920A"/>
+            <stop offset="100%" stopColor="transparent"/>
+          </radialGradient>
+          <radialGradient id="eth-grad-white" fx="1">
+            <stop offset="0%"   stopColor="white"/>
+            <stop offset="50%"  stopColor="rgba(251,176,52,0.6)"/>
+            <stop offset="100%" stopColor="transparent"/>
+          </radialGradient>
+          <radialGradient id="eth-grad-copper" fx="1">
+            <stop offset="0%"   stopColor="#D4920A"/>
+            <stop offset="50%"  stopColor="#7A5008"/>
+            <stop offset="100%" stopColor="transparent"/>
+          </radialGradient>
+
+          <linearGradient id="eth-text-gradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"  stopColor="#7A5008">
+              <animate attributeName="offset" values="-2;-1;0" dur="4s" repeatCount="indefinite"
+                calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+            </stop>
+            <stop offset="25%" stopColor="#FBB034">
+              <animate attributeName="offset" values="-1;0;1" dur="4s" repeatCount="indefinite"
+                calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+            </stop>
+            <stop offset="50%" stopColor="#D4920A">
+              <animate attributeName="offset" values="0;1;2" dur="4s" repeatCount="indefinite"
+                calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+            </stop>
           </linearGradient>
+
+          <linearGradient id="eth-bolt-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#FBB034"/>
+            <stop offset="100%" stopColor="#D4920A"/>
+          </linearGradient>
+
+          <linearGradient id="eth-pin-gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stopColor="#FBB034" stopOpacity="0.6"/>
+            <stop offset="60%" stopColor="#1A1105"/>
+          </linearGradient>
+
+          <filter id="eth-shadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#FBB034" floodOpacity="0.15"/>
+          </filter>
+
+          <marker id="eth-circle-marker" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="18" markerHeight="18">
+            <circle cx="5" cy="5" r="2" fill="#1A1105" stroke="#FBB034" strokeWidth="0.5">
+              <animate attributeName="r" values="0;3;2" dur="0.5s"/>
+            </circle>
+          </marker>
         </defs>
       </svg>
     </div>

@@ -2,148 +2,223 @@
 import { useReducedMotion } from 'framer-motion'
 
 interface Props {
-  showSolar?: boolean   // true for hybrid/off-grid, false for standalone battery
+  showSolar?: boolean
 }
 
 export default function BatteryAnim({ showSolar = true }: Props) {
   const shouldReduce = useReducedMotion()
-  const animated = !shouldReduce
 
   return (
     <div className="relative w-full h-72 md:h-96 rounded-2xl overflow-hidden bg-navy-deep border border-amber/10 flex items-center justify-center">
-      <svg viewBox="0 0 360 280" className="w-full h-full" aria-label="Battery system animation">
 
-        {/* Sun (shown for hybrid) */}
-        {showSolar && (
-          <g transform="translate(60,55)">
-            {/* Rays */}
-            {[0,45,90,135,180,225,270,315].map((angle, i) => (
-              <line
-                key={i}
-                x1="0" y1="-22" x2="0" y2="-30"
-                stroke="#FBB034"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                transform={`rotate(${angle})`}
-                opacity={animated ? undefined : '0.6'}
-              >
-                {animated && (
-                  <animate attributeName="opacity" values="0.4;1;0.4" dur="2s"
-                    begin={`${i * 0.25}s`} repeatCount="indefinite"/>
-                )}
-              </line>
-            ))}
-            {/* Sun circle */}
-            <circle r="16" fill="#FBB034" opacity="0.9">
-              {animated && (
-                <animate attributeName="r" values="14;16;14" dur="3s" repeatCount="indefinite"/>
-              )}
-            </circle>
-          </g>
-        )}
+      {/* Ambient glow */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 55% 40% at 50% 50%, rgba(251,176,52,0.06) 0%, transparent 70%)',
+        }}
+      />
 
-        {/* Solar panel (shown for hybrid) */}
-        {showSolar && (
-          <g transform="translate(30,110)">
-            <rect width="70" height="44" rx="2" fill="#1a2a05" stroke="#FBB034" strokeWidth="0.8"/>
-            {[0,1,2].map(i => (
-              <line key={i} x1="0" y1={8 + i*13} x2="70" y2={8 + i*13} stroke="#D4920A" strokeWidth="0.5" opacity="0.6"/>
-            ))}
-            {[0,1,2,3].map(i => (
-              <line key={i} x1={12 + i*16} y1="0" x2={12 + i*16} y2="44" stroke="#D4920A" strokeWidth="0.5" opacity="0.6"/>
-            ))}
-          </g>
-        )}
+      <svg
+        viewBox="0 0 200 100"
+        width="100%"
+        height="100%"
+        className="text-amber/25"
+        aria-label={showSolar ? 'Solar hybrid battery system animation' : 'Battery inverter system animation'}
+      >
 
-        {/* Flow line: solar → battery */}
-        {showSolar && (
-          <g>
-            <path d="M100 132 C150 132 150 140 190 140" stroke="#7A5008" strokeWidth="1.5" fill="none" strokeDasharray="4,3"/>
-            {animated && [0,1,2].map(i => (
-              <circle key={i} r="3" fill="#FBB034">
-                <animateMotion dur="1.5s" begin={`${i*0.5}s`} repeatCount="indefinite"
-                  path="M100 132 C150 132 150 140 190 140"/>
-                <animate attributeName="opacity" values="0;1;1;0" dur="1.5s" begin={`${i*0.5}s`} repeatCount="indefinite"/>
-              </circle>
-            ))}
-          </g>
-        )}
+        {/* ── Circuit traces ── */}
+        <g
+          stroke="currentColor"
+          fill="none"
+          strokeWidth="0.3"
+          strokeDasharray="100 100"
+          pathLength="100"
+          markerStart="url(#bat-circle-marker)"
+        >
+          <path strokeDasharray="100 100" pathLength="100" d="M 10 20 h 79.5 q 5 0 5 5 v 30" />
+          <path strokeDasharray="100 100" pathLength="100" d="M 180 10 h -69.7 q -5 0 -5 5 v 30" />
+          <path d="M 130 20 v 21.8 q 0 5 -5 5 h -10" />
+          <path d="M 170 80 v -21.8 q 0 -5 -5 -5 h -50" />
+          <path strokeDasharray="100 100" pathLength="100" d="M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -20" />
+          <path d="M 94.8 95 v -36" />
+          <path d="M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 14" />
+          <path d="M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 20" />
 
-        {/* Battery body */}
-        <g transform="translate(190,100)">
-          {/* Terminal */}
-          <rect x="32" y="-6" width="16" height="6" rx="2" fill="#D4920A"/>
-          {/* Outer case */}
-          <rect width="80" height="110" rx="6" fill="#221608" stroke="#FBB034" strokeWidth="1.2"/>
-          {/* Fill level — animated */}
-          <clipPath id="battClip">
-            <rect x="5" y="5" width="70" height="100" rx="4"/>
-          </clipPath>
-          <rect x="5" y="5" width="70" height="100" rx="4" fill="#2A1C05"/>
-          <g clipPath="url(#battClip)">
-            <rect
-              x="5" y="5" width="70" height="100" rx="4"
-              fill="url(#battFill)"
-              style={{ transformOrigin: '5px 105px', transform: 'scaleY(0)' }}
-            >
-              {animated && (
-                <animateTransform
-                  attributeName="transform"
-                  type="scale"
-                  values="1,0;1,0.78"
-                  dur="2.5s"
-                  fill="freeze"
-                  calcMode="spline"
-                  keySplines="0.25,0.1,0.25,1"
-                />
-              )}
-            </rect>
-          </g>
-          {/* Percentage label */}
-          <text x="40" y="62" textAnchor="middle" fill="#FBB034" fontSize="18" fontFamily="monospace" fontWeight="bold">
-            78%
-          </text>
-          {/* Charge icon */}
-          <text x="40" y="82" textAnchor="middle" fill="#D4920A" fontSize="9" fontFamily="monospace">
-            CHARGING
-          </text>
-          {/* Segment lines */}
-          {[25, 50, 75].map(y => (
-            <line key={y} x1="5" y1={y + 5} x2="75" y2={y + 5} stroke="#1A1105" strokeWidth="1" opacity="0.6"/>
-          ))}
+          {!shouldReduce && (
+            <animate
+              attributeName="stroke-dashoffset"
+              from="100" to="0" dur="1s"
+              fill="freeze"
+              calcMode="spline"
+              keySplines="0.25,0.1,0.5,1"
+              keyTimes="0; 1"
+            />
+          )}
         </g>
 
-        {/* Flow line: battery → house */}
+        {/* ── Particle lights ── */}
+        {!shouldReduce && (
+          <>
+            <g mask="url(#bat-mask-1)">
+              <circle className="cpu-architecture cpu-line-1" cx="0" cy="0" r="8" fill="url(#bat-grad-amber)" />
+            </g>
+            <g mask="url(#bat-mask-2)">
+              <circle className="cpu-architecture cpu-line-2" cx="0" cy="0" r="8" fill="url(#bat-grad-gold)" />
+            </g>
+            <g mask="url(#bat-mask-3)">
+              <circle className="cpu-architecture cpu-line-3" cx="0" cy="0" r="8" fill="url(#bat-grad-white)" />
+            </g>
+            <g mask="url(#bat-mask-4)">
+              <circle className="cpu-architecture cpu-line-4" cx="0" cy="0" r="8" fill="url(#bat-grad-amber)" />
+            </g>
+            <g mask="url(#bat-mask-5)">
+              <circle className="cpu-architecture cpu-line-5" cx="0" cy="0" r="8" fill="url(#bat-grad-gold)" />
+            </g>
+            <g mask="url(#bat-mask-6)">
+              <circle className="cpu-architecture cpu-line-6" cx="0" cy="0" r="8" fill="url(#bat-grad-copper)" />
+            </g>
+            <g mask="url(#bat-mask-7)">
+              <circle className="cpu-architecture cpu-line-7" cx="0" cy="0" r="8" fill="url(#bat-grad-white)" />
+            </g>
+            <g mask="url(#bat-mask-8)">
+              <circle className="cpu-architecture cpu-line-8" cx="0" cy="0" r="8" fill="url(#bat-grad-amber)" />
+            </g>
+          </>
+        )}
+
+        {/* ── Central battery chip ── */}
         <g>
-          <path d="M270 150 C300 150 300 160 310 160" stroke="#7A5008" strokeWidth="1.5" fill="none" strokeDasharray="4,3"/>
-          {animated && [0,1].map(i => (
-            <circle key={i} r="3" fill="#FBB034">
-              <animateMotion dur="1.2s" begin={`${i*0.6}s`} repeatCount="indefinite"
-                path="M270 150 C300 150 300 160 310 160"/>
-              <animate attributeName="opacity" values="0;1;1;0" dur="1.2s" begin={`${i*0.6}s`} repeatCount="indefinite"/>
-            </circle>
-          ))}
+          {/* Connector pins */}
+          <g fill="url(#bat-pin-gradient)">
+            <rect x="93"    y="37"    width="2.5" height="5" rx="0.7" />
+            <rect x="104"   y="37"    width="2.5" height="5" rx="0.7" />
+            <rect x="116.3" y="44"    width="2.5" height="5" rx="0.7" transform="rotate(90 116.25 45.5)" />
+            <rect x="122.8" y="44"    width="2.5" height="5" rx="0.7" transform="rotate(90 116.25 45.5)" />
+            <rect x="104"   y="16"    width="2.5" height="5" rx="0.7" transform="rotate(180 105.25 39.5)" />
+            <rect x="114.5" y="16"    width="2.5" height="5" rx="0.7" transform="rotate(180 105.25 39.5)" />
+            <rect x="80"    y="-13.6" width="2.5" height="5" rx="0.7" transform="rotate(270 115.25 19.5)" />
+            <rect x="87"    y="-13.6" width="2.5" height="5" rx="0.7" transform="rotate(270 115.25 19.5)" />
+          </g>
+
+          {/* Chip body */}
+          <rect x="85" y="40" width="30" height="20" rx="2" fill="#1A1105" filter="url(#bat-shadow)" />
+
+          {/* Battery icon — two stacked cells */}
+          <rect x="93" y="43" width="14" height="7" rx="1" fill="none" stroke="url(#bat-bolt-grad)" strokeWidth="0.5"/>
+          {/* Terminal nub */}
+          <rect x="107" y="45.5" width="2" height="3" rx="0.4" fill="url(#bat-bolt-grad)"/>
+          {/* Fill level bar */}
+          <rect x="94" y="44" width="9" height="5" rx="0.5" fill="url(#bat-bolt-grad)" opacity="0.8">
+            {!shouldReduce && (
+              <animate attributeName="width" values="3;9;3" dur="3s" repeatCount="indefinite"
+                calcMode="spline" keySplines="0.4,0,0.6,1;0.4,0,0.6,1"/>
+            )}
+          </rect>
+
+          {/* Label */}
+          <text
+            x={showSolar ? '90' : '91'} y="57.5"
+            fontSize="4.5"
+            fill="url(#bat-text-gradient)"
+            fontWeight="600"
+            letterSpacing="0.04em"
+            fontFamily="monospace"
+          >
+            {showSolar ? 'HYBRID' : 'BATTERY'}
+          </text>
         </g>
 
-        {/* House */}
-        <g transform="translate(300,130)">
-          <polygon points="25,0 0,22 50,22" fill="#221608" stroke="#FBB034" strokeWidth="0.8"/>
-          <rect x="5" y="22" width="40" height="28" fill="#221608" stroke="#7A5008" strokeWidth="0.6"/>
-          {/* Lit window */}
-          <rect x="14" y="30" width="12" height="10" rx="1" fill="#FBB034" opacity="0.7">
-            {animated && <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2s" repeatCount="indefinite"/>}
-          </rect>
-          <rect x="30" y="30" width="10" height="10" rx="1" fill="#FBB034" opacity="0.5">
-            {animated && <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2.5s" repeatCount="indefinite"/>}
-          </rect>
+        {/* ── Stats overlay ── */}
+        <g>
+          <rect x="2" y="2" width="46" height="20" rx="2" fill="#1A1105" stroke="#FBB034" strokeWidth="0.3" opacity="0.9"/>
+          <text x="6" y="10"  fill="#9A8870" fontSize="4"  fontFamily="monospace">{showSolar ? 'SOLAR INPUT' : 'STORED'}</text>
+          <text x="6" y="18"  fill="#FBB034" fontSize="7"  fontFamily="monospace" fontWeight="bold">{showSolar ? '4.8 kW' : '78%'}</text>
         </g>
 
+        {/* ── Defs ── */}
         <defs>
-          <linearGradient id="battFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="#FBB034" stopOpacity="0.9"/>
-            <stop offset="60%"  stopColor="#D4920A" stopOpacity="0.8"/>
-            <stop offset="100%" stopColor="#7A5008" stopOpacity="0.7"/>
+          <mask id="bat-mask-1">
+            <path d="M 10 20 h 79.5 q 5 0 5 5 v 24" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="bat-mask-2">
+            <path d="M 180 10 h -69.7 q -5 0 -5 5 v 24" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="bat-mask-3">
+            <path d="M 130 20 v 21.8 q 0 5 -5 5 h -10" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="bat-mask-4">
+            <path d="M 170 80 v -21.8 q 0 -5 -5 -5 h -50" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="bat-mask-5">
+            <path d="M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -20" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="bat-mask-6">
+            <path d="M 94.8 95 v -46" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="bat-mask-7">
+            <path d="M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 14" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+          <mask id="bat-mask-8">
+            <path d="M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 20" strokeWidth="0.5" stroke="white" fill="none"/>
+          </mask>
+
+          <radialGradient id="bat-grad-amber" fx="1">
+            <stop offset="0%"   stopColor="#FBB034"/>
+            <stop offset="50%"  stopColor="#FBB034" stopOpacity="0.8"/>
+            <stop offset="100%" stopColor="transparent"/>
+          </radialGradient>
+          <radialGradient id="bat-grad-gold" fx="1">
+            <stop offset="0%"   stopColor="#FFD700"/>
+            <stop offset="50%"  stopColor="#D4920A"/>
+            <stop offset="100%" stopColor="transparent"/>
+          </radialGradient>
+          <radialGradient id="bat-grad-white" fx="1">
+            <stop offset="0%"   stopColor="white"/>
+            <stop offset="50%"  stopColor="rgba(251,176,52,0.6)"/>
+            <stop offset="100%" stopColor="transparent"/>
+          </radialGradient>
+          <radialGradient id="bat-grad-copper" fx="1">
+            <stop offset="0%"   stopColor="#D4920A"/>
+            <stop offset="50%"  stopColor="#7A5008"/>
+            <stop offset="100%" stopColor="transparent"/>
+          </radialGradient>
+
+          <linearGradient id="bat-text-gradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stopColor="#7A5008">
+              <animate attributeName="offset" values="-2;-1;0" dur="4s" repeatCount="indefinite"
+                calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+            </stop>
+            <stop offset="25%"  stopColor="#FBB034">
+              <animate attributeName="offset" values="-1;0;1" dur="4s" repeatCount="indefinite"
+                calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+            </stop>
+            <stop offset="50%"  stopColor="#D4920A">
+              <animate attributeName="offset" values="0;1;2" dur="4s" repeatCount="indefinite"
+                calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+            </stop>
           </linearGradient>
+
+          <linearGradient id="bat-bolt-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#FBB034"/>
+            <stop offset="100%" stopColor="#D4920A"/>
+          </linearGradient>
+
+          <linearGradient id="bat-pin-gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#FBB034" stopOpacity="0.6"/>
+            <stop offset="60%"  stopColor="#1A1105"/>
+          </linearGradient>
+
+          <filter id="bat-shadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#FBB034" floodOpacity="0.15"/>
+          </filter>
+
+          <marker id="bat-circle-marker" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="18" markerHeight="18">
+            <circle cx="5" cy="5" r="2" fill="#1A1105" stroke="#FBB034" strokeWidth="0.5">
+              <animate attributeName="r" values="0;3;2" dur="0.5s"/>
+            </circle>
+          </marker>
         </defs>
       </svg>
     </div>

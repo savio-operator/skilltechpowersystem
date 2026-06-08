@@ -4,17 +4,19 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/cn'
 import { SITE } from '@/content/site'
+import { SERVICE_LIST } from '@/content/services'
 
 const NAV_LINKS = [
-  { href: '/#ch-machine',  label: 'Systems'   },
-  { href: '/#ch-math',     label: 'Savings'   },
-  { href: '/projects',     label: 'Portfolio' },
-  { href: '/about',        label: 'About'     },
+  { href: '/#ch-machine', label: 'Systems'   },
+  { href: '/#ch-math',    label: 'Savings'   },
+  { href: '/projects',    label: 'Portfolio' },
+  { href: '/about',       label: 'About'     },
 ]
 
 export default function Header() {
-  const [scrolled,    setScrolled]    = useState(false)
-  const [mobileOpen,  setMobileOpen]  = useState(false)
+  const [scrolled,   setScrolled]   = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [svcOpen,    setSvcOpen]    = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -22,7 +24,9 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const waHref = `https://wa.me/${SITE.whatsapp.number}?text=${SITE.whatsapp.message}`
+  const waHref = SITE.whatsapp.number
+    ? `https://wa.me/${SITE.whatsapp.number}?text=${SITE.whatsapp.message}`
+    : `mailto:${SITE.email}`
 
   return (
     <header
@@ -37,13 +41,43 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 shrink-0">
           <ShieldLogo />
-          <span className="font-display font-black text-sm tracking-[0.12em] text-paper">
-            SKILLTECH
-          </span>
+          <span className="font-display font-black text-sm tracking-[0.12em] text-paper">SKILLTECH</span>
         </Link>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6 ml-auto" aria-label="Main navigation">
+          {/* Services dropdown */}
+          <div className="relative" onMouseEnter={() => setSvcOpen(true)} onMouseLeave={() => setSvcOpen(false)}>
+            <button className="text-sm text-warm-grey hover:text-paper transition-colors duration-200 flex items-center gap-1">
+              Services
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" className={cn('transition-transform', svcOpen && 'rotate-180')}>
+                <path d="M1 3l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+              </svg>
+            </button>
+            <AnimatePresence>
+              {svcOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-full left-0 mt-2 w-64 bg-navy-deep/95 backdrop-blur-md border border-white/8 rounded-xl p-2 shadow-2xl"
+                >
+                  {SERVICE_LIST.map((s) => (
+                    <Link
+                      key={s.slug}
+                      href={`/${s.slug}`}
+                      className="flex items-center gap-2 px-3 py-2 text-sm text-warm-grey hover:text-paper hover:bg-white/5 rounded-lg transition-colors"
+                    >
+                      <span className="text-amber text-xs">—</span>
+                      {s.shortName}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           {NAV_LINKS.map((l) => (
             <Link
               key={l.href}
@@ -55,11 +89,11 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* CTA */}
+        {/* Desktop CTA */}
         <a
           href={waHref}
-          target="_blank"
-          rel="noopener noreferrer"
+          target="_blank" rel="noopener noreferrer"
+          data-event="whatsapp-click"
           className="hidden md:flex items-center gap-2 ml-4 px-4 py-2 bg-[#25D366] text-white text-sm font-semibold rounded-md hover:opacity-90 transition-opacity"
         >
           <WhatsAppIcon />
@@ -85,14 +119,26 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-navy-deep/95 backdrop-blur-md border-t border-white/5"
+            className="md:hidden bg-navy-deep/95 backdrop-blur-md border-t border-white/5 overflow-hidden"
           >
-            <nav className="flex flex-col px-5 py-4 gap-4">
+            <nav className="flex flex-col px-5 py-4 gap-1">
+              <p className="font-mono text-[0.6rem] tracking-widest text-warm-grey/50 uppercase px-3 pt-2 pb-1">Services</p>
+              {SERVICE_LIST.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/${s.slug}`}
+                  className="px-3 py-2 text-sm text-warm-grey hover:text-paper transition-colors rounded-lg"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {s.shortName}
+                </Link>
+              ))}
+              <div className="my-2 border-t border-white/5" />
               {NAV_LINKS.map((l) => (
                 <Link
                   key={l.href}
                   href={l.href}
-                  className="text-base text-warm-grey hover:text-paper transition-colors"
+                  className="px-3 py-2 text-base text-warm-grey hover:text-paper transition-colors"
                   onClick={() => setMobileOpen(false)}
                 >
                   {l.label}
@@ -100,9 +146,9 @@ export default function Header() {
               ))}
               <a
                 href={waHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 mt-2 px-4 py-3 bg-[#25D366] text-white text-sm font-semibold rounded-md w-full justify-center"
+                target="_blank" rel="noopener noreferrer"
+                data-event="whatsapp-click"
+                className="flex items-center gap-2 mt-3 px-4 py-3 bg-[#25D366] text-white text-sm font-semibold rounded-md w-full justify-center"
               >
                 <WhatsAppIcon />
                 Get a Quote on WhatsApp

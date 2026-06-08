@@ -13,6 +13,8 @@ export default function WhatsAppFloat() {
 
   const href = `https://wa.me/${SITE.whatsapp.number}?text=${SITE.whatsapp.message}`
 
+  if (!SITE.whatsapp.number) return null
+
   return (
     <AnimatePresence>
       {visible && (

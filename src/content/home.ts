@@ -1,15 +1,14 @@
 // Home page content — all copy, numbers, and image paths in one place.
-// Search for "TODO: confirm-with-client" to find everything needing real data.
+// Search "TODO: confirm-with-client" to find everything still needing real data.
 
 export const HOME = {
   hero: {
-    eyebrow:   'Ernakulam · Kerala',
-    badge:     'EST. 2016',
-    headline:  ['The power', 'comes from', 'above.'],
-    sub:       'Kerala\'s leading rooftop solar company — design, supply, installation & service',
-    // TODO: confirm-with-client — swap gradient placeholder for real golden-hour roof photo
-    image:     '/images/hero-golden-hour.jpg',
-    imageAlt:  'Rooftop solar installation at golden hour, Ernakulam Kerala',
+    eyebrow:  'Ernakulam · Kottayam · Idukki · Kerala',
+    badge:    'EST. 2015',
+    headline: ['The power', 'comes from', 'above.'],
+    sub:      'Complete power-systems company — solar, lightning protection, earthing, battery backup & AMC',
+    image:    '/images/hero-golden-hour.jpg',  // TODO: confirm-with-client — swap for real golden-hour roof photo
+    imageAlt: 'Rooftop solar installation at golden hour, Ernakulam Kerala',
   },
 
   promise: [
@@ -23,23 +22,23 @@ export const HOME = {
     callouts: [
       {
         num:   '01',
-        title: '330W Monocrystalline Panel',
-        desc:  'Tier-1 · 25-yr performance warranty',
+        title: 'Monocrystalline Solar Panels',
+        desc:  'Adani · Waaree · UTL · Luminous — 25-yr performance warranty',
       },
       {
         num:   '02',
-        title: 'Grid-tie Inverter',
-        desc:  'Solis / Growatt · MNRE approved · app monitoring',
+        title: 'Hybrid / Grid-tie Inverter',
+        desc:  'Luminous · Deye · Growatt · UTL — MNRE approved, app monitoring',
       },
       {
         num:   '03',
         title: 'Bi-directional Meter',
-        desc:  'KSEB net-metering · sell excess back to grid',
+        desc:  'KSEB net-metering — sell excess power back to the grid',
       },
       {
         num:   '04',
         title: '₹0 electricity bill',
-        desc:  '3–5 kW typical home · payback in 5 years',
+        desc:  'Typical 5 kW home system · payback in 4–5 years',
       },
     ],
   },
@@ -50,20 +49,24 @@ export const HOME = {
     sub:        'Move the slider — see what solar does to your electricity bill.',
     disclaimer: 'Based on Ernakulam avg. tariff ₹4.50/unit · 5.5 peak sun hours · ₹45,000/kW installed cost · 30% MNRE subsidy applied.',
     calc: {
-      tariff:     4.50,   // ₹/unit
+      tariff:     4.50,   // ₹/unit — Ernakulam LT domestic rate
       peakHours:  5.5,    // hours/day Ernakulam avg
-      costPerKw:  45000,  // ₹ installed, post-subsidy
-      subsidy:    0.30,   // 30% MNRE subsidy
+      costPerKw:  45000,  // ₹ installed, typical post-subsidy residential
+      subsidy:    0.30,   // 30% MNRE central subsidy
+    },
+    typicalSystem: {
+      kw:    5,
+      cost:  500000,  // ~₹5 lakh residential
     },
   },
 
   storm: {
     eyebrow:   'CH.05 / THE STORM',
     headline:  "Kerala's skies are beautiful. And unforgiving.",
-    body:      "Every monsoon, unprotected solar systems take direct hits. We design for the weather you actually live in — lightning arresters, surge protection, proper earthing. Because a ₹3 lakh system deserves more than hope.",
-    features:  ['Lightning Arrester', 'Surge Protection Device', 'Proper Earthing System'],
-    // TODO: confirm-with-client — swap gradient for real monsoon/storm photo
-    image:     '/images/storm-kerala.jpg',
+    body:      "Every monsoon, unprotected systems take direct hits. Skilltech designs for the weather you actually live in — ESE lightning arresters, IS 3043-compliant earthing, DC/AC surge protection. Because a ₹5 lakh system deserves more than hope.",
+    features:  ['ESE Lightning Arrester', 'DC + AC Surge Protection', 'IS 3043-Compliant Earthing'],
+    cta:       'April–June is peak lightning season — get protected before the monsoon.',
+    image:     '/images/storm-kerala.jpg',   // TODO: confirm-with-client — real monsoon/storm photo
     imageAlt:  'Kerala monsoon storm clouds',
   },
 
@@ -71,18 +74,17 @@ export const HOME = {
     eyebrow:  'CH.06 / THE PROOF',
     headline: "Numbers don't install themselves.",
     counters: [
-      { id: 'installs', target: 500,  label: 'Rooftop Installations', suffix: '+' },
-      { id: 'kw',       target: 2500, label: 'kW Commissioned',       suffix: '+' },
-      { id: 'years',    target: 8,    label: 'Years in Kerala',        suffix: ''  },
-      { id: 'cr',       target: 12,   label: 'Crore ₹ Saved',         suffix: '+' },
+      { id: 'installs', target: 50,  label: 'Rooftop Installations',   suffix: '+' },
+      { id: 'kw',       target: 100, label: 'kW Commissioned',          suffix: 'kW+' },
+      { id: 'years',    target: 11,  label: 'Years in Kerala',           suffix: ''  },
+      { id: 'kw_max',   target: 25,  label: 'kW Largest Single Project', suffix: 'kW' },
     ],
-    mapCaption: 'Every dot is a household powered by the sun.',
+    mapCaption: 'Every dot is a household powered by the sun. Ernakulam, Kottayam, Idukki.',
   },
 
   footer: {
     promise: 'Sun above. Savings below.',
-    // TODO: confirm-with-client — swap gradient for real dusk/golden-hour image
-    image:    '/images/footer-dusk.jpg',
-    imageAlt: 'Kerala rooftop at dusk',
+    image:    '/images/footer-dusk.jpg',   // TODO: confirm-with-client — real dusk/golden-hour photo
+    imageAlt: 'Kerala rooftop at dusk with solar panels',
   },
 } as const

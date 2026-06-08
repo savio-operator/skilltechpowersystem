@@ -3,16 +3,16 @@ import { SERVICES } from '@/content/services'
 import { SITE } from '@/content/site'
 import ServicePage, { ServiceSchema } from '@/components/layout/ServicePage'
 
-const s = SERVICES.solarInstallation
+const s = SERVICES.earthing
 
 export const metadata: Metadata = {
   title: s.name,
   description: s.description,
   keywords: s.keywords,
-  openGraph: { url: `${SITE.siteUrl}/solar-installation` },
+  openGraph: { url: `${SITE.siteUrl}/earthing-system` },
 }
 
-export default function SolarInstallationPage() {
+export default function EarthingSystemPage() {
   return (
     <>
       <ServiceSchema service={s} siteUrl={SITE.siteUrl} />

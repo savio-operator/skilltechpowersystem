@@ -5,9 +5,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { SITE } from '@/content/site'
 import { HOME } from '@/content/home'
-import { SERVICES } from '@/content/services'
+import { SERVICE_LIST } from '@/content/services'
 
-const SERVICE_LABELS = Object.values(SERVICES).map((s) => s.shortName)
+const SERVICE_LABELS = SERVICE_LIST.map((s) => s.shortName)
 
 export default function ChInvitation() {
   const ref          = useRef<HTMLElement>(null)
@@ -79,10 +79,10 @@ export default function ChInvitation() {
           {/* Contact */}
           <div className="flex flex-col gap-3">
             {[
-              { label: 'Email', val: SITE.email, href: `mailto:${SITE.email}` },
-              { label: 'Phone', val: SITE.phone, href: `tel:${SITE.phone.replace(/\s/g, '')}` },
-              { label: 'Area',  val: SITE.address },
-              { label: 'Hours', val: SITE.hours },
+              { label: 'Email', val: SITE.email,             href: `mailto:${SITE.email}` },
+              { label: 'Phone', val: SITE.phone || '—',     href: SITE.phone ? `tel:${(SITE.phone as string).replace(/\s/g, '')}` : undefined },
+              { label: 'Area',  val: SITE.address.display,  href: undefined },
+              { label: 'Hours', val: SITE.hours,            href: undefined },
             ].map(({ label, val, href }) => (
               <div key={label} className="flex gap-4 items-baseline">
                 <span className="font-mono text-[0.62rem] tracking-[0.12em] text-warm-grey min-w-[48px]">{label}</span>

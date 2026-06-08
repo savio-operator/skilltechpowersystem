@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { SERVICES } from '@/content/services'
 import { SITE } from '@/content/site'
 import ServicePage, { ServiceSchema } from '@/components/layout/ServicePage'
+import WaterHeaterAnim from '@/components/animations/WaterHeaterAnim'
 
 const s = SERVICES.solarWaterHeater
 
@@ -16,7 +17,7 @@ export default function SolarWaterHeaterPage() {
   return (
     <>
       <ServiceSchema service={s} siteUrl={SITE.siteUrl} />
-      <ServicePage service={s} />
+      <ServicePage service={s} animation={<WaterHeaterAnim />} />
     </>
   )
 }

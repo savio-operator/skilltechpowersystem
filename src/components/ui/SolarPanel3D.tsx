@@ -96,7 +96,7 @@ function Scene() {
     <>
       <ambientLight intensity={0.35} />
       <directionalLight position={[4, 6, 5]} intensity={1.4} color="#f5c060" castShadow />
-      <pointLight position={[-3, 2, 3]} intensity={0.6} color="#4A90D9" />
+      <pointLight position={[-3, 2, 3]} intensity={0.6} color="#D4920A" />
       <Suspense fallback={null}>
         <Environment preset="city" />
       </Suspense>

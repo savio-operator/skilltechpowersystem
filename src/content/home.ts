@@ -12,9 +12,9 @@ export const HOME = {
   },
 
   promise: [
-    { word: 'Greener.', bg: '#0D1B34', color: '#FBFAF7' },
-    { word: 'Cleaner.', bg: '#0A2418', color: '#FBFAF7' },
-    { word: 'Better.',  bg: '#1a0f00', color: '#F5A623' },
+    { word: 'Greener.', bg: '#0D0A01', color: '#FBF8F0' },
+    { word: 'Cleaner.', bg: '#120D02', color: '#FBF8F0' },
+    { word: 'Better.',  bg: '#1A1105', color: '#FBB034' },
   ],
 
   machine: {

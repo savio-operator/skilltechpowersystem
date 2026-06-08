@@ -1,12 +1,14 @@
+import type { ReactNode } from 'react'
 import type { Service } from '@/content/services'
 import { SITE } from '@/content/site'
 import Link from 'next/link'
 
 interface Props {
   service: Service
+  animation?: ReactNode
 }
 
-export default function ServicePage({ service: s }: Props) {
+export default function ServicePage({ service: s, animation }: Props) {
   const waHref = SITE.whatsapp.number
     ? `https://wa.me/${SITE.whatsapp.number}?text=Hi%2C%20I%27m%20interested%20in%20${encodeURIComponent(s.shortName)}.`
     : `mailto:${SITE.email}`
@@ -23,6 +25,13 @@ export default function ServicePage({ service: s }: Props) {
           {s.name}
         </h1>
         <p className="text-amber font-medium text-lg mb-6">{s.tagline}</p>
+
+        {animation && (
+          <div className="mb-10">
+            {animation}
+          </div>
+        )}
+
         <p className="text-warm-grey leading-relaxed mb-10">{s.description}</p>
 
         {s.pricing && (

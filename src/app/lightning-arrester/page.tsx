@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { SERVICES } from '@/content/services'
 import { SITE } from '@/content/site'
 import ServicePage, { ServiceSchema } from '@/components/layout/ServicePage'
+import LightningAnim from '@/components/animations/LightningAnim'
 
 const s = SERVICES.lightningArrester
 
@@ -16,7 +17,7 @@ export default function LightningArresterPage() {
   return (
     <>
       <ServiceSchema service={s} siteUrl={SITE.siteUrl} />
-      <ServicePage service={s} />
+      <ServicePage service={s} animation={<LightningAnim />} />
     </>
   )
 }

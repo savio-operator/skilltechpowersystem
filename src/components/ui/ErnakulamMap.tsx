@@ -51,7 +51,7 @@ export default function ErnakulamMap() {
       <path
         d="M120,40 L180,20 L240,30 L300,50 L350,80 L370,130 L380,180 L360,240 L340,300 L300,360 L260,420 L220,460 L180,480 L140,460 L110,420 L90,370 L80,310 L85,250 L90,190 L95,140 L105,90 Z"
         fill="rgba(44,74,124,0.1)"
-        stroke="#2C4A7C"
+        stroke="#7A5008"
         strokeWidth="1.5"
       />
       {/* Water body */}

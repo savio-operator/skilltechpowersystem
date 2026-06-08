@@ -1,15 +1,16 @@
 'use client'
-import { useEffect, useRef } from 'react'
-import { useInView, useMotionValue, useSpring, animate } from 'framer-motion'
+import { useEffect, useRef, type CSSProperties } from 'react'
+import { useInView, animate } from 'framer-motion'
 import { useReducedMotion } from 'framer-motion'
 
 interface Props {
-  target:  number
-  suffix?: string
+  target:    number
+  suffix?:   string
   className?: string
+  style?:    CSSProperties
 }
 
-export default function OdometerCounter({ target, suffix = '', className }: Props) {
+export default function OdometerCounter({ target, suffix = '', className, style }: Props) {
   const ref             = useRef<HTMLSpanElement>(null)
   const isInView        = useInView(ref, { once: true, amount: 0.5 })
   const shouldReduce    = useReducedMotion()
@@ -38,7 +39,7 @@ export default function OdometerCounter({ target, suffix = '', className }: Prop
   }, [isInView, target, suffix, shouldReduce])
 
   return (
-    <span ref={ref} className={className} aria-label={`${target}${suffix}`}>
+    <span ref={ref} className={className} style={style} aria-label={`${target}${suffix}`}>
       0
     </span>
   )

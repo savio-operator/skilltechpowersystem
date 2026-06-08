@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js
+.next/
+out/
+build/
+
+# Environment — NEVER commit .env.local
+.env.local
+.env.*.local
+.env
+
+# Vercel
+.vercel
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/settings.json
+.claude/
+
+# Design source files
+DESIGN.md
+design/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts

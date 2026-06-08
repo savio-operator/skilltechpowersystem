@@ -1,0 +1,11 @@
+# Drop real photography here.
+# See src/content/home.ts, services.ts, and projects.ts for the expected filenames.
+# All images use next/image — they'll be auto-optimised to AVIF/WebP on Vercel.
+#
+# Required:
+#   hero-golden-hour.jpg     — Kerala rooftop at golden hour (Ch1 hero)
+#   storm-kerala.jpg         — Kerala monsoon / storm clouds (Ch5)
+#   footer-dusk.jpg          — Rooftop at dusk (Ch7 footer)
+#   og-home.jpg              — 1200×630 OG card
+#   project-01.jpg … 06.jpg  — Installation photos
+#   service-*.jpg            — One per service page

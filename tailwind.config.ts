@@ -26,6 +26,7 @@ const config: Config = {
         mono:    ['var(--font-jetbrains-mono)',  'monospace'],
       },
       animation: {
+        'spotlight':    'spotlight 2s ease .75s 1 forwards',
         'arrow-bounce': 'arrowBounce 2s ease-in-out infinite',
         'pulse-glow':   'pulseGlow 2.5s ease-in-out infinite',
         'sun-spin':     'sunSpin 12s linear infinite',
@@ -37,6 +38,10 @@ const config: Config = {
         'charge-flow':  'chargeFlow 1.5s linear infinite',
       },
       keyframes: {
+        spotlight: {
+          '0%':   { opacity: '0', transform: 'translate(-72%, -62%) scale(0.5)' },
+          '100%': { opacity: '1', transform: 'translate(-50%, -40%) scale(1)' },
+        },
         arrowBounce: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%':      { transform: 'translateY(4px)' },

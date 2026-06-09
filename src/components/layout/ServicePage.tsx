@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import type { Service } from '@/content/services'
 import { SITE } from '@/content/site'
 import Link from 'next/link'
+import { Spotlight } from '@/components/ui/spotlight'
 
 interface Props {
   service: Service
@@ -27,7 +28,8 @@ export default function ServicePage({ service: s, animation }: Props) {
         <p className="text-amber font-medium text-lg mb-6">{s.tagline}</p>
 
         {animation && (
-          <div className="mb-10">
+          <div className="mb-10 relative rounded-2xl overflow-hidden">
+            <Spotlight size={320} />
             {animation}
           </div>
         )}

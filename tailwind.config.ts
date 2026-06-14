@@ -8,17 +8,25 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // ── Light brand palette ──────────────────────────────────────────────
+      // 50% #FFFFFF (canvas) · 30% #1A2B43 navy (ink) · 20% #F7B538 gold (accent)
+      // Token NAMES are kept stable so existing components don't break; only the
+      // VALUES are flipped from the old dark theme to the new light theme:
+      //   bg-navy-deep  → white page background
+      //   text-paper    → navy primary text (readable on white)
+      //   text-warm-grey→ cool muted grey
+      //   text-amber    → gold accent
       colors: {
-        amber:       '#FBB034',
+        amber:       '#F7B538',    // gold accent (CTAs, highlights, numbers)
         navy: {
-          DEFAULT: '#1A1105',
-          deep:    '#0D0A01',
-          mid:     '#221608',
+          DEFAULT: '#1A2B43',      // brand navy — ink, dark elements
+          deep:    '#FFFFFF',      // page background (flipped to white)
+          mid:     '#F4F6F9',      // light section background
         },
-        'blue-word':  '#7A5008',   // warm dark-gold (map strokes, subtle accents)
-        'sky-blue':   '#D4920A',   // warm mid-gold (replaces sky blue)
-        paper:        '#FBF8F0',   // warm white
-        'warm-grey':  '#9A8870',   // warm brown-grey
+        'blue-word':  '#1A2B43',   // navy accent
+        'sky-blue':   '#F7B538',   // gold accent (replaces old sky blue)
+        paper:        '#1A2B43',   // primary text — navy on white
+        'warm-grey':  '#5C6B7F',   // muted cool grey
       },
       fontFamily: {
         display: ['var(--font-sora)',           'sans-serif'],

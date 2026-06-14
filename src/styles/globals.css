@@ -60,33 +60,33 @@
     @apply font-mono text-[0.65rem] tracking-[0.2em] text-warm-grey uppercase mb-4;
   }
 
-  /* Cinematic section bgs — warm brown palette */
+  /* Cinematic section bgs — light navy/gold palette */
   .bg-cinematic-sky {
     background:
-      radial-gradient(ellipse 80% 60% at 60% 30%, #4a2d06 0%, transparent 60%),
-      radial-gradient(ellipse 60% 80% at 20% 70%, #1a0f02 0%, transparent 70%),
-      linear-gradient(160deg, #2e1c04 0%, #1a1105 40%, #0d0a01 100%);
+      radial-gradient(ellipse 80% 60% at 60% 30%, rgba(247,181,56,0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 20% 70%, rgba(26,43,67,0.05) 0%, transparent 70%),
+      linear-gradient(160deg, #FFFFFF 0%, #F4F6F9 55%, #E8EDF3 100%);
   }
   .bg-cinematic-storm {
     background:
-      radial-gradient(ellipse 70% 70% at 50% 20%, #1a1200 0%, transparent 60%),
-      linear-gradient(180deg, #0a0800 0%, #0d0a01 50%, #080600 100%);
+      radial-gradient(ellipse 70% 70% at 50% 20%, rgba(26,43,67,0.07) 0%, transparent 60%),
+      linear-gradient(180deg, #F4F6F9 0%, #E8EDF3 50%, #DFE6EE 100%);
   }
   .bg-cinematic-dusk {
     background:
-      radial-gradient(ellipse 80% 50% at 50% 80%, rgba(251,176,52,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(251,176,52,0.06) 0%, transparent 60%),
-      linear-gradient(180deg, #1A1105 0%, #100c02 60%, #0d0a01 100%);
+      radial-gradient(ellipse 80% 50% at 50% 80%, rgba(247,181,56,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(247,181,56,0.06) 0%, transparent 60%),
+      linear-gradient(180deg, #FFFFFF 0%, #F4F6F9 60%, #E8EDF3 100%);
   }
 
-  /* Solar panel cell (used by 3D fallback) */
+  /* Solar panel cell (used by 3D fallback) — dark navy cell with gold sheen */
   .panel-cell {
-    @apply bg-[#2a1c05] rounded-sm relative overflow-hidden;
+    @apply bg-[#1A2B43] rounded-sm relative overflow-hidden;
   }
   .panel-cell::after {
     content: '';
     @apply absolute inset-0;
-    background: linear-gradient(135deg, rgba(251,176,52,0.15) 0%, transparent 55%);
+    background: linear-gradient(135deg, rgba(247,181,56,0.20) 0%, transparent 55%);
   }
 }
 

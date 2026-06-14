@@ -2,22 +2,22 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Home, Sun, Calculator, Images, Info, Phone } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { SITE } from '@/content/site'
-import { SERVICE_LIST } from '@/content/services'
+import { NavBar } from './NavBar'
 
-const NAV_LINKS = [
-  { href: '/#ch-machine', label: 'Systems'   },
-  { href: '/#ch-math',    label: 'Savings'   },
-  { href: '/projects',    label: 'Portfolio' },
-  { href: '/about',       label: 'About'     },
+const NAV_ITEMS = [
+  { name: 'Home',      url: '/',           icon: Home },
+  { name: 'Systems',   url: '/#ch-machine', icon: Sun },
+  { name: 'Savings',   url: '/#ch-math',    icon: Calculator },
+  { name: 'Portfolio', url: '/projects',    icon: Images },
+  { name: 'About',     url: '/about',       icon: Info },
+  { name: 'Contact',   url: '/contact',     icon: Phone },
 ]
 
 export default function Header() {
-  const [scrolled,   setScrolled]   = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [svcOpen,    setSvcOpen]    = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -30,141 +30,41 @@ export default function Header() {
     : `mailto:${SITE.email}`
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        scrolled
-          ? 'bg-navy-deep/90 backdrop-blur-md border-b border-white/5 py-3'
-          : 'py-5'
-      )}
-    >
-      <div className="max-w-7xl mx-auto px-5 md:px-8 flex items-center gap-4">
-        {/* Logo */}
-        <Link href="/" className="flex items-center shrink-0" aria-label="Skilltech Power System — home">
-          <Image
-            src="/images/cinematic/logo.png"
-            alt="Skilltech Power System"
-            width={110}
-            height={72}
-            priority
-            className="h-9 w-auto md:h-10"
-          />
-        </Link>
-
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6 ml-auto" aria-label="Main navigation">
-          {/* Services dropdown */}
-          <div className="relative" onMouseEnter={() => setSvcOpen(true)} onMouseLeave={() => setSvcOpen(false)}>
-            <button className="text-sm text-warm-grey hover:text-paper transition-colors duration-200 flex items-center gap-1">
-              Services
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" className={cn('transition-transform', svcOpen && 'rotate-180')}>
-                <path d="M1 3l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-              </svg>
-            </button>
-            <AnimatePresence>
-              {svcOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute top-full left-0 mt-2 w-64 bg-navy-deep/95 backdrop-blur-md border border-white/8 rounded-xl p-2 shadow-2xl"
-                >
-                  {SERVICE_LIST.map((s) => (
-                    <Link
-                      key={s.slug}
-                      href={`/${s.slug}`}
-                      className="flex items-center gap-2 px-3 py-2 text-sm text-warm-grey hover:text-paper hover:bg-white/5 rounded-lg transition-colors"
-                    >
-                      <span className="text-amber text-xs">—</span>
-                      {s.shortName}
-                    </Link>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="text-sm text-warm-grey hover:text-paper transition-colors duration-200"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Desktop CTA */}
-        <a
-          href={waHref}
-          target="_blank" rel="noopener noreferrer"
-          data-event="whatsapp-click"
-          className="hidden md:flex items-center gap-2 ml-4 px-4 py-2 bg-[#25D366] text-white text-sm font-semibold rounded-md hover:opacity-90 transition-opacity"
-        >
-          <WhatsAppIcon />
-          WhatsApp
-        </a>
-
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden ml-auto p-3 min-h-[44px] min-w-[44px] flex flex-col items-center justify-center text-warm-grey"
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          <span className={cn('block w-5 h-px bg-current transition-all', mobileOpen ? 'rotate-45 translate-y-px' : '-translate-y-1')} />
-          <span className={cn('block w-5 h-px bg-current transition-all', mobileOpen ? 'opacity-0' : 'opacity-100')} />
-          <span className={cn('block w-5 h-px bg-current transition-all', mobileOpen ? '-rotate-45 -translate-y-px' : 'translate-y-1')} />
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-navy-deep/95 backdrop-blur-md border-t border-white/5 overflow-hidden"
-          >
-            <nav className="flex flex-col px-5 py-4 gap-1">
-              <p className="font-mono text-[0.6rem] tracking-widest text-warm-grey/50 uppercase px-3 pt-2 pb-1">Services</p>
-              {SERVICE_LIST.map((s) => (
-                <Link
-                  key={s.slug}
-                  href={`/${s.slug}`}
-                  className="px-3 py-3 text-sm text-warm-grey hover:text-paper transition-colors rounded-lg"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {s.shortName}
-                </Link>
-              ))}
-              <div className="my-2 border-t border-white/5" />
-              {NAV_LINKS.map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  className="px-3 py-3 text-base text-warm-grey hover:text-paper transition-colors"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {l.label}
-                </Link>
-              ))}
-              <a
-                href={waHref}
-                target="_blank" rel="noopener noreferrer"
-                data-event="whatsapp-click"
-                className="flex items-center gap-2 mt-3 px-4 py-3 bg-[#25D366] text-white text-sm font-semibold rounded-md w-full justify-center"
-              >
-                <WhatsAppIcon />
-                Get a Quote on WhatsApp
-              </a>
-            </nav>
-          </motion.div>
+    <>
+      {/* Top bar — logo (left) + WhatsApp CTA (right) */}
+      <header
+        className={cn(
+          'fixed top-0 left-0 right-0 z-40 transition-all duration-300',
+          scrolled ? 'bg-navy/90 backdrop-blur-md py-3 shadow-lg' : 'py-5',
         )}
-      </AnimatePresence>
-    </header>
+      >
+        <div className="max-w-7xl mx-auto px-5 md:px-8 flex items-center justify-between">
+          <Link href="/" className="flex items-center shrink-0" aria-label="Skilltech Power System — home">
+            <Image
+              src="/images/cinematic/logo.png"
+              alt="Skilltech Power System"
+              width={110}
+              height={72}
+              priority
+              className="h-9 w-auto md:h-10"
+            />
+          </Link>
+
+          <a
+            href={waHref}
+            target="_blank" rel="noopener noreferrer"
+            data-event="whatsapp-click"
+            className="flex items-center gap-2 px-4 py-2 bg-[#25D366] text-white text-sm font-semibold rounded-md hover:opacity-90 transition-opacity"
+          >
+            <WhatsAppIcon />
+            <span className="hidden xs:inline">WhatsApp</span>
+          </a>
+        </div>
+      </header>
+
+      {/* Tubelight navigation — floating pill (top on desktop, bottom on mobile) */}
+      <NavBar items={NAV_ITEMS} />
+    </>
   )
 }
 

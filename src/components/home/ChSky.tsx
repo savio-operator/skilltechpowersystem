@@ -1,8 +1,9 @@
 'use client'
-import { useRef } from 'react'
+import { useRef, type RefObject } from 'react'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import { HOME } from '@/content/home'
+import TextCursorProximity from '@/components/ui/text-cursor-proximity'
 
 export default function ChSky() {
   const ref          = useRef<HTMLElement>(null)
@@ -15,16 +16,6 @@ export default function ChSky() {
   const bgY       = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
   const contentOp = useTransform(scrollYProgress, [0, 0.6], [1, 0])
   const contentY  = useTransform(scrollYProgress, [0, 0.6], ['0%', '-8%'])
-
-  const wordVariants = {
-    hidden:  { clipPath: 'inset(0 100% 0 0)', opacity: 0, y: 32 },
-    visible: (i: number) => ({
-      clipPath: 'inset(0 0% 0 0)',
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 + i * 0.14 },
-    }),
-  }
 
   return (
     <section ref={ref} id="ch-sky" className="relative h-screen min-h-[600px] overflow-hidden flex items-center">
@@ -69,21 +60,17 @@ export default function ChSky() {
           </span>
         </motion.div>
 
-        {/* Headline — each word reveals independently */}
-        <h1 className="font-display font-black leading-none tracking-tight mb-6 text-balance"
+        {/* Headline — letters react to cursor proximity */}
+        <h1 className="font-display font-black leading-none tracking-tight mb-6 text-balance text-paper"
             style={{ fontSize: 'clamp(3rem, 9.5vw, 8.5rem)' }}>
-          {HOME.hero.headline.map((word, i) => (
-            <motion.span
-              key={word}
-              className={`block ${i === HOME.hero.headline.length - 1 ? 'text-amber' : 'text-paper'}`}
-              custom={i}
-              variants={shouldReduce ? {} : wordVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              {word}
-            </motion.span>
-          ))}
+          <TextCursorProximity
+            label={HOME.hero.headline.join(' ')}
+            containerRef={ref as RefObject<HTMLDivElement>}
+            radius={140}
+            falloff="gaussian"
+            className=""
+            styles={{ color: { from: '#1A1828', to: '#FFFFFF' } }}
+          />
         </h1>
 
         {/* Subline */}

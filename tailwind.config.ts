@@ -29,6 +29,20 @@ const config: Config = {
         'sky-blue':   '#1A1828',   // dark accent (replaces old sky blue)
         paper:        '#1A1828',   // primary text — dark on gold
         'warm-grey':  '#4D4632',   // muted dark warm-grey (secondary text)
+
+        // shadcn-style semantic tokens (used by the MapLibre map + tubelight
+        // navbar) mapped to this project's gold/dark theme.
+        background:  '#1A1828',
+        foreground:  '#FBF8F0',
+        primary:    { DEFAULT: '#FBB034', foreground: '#1A1828' },
+        secondary:  { DEFAULT: '#2A2740', foreground: '#FBF8F0' },
+        muted:      { DEFAULT: '#2A2740', foreground: '#B8AE95' },
+        accent:     { DEFAULT: '#2A2740', foreground: '#FBF8F0' },
+        popover:    { DEFAULT: '#1A1828', foreground: '#FBF8F0' },
+        card:       { DEFAULT: '#1A1828', foreground: '#FBF8F0' },
+        border:      '#3A3550',
+        input:       '#3A3550',
+        ring:        '#FBB034',
       },
       fontFamily: {
         display: ['var(--font-sora)',           'sans-serif'],

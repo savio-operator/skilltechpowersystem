@@ -5,6 +5,7 @@ import ChMachine    from '@/components/home/ChMachine'
 import ChMath       from '@/components/home/ChMath'
 import ChStorm      from '@/components/home/ChStorm'
 import ChProof      from '@/components/home/ChProof'
+import ChFAQ        from '@/components/home/ChFAQ'
 import ChInvitation from '@/components/home/ChInvitation'
 import LocalBusinessSchema from '@/components/seo/LocalBusinessSchema'
 import { SITE } from '@/content/site'
@@ -30,6 +31,7 @@ export default function HomePage() {
         <ChMath />
         <ChStorm />
         <ChProof />
+        <ChFAQ />
         <ChInvitation />
       </main>
     </>

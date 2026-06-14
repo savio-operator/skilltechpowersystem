@@ -88,6 +88,25 @@
     @apply absolute inset-0;
     background: linear-gradient(135deg, rgba(251,176,52,0.28) 0%, transparent 55%);
   }
+
+  /* Inverted (dark) section — flips the gold canvas to dark with light ink.
+     Add `section-invert` to a section root; the brand text/accent utilities
+     used inside are remapped to light + gold via these scoped overrides.
+     Higher specificity (.section-invert .x) wins over the base utility. */
+  .section-invert {
+    background-color: #1A1828;
+    color: #FBF8F0;
+  }
+  .section-invert .text-paper { color: #FBF8F0; }
+  .section-invert .chapter-eyebrow,
+  .section-invert .text-warm-grey,
+  .section-invert .text-warm-grey\/60,
+  .section-invert .text-warm-grey\/50,
+  .section-invert .text-warm-grey\/40 { color: #B8AE95; }
+  .section-invert .text-amber { color: #FBB034; }
+  .section-invert .bg-amber { background-color: #FBB034; }
+  .section-invert .border-amber\/20 { border-color: rgba(251,176,52,0.20); }
+  .section-invert .bg-amber\/\[0\.07\] { background-color: rgba(251,176,52,0.07); }
 }
 
 @layer utilities {

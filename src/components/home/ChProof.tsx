@@ -22,7 +22,7 @@ export default function ChProof() {
         }
 
   return (
-    <section id="ch-proof" ref={ref} className="py-20 md:py-28 bg-navy-deep">
+    <section id="ch-proof" ref={ref} className="py-20 md:py-28 section-invert">
       <div className="max-w-6xl mx-auto px-6 md:px-10">
 
         <motion.p className="chapter-eyebrow" {...fadeUp(0)}>

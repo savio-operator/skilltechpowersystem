@@ -1,102 +1,46 @@
 'use client'
-import { useRef, useEffect, useState } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 
-const WORDS  = ['cleaner.', 'greener.', 'better.']
-const COLORS = ['#FBF8F0', '#FBF8F0', '#FBB034']
+// Each promise word is now its own full-screen page (no scroll-pinned cycling).
+const PAGES = [
+  { word: 'cleaner.', color: '#000000' },  // black on gold
+  { word: 'greener.', color: '#000000' },  // black on gold
+  { word: 'better.',  color: '#FFFFFF' },  // white on gold
+]
 
 export default function ChPromise() {
   const shouldReduce = useReducedMotion()
-  const [index, setIndex]   = useState(0)
-  const spacerRef = useRef<HTMLDivElement>(null)
-  const stageRef  = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (shouldReduce) return
-    if (!spacerRef.current || !stageRef.current) return
-
-    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
-      ([{ default: gsap }, { ScrollTrigger }]) => {
-        gsap.registerPlugin(ScrollTrigger)
-
-        const ctx = gsap.context(() => {
-          ScrollTrigger.create({
-            trigger: spacerRef.current,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: true,
-            pin: stageRef.current,
-            pinSpacing: false,
-            onUpdate(self) {
-              const p = self.progress
-              if      (p >= 0.66) setIndex(2)
-              else if (p >= 0.33) setIndex(1)
-              else                setIndex(0)
-            },
-          })
-        }, spacerRef)
-
-        return () => ctx.revert()
-      }
-    )
-  }, [shouldReduce])
-
-  if (shouldReduce) {
-    return (
-      <section id="ch-promise" className="py-24 bg-navy-deep flex items-center justify-center min-h-[40vh]">
-        <p className="font-display font-black text-4xl text-paper text-center leading-snug">
-          This is something<br /><span className="text-amber">better.</span>
-        </p>
-      </section>
-    )
-  }
 
   return (
     <section id="ch-promise">
-      <div ref={spacerRef} className="relative h-[300vh]">
+      {PAGES.map((p) => (
         <div
-          ref={stageRef}
-          className="relative flex h-screen items-center justify-center bg-navy-deep overflow-hidden"
+          key={p.word}
+          className="relative flex h-screen items-center justify-center overflow-hidden bg-navy-deep px-6"
         >
-          {/* Subtle ambient glow */}
+          {/* Subtle ambient depth */}
           <div
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(251,176,52,0.04) 0%, transparent 70%)',
+                'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(26,24,40,0.06) 0%, transparent 70%)',
             }}
           />
 
-          <div className="relative z-10 px-6 text-center">
-            <p
-              className="font-display font-black leading-[1.08] select-none"
-              style={{ fontSize: 'clamp(3.5rem, 10vw, 9rem)', letterSpacing: '-0.03em' }}
-              aria-label="This is something cleaner, greener, better."
-            >
-              <span className="text-warm-grey block">This is something</span>
-
-              <span
-                className="relative block overflow-hidden"
-                style={{ height: 'clamp(4rem, 11.5vw, 10.5rem)' }}
-              >
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={index}
-                    className="absolute inset-x-0 flex justify-center"
-                    style={{ color: COLORS[index] }}
-                    initial={{ y: '100%', opacity: 0 }}
-                    animate={{ y: '0%',   opacity: 1 }}
-                    exit={{    y: '-100%', opacity: 0 }}
-                    transition={{ type: 'spring', stiffness: 60, damping: 18 }}
-                  >
-                    {WORDS[index]}
-                  </motion.span>
-                </AnimatePresence>
-              </span>
-            </p>
-          </div>
+          <motion.p
+            className="relative z-10 select-none text-center font-display font-black leading-[1.08]"
+            style={{ fontSize: 'clamp(3.5rem, 10vw, 9rem)', letterSpacing: '-0.03em' }}
+            aria-label={`This is something ${p.word}`}
+            initial={shouldReduce ? false : { opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="block text-[#1A1828]">This is something</span>
+            <span className="block" style={{ color: p.color }}>{p.word}</span>
+          </motion.p>
         </div>
-      </div>
+      ))}
     </section>
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/cn'
 import { SITE } from '@/content/site'
@@ -39,9 +40,15 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-5 md:px-8 flex items-center gap-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0">
-          <ShieldLogo />
-          <span className="font-display font-black text-sm tracking-[0.12em] text-paper">SKILLTECH</span>
+        <Link href="/" className="flex items-center shrink-0" aria-label="Skilltech Power System — home">
+          <Image
+            src="/images/cinematic/logo.png"
+            alt="Skilltech Power System"
+            width={110}
+            height={72}
+            priority
+            className="h-9 w-auto md:h-10"
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -158,19 +165,6 @@ export default function Header() {
         )}
       </AnimatePresence>
     </header>
-  )
-}
-
-function ShieldLogo() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-      <path d="M18 2L4 8v10c0 8.5 6 16.5 14 19 8-2.5 14-10.5 14-19V8L18 2z" fill="#1A1105" stroke="#FBB034" strokeWidth="1.5"/>
-      <circle cx="18" cy="17" r="8" stroke="#D4920A" strokeWidth="1" fill="none"/>
-      <line x1="10" y1="17" x2="26" y2="17" stroke="#D4920A" strokeWidth="0.8" opacity="0.6"/>
-      <line x1="18" y1="9"  x2="18" y2="25" stroke="#D4920A" strokeWidth="0.8" opacity="0.6"/>
-      <ellipse cx="18" cy="17" rx="4" ry="8" stroke="#D4920A" strokeWidth="0.8" fill="none" opacity="0.5"/>
-      <path d="M16 6l-1.5 5.5h3L15.5 18l4.5-1-2 8" stroke="#FBB034" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
-    </svg>
   )
 }
 

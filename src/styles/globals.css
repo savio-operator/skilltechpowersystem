@@ -65,18 +65,18 @@
     background:
       radial-gradient(ellipse 80% 60% at 60% 30%, rgba(26,24,40,0.06) 0%, transparent 60%),
       radial-gradient(ellipse 60% 80% at 20% 70%, rgba(26,24,40,0.04) 0%, transparent 70%),
-      linear-gradient(160deg, #ECC15E 0%, #E8B94B 55%, #DFAE3C 100%);
+      linear-gradient(160deg, #FDC558 0%, #FBB034 55%, #F0A81E 100%);
   }
   .bg-cinematic-storm {
     background:
       radial-gradient(ellipse 70% 70% at 50% 20%, rgba(26,24,40,0.10) 0%, transparent 60%),
-      linear-gradient(180deg, #E8B94B 0%, #DFAE3C 50%, #D6A636 100%);
+      linear-gradient(180deg, #FBB034 0%, #F0A81E 50%, #E59E12 100%);
   }
   .bg-cinematic-dusk {
     background:
       radial-gradient(ellipse 80% 50% at 50% 80%, rgba(26,24,40,0.10) 0%, transparent 60%),
       radial-gradient(ellipse 60% 80% at 80% 20%, rgba(26,24,40,0.05) 0%, transparent 60%),
-      linear-gradient(180deg, #ECC15E 0%, #E8B94B 60%, #DFAE3C 100%);
+      linear-gradient(180deg, #FDC558 0%, #FBB034 60%, #F0A81E 100%);
   }
 
   /* Solar panel cell (used by 3D fallback) — dark cell with gold sheen */
@@ -86,7 +86,7 @@
   .panel-cell::after {
     content: '';
     @apply absolute inset-0;
-    background: linear-gradient(135deg, rgba(232,185,75,0.28) 0%, transparent 55%);
+    background: linear-gradient(135deg, rgba(251,176,52,0.28) 0%, transparent 55%);
   }
 }
 

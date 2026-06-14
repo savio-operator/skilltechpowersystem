@@ -40,12 +40,14 @@ export default function ChInvitation() {
 
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 md:px-10 pt-24 pb-[max(6rem,calc(env(safe-area-inset-bottom,0px)+6rem))] flex flex-col items-center text-center gap-8">
         {/* Logo */}
-        <motion.div className="flex items-center gap-3" {...fadeUp(0)}>
-          <ShieldLogo size={44} />
-          <div className="flex flex-col items-start">
-            <span className="font-display font-black text-sm tracking-[0.14em] text-paper">SKILLTECH</span>
-            <span className="font-mono text-[0.55rem] tracking-[0.18em] text-warm-grey">POWER SYSTEM</span>
-          </div>
+        <motion.div className="flex items-center" {...fadeUp(0)}>
+          <Image
+            src="/images/cinematic/logo.png"
+            alt="Skilltech Power System"
+            width={170}
+            height={111}
+            className="h-14 w-auto"
+          />
         </motion.div>
 
         {/* Promise */}
@@ -116,19 +118,6 @@ export default function ChInvitation() {
         </div>
       </div>
     </footer>
-  )
-}
-
-function ShieldLogo({ size = 36 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 36 36" fill="none" aria-hidden="true">
-      <path d="M18 2L4 8v10c0 8.5 6 16.5 14 19 8-2.5 14-10.5 14-19V8L18 2z" fill="#1A1105" stroke="#F5A623" strokeWidth="1.5"/>
-      <circle cx="18" cy="17" r="8" stroke="#D4920A" strokeWidth="1" fill="none"/>
-      <line x1="10" y1="17" x2="26" y2="17" stroke="#D4920A" strokeWidth="0.8" opacity="0.6"/>
-      <line x1="18" y1="9"  x2="18" y2="25" stroke="#D4920A" strokeWidth="0.8" opacity="0.6"/>
-      <ellipse cx="18" cy="17" rx="4" ry="8" stroke="#D4920A" strokeWidth="0.8" fill="none" opacity="0.5"/>
-      <path d="M16 6l-1.5 5.5h3L15.5 18l4.5-1-2 8" stroke="#F5A623" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
-    </svg>
   )
 }
 

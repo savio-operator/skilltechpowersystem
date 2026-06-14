@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       // ── Gold brand palette (two-tone, 50/30/20) ──────────────────────────
-      // 50% #E8B94B gold (dominant canvas) · 30% #1A1828 dark (ink) ·
+      // 50% #FBB034 gold (dominant canvas) · 30% #1A1828 dark (ink) ·
       // 20% #1A1828 dark (accent — the high-contrast pop against gold).
       // Token NAMES are kept stable so existing components don't break; only the
       // VALUES change. Roles on the gold canvas:
@@ -22,8 +22,8 @@ const config: Config = {
         amber:       '#1A1828',    // accent — dark, high-contrast on gold
         navy: {
           DEFAULT: '#1A1828',      // brand dark — ink, dark elements
-          deep:    '#E8B94B',      // page background (gold canvas)
-          mid:     '#E0AE3C',      // deeper-gold section background (hierarchy)
+          deep:    '#FBB034',      // page background (gold canvas)
+          mid:     '#F0A81E',      // deeper-gold section background (hierarchy)
         },
         'blue-word':  '#1A1828',   // dark accent
         'sky-blue':   '#1A1828',   // dark accent (replaces old sky blue)

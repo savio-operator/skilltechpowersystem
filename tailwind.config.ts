@@ -8,25 +8,27 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // ── Light brand palette ──────────────────────────────────────────────
-      // 50% #FFFFFF (canvas) · 30% #1A2B43 navy (ink) · 20% #F7B538 gold (accent)
+      // ── Gold brand palette (two-tone, 50/30/20) ──────────────────────────
+      // 50% #E8B94B gold (dominant canvas) · 30% #1A1828 dark (ink) ·
+      // 20% #1A1828 dark (accent — the high-contrast pop against gold).
       // Token NAMES are kept stable so existing components don't break; only the
-      // VALUES are flipped from the old dark theme to the new light theme:
-      //   bg-navy-deep  → white page background
-      //   text-paper    → navy primary text (readable on white)
-      //   text-warm-grey→ cool muted grey
-      //   text-amber    → gold accent
+      // VALUES change. Roles on the gold canvas:
+      //   bg-navy-deep  → gold page background
+      //   bg-navy-mid   → deeper-gold alternating sections (hierarchy)
+      //   text-paper    → dark ink (readable on gold)
+      //   text-warm-grey→ muted dark (secondary text)
+      //   text-amber    → dark accent (CTAs, borders, numbers pop on gold)
       colors: {
-        amber:       '#F7B538',    // gold accent (CTAs, highlights, numbers)
+        amber:       '#1A1828',    // accent — dark, high-contrast on gold
         navy: {
-          DEFAULT: '#1A2B43',      // brand navy — ink, dark elements
-          deep:    '#FFFFFF',      // page background (flipped to white)
-          mid:     '#F4F6F9',      // light section background
+          DEFAULT: '#1A1828',      // brand dark — ink, dark elements
+          deep:    '#E8B94B',      // page background (gold canvas)
+          mid:     '#E0AE3C',      // deeper-gold section background (hierarchy)
         },
-        'blue-word':  '#1A2B43',   // navy accent
-        'sky-blue':   '#F7B538',   // gold accent (replaces old sky blue)
-        paper:        '#1A2B43',   // primary text — navy on white
-        'warm-grey':  '#5C6B7F',   // muted cool grey
+        'blue-word':  '#1A1828',   // dark accent
+        'sky-blue':   '#1A1828',   // dark accent (replaces old sky blue)
+        paper:        '#1A1828',   // primary text — dark on gold
+        'warm-grey':  '#4D4632',   // muted dark warm-grey (secondary text)
       },
       fontFamily: {
         display: ['var(--font-sora)',           'sans-serif'],

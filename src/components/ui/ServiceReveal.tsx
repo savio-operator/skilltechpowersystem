@@ -24,8 +24,8 @@ export default function ServiceReveal({
   as = 'div',
   className,
 }: Props) {
-  const ref          = useRef<any>(null)
-  const isInView     = useInView(ref, { once: true, amount: 0.3 })
+  const ref = useRef<any>(null)
+  const isInView = useInView(ref, { once: true, amount: 0.3 })
   const shouldReduce = useReducedMotion()
 
   if (shouldReduce) {

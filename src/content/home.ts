@@ -7,7 +7,7 @@ export const HOME = {
     badge:    'EST. 2015',
     headline: ['The power', 'comes from', 'above.'],
     sub:      'Complete power-systems company — solar, lightning protection, earthing, battery backup & AMC',
-    image:    '/images/hero-golden-hour.jpg',  // TODO: confirm-with-client — swap for real golden-hour roof photo
+    image:    '/images/cinematic/hero-rooftop-desktop.png',  // TODO: confirm-with-client — swap for real golden-hour roof photo
     imageAlt: 'Rooftop solar installation at golden hour, Ernakulam Kerala',
   },
 
@@ -66,7 +66,7 @@ export const HOME = {
     body:      "Every monsoon, unprotected systems take direct hits. Skilltech designs for the weather you actually live in — ESE lightning arresters, IS 3043-compliant earthing, DC/AC surge protection. Because a ₹5 lakh system deserves more than hope.",
     features:  ['ESE Lightning Arrester', 'DC + AC Surge Protection', 'IS 3043-Compliant Earthing'],
     cta:       'April–June is peak lightning season — get protected before the monsoon.',
-    image:     '/images/storm-kerala.jpg',   // TODO: confirm-with-client — real monsoon/storm photo
+    image:     '/images/cinematic/storm-lightning-desktop.png',   // TODO: confirm-with-client — real monsoon/storm photo
     imageAlt:  'Kerala monsoon storm clouds',
   },
 
@@ -84,7 +84,7 @@ export const HOME = {
 
   footer: {
     promise: 'Sun above. Savings below.',
-    image:    '/images/footer-dusk.jpg',   // TODO: confirm-with-client — real dusk/golden-hour photo
+    image:    '/images/cinematic/invitation-dusk-home.png',   // TODO: confirm-with-client — real dusk/golden-hour photo
     imageAlt: 'Kerala rooftop at dusk with solar panels',
   },
 } as const

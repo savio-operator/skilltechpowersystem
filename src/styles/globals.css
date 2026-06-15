@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 @layer base {
-  *, *::before, *::after { box-sizing: border-box; }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
   html {
     font-size: 16px;
@@ -25,32 +30,84 @@
   /* Hide native cursor on desktop (the custom cursor replaces it) — but keep a
      real cursor on form fields so the text caret / affordances stay usable. */
   @media (pointer: fine) {
-    body, a, button, [role="button"] { cursor: none; }
-    input, textarea          { cursor: text; }
-    select, option, label    { cursor: pointer; }
+
+    body,
+    a,
+    button,
+    [role="button"] {
+      cursor: none;
+    }
+
+    input,
+    textarea {
+      cursor: text;
+    }
+
+    select,
+    option,
+    label {
+      cursor: pointer;
+    }
   }
 
   /* Lenis smooth scroll */
-  html.lenis, html.lenis body { height: auto; }
-  .lenis.lenis-smooth { scroll-behavior: auto !important; }
-  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-stopped { overflow: hidden; }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
 
   /* Typography */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-sora), sans-serif;
     font-weight: 800;
     line-height: 1.05;
     letter-spacing: -0.025em;
   }
 
-  a { color: inherit; text-decoration: none; }
-  img, video { display: block; max-width: 100%; }
-  button { cursor: pointer; font: inherit; border: none; background: none; }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  button {
+    cursor: pointer;
+    font: inherit;
+    border: none;
+    background: none;
+  }
 
   /* Scrollbar */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: theme('colors.navy.deep'); }
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: theme('colors.navy.deep');
+  }
+
   ::-webkit-scrollbar-thumb {
     background: theme('colors.sky-blue');
     border-radius: 2px;
@@ -58,12 +115,22 @@
 }
 
 @layer components {
-  .font-display { font-family: var(--font-sora), sans-serif; }
-  .font-mono    { font-family: var(--font-jetbrains-mono), monospace; }
+  .font-display {
+    font-family: var(--font-sora), sans-serif;
+  }
+
+  .font-mono {
+    font-family: var(--font-jetbrains-mono), monospace;
+  }
 
   /* Clip-path text reveal */
-  .clip-reveal      { clip-path: inset(0 100% 0 0); }
-  .clip-reveal-done { clip-path: inset(0 0% 0 0); }
+  .clip-reveal {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .clip-reveal-done {
+    clip-path: inset(0 0% 0 0);
+  }
 
   /* Chapter label */
   .chapter-eyebrow {
@@ -73,19 +140,21 @@
   /* Cinematic section bgs — gold canvas with dark accents */
   .bg-cinematic-sky {
     background:
-      radial-gradient(ellipse 80% 60% at 60% 30%, rgba(0,0,0,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 80% at 20% 70%, rgba(0,0,0,0.04) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 60% at 60% 30%, rgba(0, 0, 0, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 20% 70%, rgba(0, 0, 0, 0.04) 0%, transparent 70%),
       linear-gradient(160deg, #FDC558 0%, #FBB034 55%, #F0A81E 100%);
   }
+
   .bg-cinematic-storm {
     background:
-      radial-gradient(ellipse 70% 70% at 50% 20%, rgba(0,0,0,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 70% at 50% 20%, rgba(0, 0, 0, 0.10) 0%, transparent 60%),
       linear-gradient(180deg, #FBB034 0%, #F0A81E 50%, #E59E12 100%);
   }
+
   .bg-cinematic-dusk {
     background:
-      radial-gradient(ellipse 80% 50% at 50% 80%, rgba(0,0,0,0.10) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(0,0,0,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 50% at 50% 80%, rgba(0, 0, 0, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(0, 0, 0, 0.05) 0%, transparent 60%),
       linear-gradient(180deg, #FDC558 0%, #FBB034 60%, #F0A81E 100%);
   }
 
@@ -93,10 +162,11 @@
   .panel-cell {
     @apply bg-black rounded-sm relative overflow-hidden;
   }
+
   .panel-cell::after {
     content: '';
     @apply absolute inset-0;
-    background: linear-gradient(135deg, rgba(251,176,52,0.28) 0%, transparent 55%);
+    background: linear-gradient(135deg, rgba(251, 176, 52, 0.28) 0%, transparent 55%);
   }
 
   /* Inverted (dark) section — flips the gold canvas to dark with light ink.
@@ -107,27 +177,55 @@
     background-color: #000000;
     color: #FBF8F0;
   }
-  .section-invert .text-paper { color: #FBF8F0; }
+
+  .section-invert .text-paper {
+    color: #FBF8F0;
+  }
+
   .section-invert .chapter-eyebrow,
   .section-invert .text-warm-grey,
   .section-invert .text-warm-grey\/60,
   .section-invert .text-warm-grey\/50,
-  .section-invert .text-warm-grey\/40 { color: #B8AE95; }
-  .section-invert .text-amber { color: #FBB034; }
-  .section-invert .bg-amber { background-color: #FBB034; }
-  .section-invert .border-amber\/20 { border-color: rgba(251,176,52,0.20); }
-  .section-invert .bg-amber\/\[0\.07\] { background-color: rgba(251,176,52,0.07); }
+  .section-invert .text-warm-grey\/40 {
+    color: #B8AE95;
+  }
+
+  .section-invert .text-amber {
+    color: #FBB034;
+  }
+
+  .section-invert .bg-amber {
+    background-color: #FBB034;
+  }
+
+  .section-invert .border-amber\/20 {
+    border-color: rgba(251, 176, 52, 0.20);
+  }
+
+  .section-invert .bg-amber\/\[0\.07\] {
+    background-color: rgba(251, 176, 52, 0.07);
+  }
 }
 
 @layer utilities {
-  .text-balance { text-wrap: balance; }
+  .text-balance {
+    text-wrap: balance;
+  }
 
   /* iOS safe area helpers */
-  .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
-  .pt-safe { padding-top:    env(safe-area-inset-top, 0px); }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+
+    *,
+    *::before,
+    *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
@@ -168,9 +266,8 @@
 }
 
 .cpu-line-5 {
-  offset-path: path(
-    "M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -35"
-  );
+  offset-path: path("M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -35"
+    );
   animation-delay: 9s;
   animation-duration: 4s;
 }
@@ -182,9 +279,8 @@
 }
 
 .cpu-line-7 {
-  offset-path: path(
-    "M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 28"
-  );
+  offset-path: path("M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 28"
+    );
   animation-delay: 4s;
   animation-duration: 4s;
 }
@@ -196,6 +292,11 @@
 }
 
 @keyframes animation-path {
-  0%   { offset-distance: 0%; }
-  100% { offset-distance: 100%; }
+  0% {
+    offset-distance: 0%;
+  }
+
+  100% {
+    offset-distance: 100%;
+  }
 }

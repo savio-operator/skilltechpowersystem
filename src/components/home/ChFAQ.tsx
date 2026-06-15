@@ -9,7 +9,7 @@ const SPIRAL = {
   points:     520,
   dotRadius:  1.6,
   duration:   3.2,
-  color:      '#FFFFFF',  // gold dots on dark
+  color:      '#1A2B43',  // navy dots on white (inverted)
   opacityMin: 0.18,
   opacityMax: 0.55,
   sizeMin:    0.6,
@@ -87,10 +87,10 @@ export default function ChFAQ() {
     : FAQS
 
   return (
-    <section id="ch-faq" className="relative z-10 overflow-hidden section-invert py-20 md:py-28">
+    <section id="ch-faq" className="relative z-10 overflow-hidden bg-white py-20 md:py-28">
       {/* Background spiral */}
       <div
-        className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-40 [mask-image:radial-gradient(circle_at_center,rgba(0,0,0,1),rgba(0,0,0,0.15)_55%,transparent_75%)]"
+        className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-40 [mask-image:radial-gradient(circle_at_center,rgba(26,43,67,1),rgba(26,43,67,0.15)_55%,transparent_75%)]"
         aria-hidden="true"
       >
         <div ref={spiralRef} />
@@ -98,7 +98,7 @@ export default function ChFAQ() {
 
       <div className="relative z-10 mx-auto max-w-5xl px-6 md:px-10">
         {/* Header */}
-        <header className="mb-10 flex flex-col gap-6 border-b border-white/15 pb-6 sm:flex-row sm:items-end sm:justify-between">
+        <header className="mb-10 flex flex-col gap-6 border-b border-[#1A2B43]/15 pb-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="chapter-eyebrow">CH.07 / THE QUESTIONS</p>
             <h2
@@ -117,7 +117,7 @@ export default function ChFAQ() {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search questions…"
             aria-label="Search FAQs"
-            className="h-11 w-full rounded-xl border border-white/20 bg-white/5 px-4 text-sm text-paper outline-none transition placeholder:text-warm-grey focus:border-[#FFFFFF] sm:w-64"
+            className="h-11 w-full rounded-xl border border-[#1A2B43]/20 bg-[#1A2B43]/5 px-4 text-sm text-paper outline-none transition placeholder:text-warm-grey focus:border-[#1A2B43] sm:w-64"
           />
         </header>
 
@@ -141,7 +141,7 @@ export default function ChFAQ() {
 function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
   const [open, setOpen] = useState(false)
   return (
-    <div className="group relative self-start overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#FFFFFF]/60">
+    <div className="group relative self-start overflow-hidden rounded-2xl border border-[#1A2B43]/10 bg-[#1A2B43]/[0.03] p-5 transition hover:border-[#1A2B43]/60">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -152,7 +152,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
           <span className="font-mono text-xs text-amber">{String(index).padStart(2, '0')}</span>
           <h3 className="font-display text-base font-semibold leading-tight text-paper md:text-lg">{q}</h3>
         </div>
-        <span className="ml-4 shrink-0 text-lg text-warm-grey transition group-hover:text-[#FFFFFF]">
+        <span className="ml-4 shrink-0 text-lg text-warm-grey transition group-hover:text-[#1A2B43]">
           {open ? '–' : '+'}
         </span>
       </button>

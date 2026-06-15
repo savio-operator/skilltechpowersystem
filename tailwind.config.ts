@@ -19,27 +19,30 @@ const config: Config = {
       //   text-warm-grey→ muted dark (secondary text)
       //   text-amber    → dark accent (CTAs, borders, numbers pop on gold)
       colors: {
-        amber:       '#000000',    // accent — pure black, high-contrast on gold
+        // Brand dark is navy now — override Tailwind's default `black` so every
+        // bg-black / text-black / *-black/NN utility resolves to navy #1A2B43.
+        black:       '#1A2B43',
+        amber:       '#1A2B43',    // accent — navy ink, high-contrast on white
         navy: {
-          DEFAULT: '#000000',      // brand dark — pure black ink / dark elements
+          DEFAULT: '#1A2B43',      // brand dark — pure black ink / dark elements
           deep:    '#FFFFFF',      // page background (gold canvas)
           mid:     '#FFFFFF',      // deeper-gold section background (hierarchy)
         },
-        'blue-word':  '#000000',   // dark accent
-        'sky-blue':   '#000000',   // dark accent (replaces old sky blue)
-        paper:        '#000000',   // primary text — pure black on gold
+        'blue-word':  '#1A2B43',   // dark accent
+        'sky-blue':   '#1A2B43',   // dark accent (replaces old sky blue)
+        paper:        '#1A2B43',   // primary text — pure black on gold
         'warm-grey':  '#4D4632',   // muted dark warm-grey (secondary text)
 
         // shadcn-style semantic tokens (used by the MapLibre map + tubelight
         // navbar) mapped to this project's gold / pure-black theme.
-        background:  '#000000',
+        background:  '#1A2B43',
         foreground:  '#FBF8F0',
-        primary:    { DEFAULT: '#FFFFFF', foreground: '#000000' },
-        secondary:  { DEFAULT: '#0A0A0A', foreground: '#FBF8F0' },
-        muted:      { DEFAULT: '#0A0A0A', foreground: '#B8AE95' },
-        accent:     { DEFAULT: '#0A0A0A', foreground: '#FBF8F0' },
-        popover:    { DEFAULT: '#000000', foreground: '#FBF8F0' },
-        card:       { DEFAULT: '#000000', foreground: '#FBF8F0' },
+        primary:    { DEFAULT: '#FFFFFF', foreground: '#1A2B43' },
+        secondary:  { DEFAULT: '#1A2B43', foreground: '#FBF8F0' },
+        muted:      { DEFAULT: '#1A2B43', foreground: '#B8AE95' },
+        accent:     { DEFAULT: '#1A2B43', foreground: '#FBF8F0' },
+        popover:    { DEFAULT: '#1A2B43', foreground: '#FBF8F0' },
+        card:       { DEFAULT: '#1A2B43', foreground: '#FBF8F0' },
         border:      '#262626',
         input:       '#262626',
         ring:        '#FFFFFF',

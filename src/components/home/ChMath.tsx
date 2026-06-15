@@ -23,6 +23,7 @@ export default function ChMath() {
       id="ch-math"
       ref={ref}
       className="relative z-10 py-20 md:py-28 section-invert"
+      style={{ backgroundColor: '#1A1828' }}
     >
       <div className="max-w-3xl mx-auto px-6 md:px-10">
         <motion.p className="chapter-eyebrow" {...fadeUp(0)}>

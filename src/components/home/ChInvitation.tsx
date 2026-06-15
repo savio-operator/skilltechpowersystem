@@ -28,7 +28,7 @@ export default function ChInvitation() {
         }
 
   return (
-    <footer id="ch-invitation" ref={ref} className="relative z-10 min-h-screen flex items-center overflow-hidden">
+    <footer id="ch-invitation" ref={ref} className="section-invert relative z-10 min-h-screen flex items-center overflow-hidden">
       {/* Parallax background */}
       <motion.div
         className="absolute inset-0"

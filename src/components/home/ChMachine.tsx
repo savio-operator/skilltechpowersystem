@@ -66,10 +66,11 @@ export default function ChMachine() {
           // Decorative, scroll-pinned stage with no interactive elements. It can
           // overlap the following section while pinned (pinSpacing:false), so it
           // must never capture clicks meant for the cards below it.
-          className="pointer-events-none h-screen overflow-hidden flex flex-col items-center justify-center bg-navy-deep"
+          // Inverted palette: navy stage with light ink (section-invert).
+          className="section-invert pointer-events-none h-screen overflow-hidden flex flex-col items-center justify-center"
           style={{
             background:
-              'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(0,0,0,0.06) 0%, transparent 70%), #FFFFFF',
+              'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,255,255,0.06) 0%, transparent 70%), #1A2B43',
           }}
         >
           {/* Chapter label */}

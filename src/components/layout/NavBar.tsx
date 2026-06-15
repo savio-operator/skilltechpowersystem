@@ -23,16 +23,16 @@ export function NavBar({ items, className }: NavBarProps) {
   const [activeUrl, setActiveUrl] = useState(items[0].url)
 
   useEffect(() => {
-    // On a sub-page, highlight the nav item whose route matches.
-    const pageMatch = items.find((it) => it.url === pathname)
-    if (pageMatch) {
-      setActiveUrl(pageMatch.url)
+    // On a sub-page, highlight the nav item whose route matches. (Skip this on
+    // the home page, where "/" would match Home and short-circuit scroll-spy.)
+    if (pathname !== "/") {
+      const pageMatch = items.find((it) => it.url === pathname)
+      if (pageMatch) setActiveUrl(pageMatch.url)
       return
     }
+
     // On the home page, scroll-spy across the in-page section anchors so the
     // active item follows your scroll position.
-    if (pathname !== "/") return
-
     const anchored = items
       .filter((it) => it.url.startsWith("/#"))
       .map((it) => ({ url: it.url, id: it.url.slice(2) }))

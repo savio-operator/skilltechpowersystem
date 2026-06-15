@@ -18,15 +18,15 @@ export default function LocationMapInner() {
         <MapMarker key={loc.name} longitude={loc.lng} latitude={loc.lat}>
           <MarkerContent>
             <span className="relative flex h-3 w-3">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FBB034]/50" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FFFFFF]/50" />
               <span
                 className={`relative inline-flex h-3 w-3 rounded-full border ${
-                  loc.hq ? 'border-white bg-[#FBB034]' : 'border-[#FBB034]/80 bg-[#FBB034]/85'
+                  loc.hq ? 'border-white bg-[#FFFFFF]' : 'border-[#FFFFFF]/80 bg-[#FFFFFF]/85'
                 }`}
               />
             </span>
           </MarkerContent>
-          <MarkerLabel className="!text-[#FBB034] text-[11px] font-semibold">
+          <MarkerLabel className="!text-[#FFFFFF] text-[11px] font-semibold">
             {loc.name}
           </MarkerLabel>
         </MapMarker>

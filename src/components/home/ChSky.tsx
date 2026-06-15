@@ -85,7 +85,7 @@ export default function ChSky() {
               radius={140}
               falloff="gaussian"
               className=""
-              styles={{ color: { from: '#000000', to: '#FF1E1E' } }}
+              styles={{ color: { from: '#000000', to: '#F7B538' } }}
             />
           )}
         </h1>

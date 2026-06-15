@@ -11,7 +11,7 @@ export default function EarthingAnim() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 55% 40% at 50% 50%, rgba(251,176,52,0.06) 0%, transparent 70%)',
+            'radial-gradient(ellipse 55% 40% at 50% 50%, rgba(255,255,255,0.06) 0%, transparent 70%)',
         }}
       />
 
@@ -118,9 +118,9 @@ export default function EarthingAnim() {
 
         {/* ── Stats overlay ── */}
         <g>
-          <rect x="2" y="2" width="50" height="20" rx="2" fill="#1A1105" stroke="#FBB034" strokeWidth="0.3" opacity="0.9"/>
+          <rect x="2" y="2" width="50" height="20" rx="2" fill="#1A1105" stroke="#FFFFFF" strokeWidth="0.3" opacity="0.9"/>
           <text x="6" y="10" fill="#9A8870" fontSize="4" fontFamily="monospace">RESISTANCE</text>
-          <text x="6" y="18" fill="#FBB034" fontSize="7" fontFamily="monospace" fontWeight="bold">{'< 1 Ω'}</text>
+          <text x="6" y="18" fill="#FFFFFF" fontSize="7" fontFamily="monospace" fontWeight="bold">{'< 1 Ω'}</text>
         </g>
 
         {/* ── Defs ── */}
@@ -151,8 +151,8 @@ export default function EarthingAnim() {
           </mask>
 
           <radialGradient id="eth-grad-amber" fx="1">
-            <stop offset="0%"   stopColor="#FBB034"/>
-            <stop offset="50%"  stopColor="#FBB034" stopOpacity="0.8"/>
+            <stop offset="0%"   stopColor="#FFFFFF"/>
+            <stop offset="50%"  stopColor="#FFFFFF" stopOpacity="0.8"/>
             <stop offset="100%" stopColor="transparent"/>
           </radialGradient>
           <radialGradient id="eth-grad-gold" fx="1">
@@ -162,7 +162,7 @@ export default function EarthingAnim() {
           </radialGradient>
           <radialGradient id="eth-grad-white" fx="1">
             <stop offset="0%"   stopColor="white"/>
-            <stop offset="50%"  stopColor="rgba(251,176,52,0.6)"/>
+            <stop offset="50%"  stopColor="rgba(255,255,255,0.6)"/>
             <stop offset="100%" stopColor="transparent"/>
           </radialGradient>
           <radialGradient id="eth-grad-copper" fx="1">
@@ -176,7 +176,7 @@ export default function EarthingAnim() {
               <animate attributeName="offset" values="-2;-1;0" dur="4s" repeatCount="indefinite"
                 calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
             </stop>
-            <stop offset="25%" stopColor="#FBB034">
+            <stop offset="25%" stopColor="#FFFFFF">
               <animate attributeName="offset" values="-1;0;1" dur="4s" repeatCount="indefinite"
                 calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
             </stop>
@@ -187,21 +187,21 @@ export default function EarthingAnim() {
           </linearGradient>
 
           <linearGradient id="eth-bolt-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="#FBB034"/>
+            <stop offset="0%"   stopColor="#FFFFFF"/>
             <stop offset="100%" stopColor="#D4920A"/>
           </linearGradient>
 
           <linearGradient id="eth-pin-gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"  stopColor="#FBB034" stopOpacity="0.6"/>
+            <stop offset="0%"  stopColor="#FFFFFF" stopOpacity="0.6"/>
             <stop offset="60%" stopColor="#1A1105"/>
           </linearGradient>
 
           <filter id="eth-shadow" x="-50%" y="-50%" width="200%" height="200%">
-            <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#FBB034" floodOpacity="0.15"/>
+            <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#FFFFFF" floodOpacity="0.15"/>
           </filter>
 
           <marker id="eth-circle-marker" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="18" markerHeight="18">
-            <circle cx="5" cy="5" r="2" fill="#1A1105" stroke="#FBB034" strokeWidth="0.5">
+            <circle cx="5" cy="5" r="2" fill="#1A1105" stroke="#FFFFFF" strokeWidth="0.5">
               <animate attributeName="r" values="0;3;2" dur="0.5s"/>
             </circle>
           </marker>

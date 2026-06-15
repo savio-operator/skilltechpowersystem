@@ -32,7 +32,7 @@ export default function SolarAnim() {
       <div
         className="pointer-events-none absolute top-6 right-10 w-28 h-28 rounded-full z-0"
         style={{
-          background: 'radial-gradient(circle, rgba(251,176,52,0.3) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)',
           animation: 'pulseGlow 3s ease-in-out infinite',
         }}
       />

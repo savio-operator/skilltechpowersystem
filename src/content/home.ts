@@ -14,7 +14,7 @@ export const HOME = {
   promise: [
     { word: 'Greener.', bg: '#0D0A01', color: '#FBF8F0' },
     { word: 'Cleaner.', bg: '#120D02', color: '#FBF8F0' },
-    { word: 'Better.',  bg: '#1A1105', color: '#FBB034' },
+    { word: 'Better.',  bg: '#1A1105', color: '#FFFFFF' },
   ],
 
   machine: {

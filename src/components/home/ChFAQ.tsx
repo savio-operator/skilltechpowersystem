@@ -9,7 +9,7 @@ const SPIRAL = {
   points:     520,
   dotRadius:  1.6,
   duration:   3.2,
-  color:      '#FBB034',  // gold dots on dark
+  color:      '#FFFFFF',  // gold dots on dark
   opacityMin: 0.18,
   opacityMax: 0.55,
   sizeMin:    0.6,
@@ -117,7 +117,7 @@ export default function ChFAQ() {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search questions…"
             aria-label="Search FAQs"
-            className="h-11 w-full rounded-xl border border-white/20 bg-white/5 px-4 text-sm text-paper outline-none transition placeholder:text-warm-grey focus:border-[#FBB034] sm:w-64"
+            className="h-11 w-full rounded-xl border border-white/20 bg-white/5 px-4 text-sm text-paper outline-none transition placeholder:text-warm-grey focus:border-[#FFFFFF] sm:w-64"
           />
         </header>
 
@@ -141,7 +141,7 @@ export default function ChFAQ() {
 function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
   const [open, setOpen] = useState(false)
   return (
-    <div className="group relative self-start overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#FBB034]/60">
+    <div className="group relative self-start overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#FFFFFF]/60">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -152,7 +152,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
           <span className="font-mono text-xs text-amber">{String(index).padStart(2, '0')}</span>
           <h3 className="font-display text-base font-semibold leading-tight text-paper md:text-lg">{q}</h3>
         </div>
-        <span className="ml-4 shrink-0 text-lg text-warm-grey transition group-hover:text-[#FBB034]">
+        <span className="ml-4 shrink-0 text-lg text-warm-grey transition group-hover:text-[#FFFFFF]">
           {open ? '–' : '+'}
         </span>
       </button>

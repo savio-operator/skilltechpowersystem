@@ -12,7 +12,7 @@ export default function EVAnim() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 55% 40% at 50% 50%, rgba(251,176,52,0.07) 0%, transparent 70%)',
+            'radial-gradient(ellipse 55% 40% at 50% 50%, rgba(255,255,255,0.07) 0%, transparent 70%)',
         }}
       />
 
@@ -124,9 +124,9 @@ export default function EVAnim() {
 
         {/* ── Output stats overlay ── */}
         <g>
-          <rect x="2" y="2" width="42" height="20" rx="2" fill="#1A1105" stroke="#FBB034" strokeWidth="0.3" opacity="0.9"/>
+          <rect x="2" y="2" width="42" height="20" rx="2" fill="#1A1105" stroke="#FFFFFF" strokeWidth="0.3" opacity="0.9"/>
           <text x="6" y="10"  fill="#9A8870" fontSize="4" fontFamily="monospace">OUTPUT</text>
-          <text x="6" y="18" fill="#FBB034" fontSize="7" fontFamily="monospace" fontWeight="bold">47 kW</text>
+          <text x="6" y="18" fill="#FFFFFF" fontSize="7" fontFamily="monospace" fontWeight="bold">47 kW</text>
         </g>
 
         {/* ── Defs ── */}
@@ -159,8 +159,8 @@ export default function EVAnim() {
 
           {/* Particle gradients — amber/gold palette */}
           <radialGradient id="ev-grad-amber" fx="1">
-            <stop offset="0%"   stopColor="#FBB034" />
-            <stop offset="50%"  stopColor="#FBB034" stopOpacity="0.8"/>
+            <stop offset="0%"   stopColor="#FFFFFF" />
+            <stop offset="50%"  stopColor="#FFFFFF" stopOpacity="0.8"/>
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
           <radialGradient id="ev-grad-gold" fx="1">
@@ -170,7 +170,7 @@ export default function EVAnim() {
           </radialGradient>
           <radialGradient id="ev-grad-white" fx="1">
             <stop offset="0%"   stopColor="white" />
-            <stop offset="50%"  stopColor="rgba(251,176,52,0.6)" />
+            <stop offset="50%"  stopColor="rgba(255,255,255,0.6)" />
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
           <radialGradient id="ev-grad-copper" fx="1">
@@ -185,7 +185,7 @@ export default function EVAnim() {
               <animate attributeName="offset" values="-2;-1;0" dur="4s" repeatCount="indefinite"
                 calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
             </stop>
-            <stop offset="25%"  stopColor="#FBB034">
+            <stop offset="25%"  stopColor="#FFFFFF">
               <animate attributeName="offset" values="-1;0;1" dur="4s" repeatCount="indefinite"
                 calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
             </stop>
@@ -197,24 +197,24 @@ export default function EVAnim() {
 
           {/* Bolt fill gradient */}
           <linearGradient id="ev-bolt-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="#FBB034"/>
+            <stop offset="0%"   stopColor="#FFFFFF"/>
             <stop offset="100%" stopColor="#D4920A"/>
           </linearGradient>
 
           {/* Connector pin gradient */}
           <linearGradient id="ev-pin-gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="#FBB034" stopOpacity="0.6"/>
+            <stop offset="0%"   stopColor="#FFFFFF" stopOpacity="0.6"/>
             <stop offset="60%"  stopColor="#1A1105"/>
           </linearGradient>
 
           {/* Chip shadow */}
           <filter id="ev-shadow" x="-50%" y="-50%" width="200%" height="200%">
-            <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#FBB034" floodOpacity="0.15"/>
+            <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#FFFFFF" floodOpacity="0.15"/>
           </filter>
 
           {/* Path-start dot marker */}
           <marker id="ev-circle-marker" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="18" markerHeight="18">
-            <circle cx="5" cy="5" r="2" fill="#1A1105" stroke="#FBB034" strokeWidth="0.5">
+            <circle cx="5" cy="5" r="2" fill="#1A1105" stroke="#FFFFFF" strokeWidth="0.5">
               <animate attributeName="r" values="0;3;2" dur="0.5s"/>
             </circle>
           </marker>

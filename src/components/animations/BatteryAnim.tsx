@@ -16,7 +16,7 @@ export default function BatteryAnim({ showSolar = true }: Props) {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 55% 40% at 50% 50%, rgba(251,176,52,0.06) 0%, transparent 70%)',
+            'radial-gradient(ellipse 55% 40% at 50% 50%, rgba(255,255,255,0.06) 0%, transparent 70%)',
         }}
       />
 
@@ -132,9 +132,9 @@ export default function BatteryAnim({ showSolar = true }: Props) {
 
         {/* ── Stats overlay ── */}
         <g>
-          <rect x="2" y="2" width="46" height="20" rx="2" fill="#1A1105" stroke="#FBB034" strokeWidth="0.3" opacity="0.9"/>
+          <rect x="2" y="2" width="46" height="20" rx="2" fill="#1A1105" stroke="#FFFFFF" strokeWidth="0.3" opacity="0.9"/>
           <text x="6" y="10"  fill="#9A8870" fontSize="4"  fontFamily="monospace">{showSolar ? 'SOLAR INPUT' : 'STORED'}</text>
-          <text x="6" y="18"  fill="#FBB034" fontSize="7"  fontFamily="monospace" fontWeight="bold">{showSolar ? '4.8 kW' : '78%'}</text>
+          <text x="6" y="18"  fill="#FFFFFF" fontSize="7"  fontFamily="monospace" fontWeight="bold">{showSolar ? '4.8 kW' : '78%'}</text>
         </g>
 
         {/* ── Defs ── */}
@@ -165,8 +165,8 @@ export default function BatteryAnim({ showSolar = true }: Props) {
           </mask>
 
           <radialGradient id="bat-grad-amber" fx="1">
-            <stop offset="0%"   stopColor="#FBB034"/>
-            <stop offset="50%"  stopColor="#FBB034" stopOpacity="0.8"/>
+            <stop offset="0%"   stopColor="#FFFFFF"/>
+            <stop offset="50%"  stopColor="#FFFFFF" stopOpacity="0.8"/>
             <stop offset="100%" stopColor="transparent"/>
           </radialGradient>
           <radialGradient id="bat-grad-gold" fx="1">
@@ -176,7 +176,7 @@ export default function BatteryAnim({ showSolar = true }: Props) {
           </radialGradient>
           <radialGradient id="bat-grad-white" fx="1">
             <stop offset="0%"   stopColor="white"/>
-            <stop offset="50%"  stopColor="rgba(251,176,52,0.6)"/>
+            <stop offset="50%"  stopColor="rgba(255,255,255,0.6)"/>
             <stop offset="100%" stopColor="transparent"/>
           </radialGradient>
           <radialGradient id="bat-grad-copper" fx="1">
@@ -190,7 +190,7 @@ export default function BatteryAnim({ showSolar = true }: Props) {
               <animate attributeName="offset" values="-2;-1;0" dur="4s" repeatCount="indefinite"
                 calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
             </stop>
-            <stop offset="25%"  stopColor="#FBB034">
+            <stop offset="25%"  stopColor="#FFFFFF">
               <animate attributeName="offset" values="-1;0;1" dur="4s" repeatCount="indefinite"
                 calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
             </stop>
@@ -201,21 +201,21 @@ export default function BatteryAnim({ showSolar = true }: Props) {
           </linearGradient>
 
           <linearGradient id="bat-bolt-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="#FBB034"/>
+            <stop offset="0%"   stopColor="#FFFFFF"/>
             <stop offset="100%" stopColor="#D4920A"/>
           </linearGradient>
 
           <linearGradient id="bat-pin-gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="#FBB034" stopOpacity="0.6"/>
+            <stop offset="0%"   stopColor="#FFFFFF" stopOpacity="0.6"/>
             <stop offset="60%"  stopColor="#1A1105"/>
           </linearGradient>
 
           <filter id="bat-shadow" x="-50%" y="-50%" width="200%" height="200%">
-            <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#FBB034" floodOpacity="0.15"/>
+            <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#FFFFFF" floodOpacity="0.15"/>
           </filter>
 
           <marker id="bat-circle-marker" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="18" markerHeight="18">
-            <circle cx="5" cy="5" r="2" fill="#1A1105" stroke="#FBB034" strokeWidth="0.5">
+            <circle cx="5" cy="5" r="2" fill="#1A1105" stroke="#FFFFFF" strokeWidth="0.5">
               <animate attributeName="r" values="0;3;2" dur="0.5s"/>
             </circle>
           </marker>

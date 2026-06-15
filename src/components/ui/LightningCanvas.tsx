@@ -33,7 +33,7 @@ export default function LightningCanvas({ flashRef }: Props) {
       ctx.globalAlpha  = alpha
       ctx.strokeStyle  = '#c8e0ff'
       ctx.lineWidth    = lineWidth
-      ctx.shadowColor  = '#FBB034'
+      ctx.shadowColor  = '#FFFFFF'
       ctx.shadowBlur   = 20
       ctx.lineCap      = 'round'
       ctx.beginPath(); ctx.moveTo(x1, y1)

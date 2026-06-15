@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       // ── Gold brand palette (two-tone, 50/30/20) ──────────────────────────
-      // 50% #FBB034 gold (dominant canvas) · 30% #1A1828 dark (ink) ·
+      // 50% #FFFFFF gold (dominant canvas) · 30% #1A1828 dark (ink) ·
       // 20% #1A1828 dark (accent — the high-contrast pop against gold).
       // Token NAMES are kept stable so existing components don't break; only the
       // VALUES change. Roles on the gold canvas:
@@ -22,8 +22,8 @@ const config: Config = {
         amber:       '#000000',    // accent — pure black, high-contrast on gold
         navy: {
           DEFAULT: '#000000',      // brand dark — pure black ink / dark elements
-          deep:    '#FBB034',      // page background (gold canvas)
-          mid:     '#F0A81E',      // deeper-gold section background (hierarchy)
+          deep:    '#FFFFFF',      // page background (gold canvas)
+          mid:     '#FFFFFF',      // deeper-gold section background (hierarchy)
         },
         'blue-word':  '#000000',   // dark accent
         'sky-blue':   '#000000',   // dark accent (replaces old sky blue)
@@ -34,7 +34,7 @@ const config: Config = {
         // navbar) mapped to this project's gold / pure-black theme.
         background:  '#000000',
         foreground:  '#FBF8F0',
-        primary:    { DEFAULT: '#FBB034', foreground: '#000000' },
+        primary:    { DEFAULT: '#FFFFFF', foreground: '#000000' },
         secondary:  { DEFAULT: '#0A0A0A', foreground: '#FBF8F0' },
         muted:      { DEFAULT: '#0A0A0A', foreground: '#B8AE95' },
         accent:     { DEFAULT: '#0A0A0A', foreground: '#FBF8F0' },
@@ -42,7 +42,7 @@ const config: Config = {
         card:       { DEFAULT: '#000000', foreground: '#FBF8F0' },
         border:      '#262626',
         input:       '#262626',
-        ring:        '#FBB034',
+        ring:        '#FFFFFF',
       },
       fontFamily: {
         display: ['var(--font-sora)',           'sans-serif'],
@@ -71,8 +71,8 @@ const config: Config = {
           '50%':      { transform: 'translateY(4px)' },
         },
         pulseGlow: {
-          '0%, 100%': { boxShadow: '0 0 8px rgba(251,176,52,0.3)' },
-          '50%':      { boxShadow: '0 0 24px rgba(251,176,52,0.65)' },
+          '0%, 100%': { boxShadow: '0 0 8px rgba(255,255,255,0.3)' },
+          '50%':      { boxShadow: '0 0 24px rgba(255,255,255,0.65)' },
         },
         sunSpin: {
           '0%':   { transform: 'rotate(0deg)' },

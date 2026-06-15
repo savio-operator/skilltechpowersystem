@@ -28,7 +28,7 @@ export default function ChProof() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 60% 40% at 50% 100%, rgba(251,176,52,0.06) 0%, transparent 60%)',
+            'radial-gradient(ellipse 60% 40% at 50% 100%, rgba(255,255,255,0.06) 0%, transparent 60%)',
         }}
         aria-hidden="true"
       />

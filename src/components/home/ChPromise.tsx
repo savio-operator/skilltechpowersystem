@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 
 const WORDS  = ['cleaner.', 'greener.', 'better.']
-const COLORS = ['#FBB034', '#FBB034', '#FFFFFF']  // gold, gold, white
+const COLORS = ['#FFFFFF', '#FFFFFF', '#F7B538']  // cleaner: white, greener: white, better: gold
 
 export default function ChPromise() {
   const shouldReduce = useReducedMotion()
@@ -52,8 +52,8 @@ export default function ChPromise() {
     return (
       <section id="ch-promise" className="flex min-h-[60vh] items-center justify-center bg-black py-24">
         <p className="text-center font-display font-black leading-snug" style={{ fontSize: 'clamp(3rem,8vw,6rem)' }}>
-          <span className="block text-[#FBB034]">This is something</span>
-          <span className="block text-white">better.</span>
+          <span className="block text-[#FFFFFF]">This is something</span>
+          <span className="block text-[#F7B538]">better.</span>
         </p>
       </section>
     )
@@ -71,7 +71,7 @@ export default function ChPromise() {
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(251,176,52,0.06) 0%, transparent 70%)',
+                'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.06) 0%, transparent 70%)',
             }}
           />
 
@@ -82,7 +82,7 @@ export default function ChPromise() {
               aria-label="This is something cleaner, greener, better."
             >
               {/* Permanent line */}
-              <span className="block text-[#FBB034]">This is something</span>
+              <span className="block text-[#FFFFFF]">This is something</span>
 
               {/* Scroll-driven word */}
               <span

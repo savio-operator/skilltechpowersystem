@@ -72,7 +72,7 @@ function PanelMesh() {
           <meshStandardMaterial
             ref={(m) => { matRefs.current[i] = m }}
             color="#111c42"
-            emissive="#FBB034"
+            emissive="#FFFFFF"
             emissiveIntensity={0}
             metalness={0.45}
             roughness={0.5}

@@ -13,7 +13,7 @@ export default function CommercialAnim() {
         <g transform="translate(300,45)">
           {[0,36,72,108,144,180,216,252,288,324].map((angle, i) => (
             <line key={i} x1="0" y1="-28" x2="0" y2="-38"
-              stroke="#FBB034" strokeWidth="1.8" strokeLinecap="round"
+              stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round"
               transform={`rotate(${angle})`} opacity="0.7">
               {animated && (
                 <animate attributeName="opacity" values="0.3;1;0.3" dur="2s"
@@ -21,7 +21,7 @@ export default function CommercialAnim() {
               )}
             </line>
           ))}
-          <circle r="22" fill="#FBB034" opacity="0.9"/>
+          <circle r="22" fill="#FFFFFF" opacity="0.9"/>
         </g>
 
         {/* Factory / commercial building */}
@@ -40,7 +40,7 @@ export default function CommercialAnim() {
           ))}
           {/* Lit windows */}
           {[20,140,260].map((x, i) => (
-            <rect key={x} x={x+2} y="22" width="26" height="21" rx="1" fill="#FBB034" opacity="0.3">
+            <rect key={x} x={x+2} y="22" width="26" height="21" rx="1" fill="#FFFFFF" opacity="0.3">
               {animated && (
                 <animate attributeName="opacity" values="0.2;0.5;0.2"
                   dur={`${2 + i*0.7}s`} repeatCount="indefinite"/>
@@ -61,7 +61,7 @@ export default function CommercialAnim() {
             const y = 60 + row * 26
             return (
               <g key={`${col}-${row}`} transform={`translate(${x},${y})`}>
-                <rect width="50" height="22" rx="2" fill="#1a2a05" stroke="#FBB034" strokeWidth="0.7"/>
+                <rect width="50" height="22" rx="2" fill="#1a2a05" stroke="#FFFFFF" strokeWidth="0.7"/>
                 {/* Cell grid */}
                 {[0,1,2].map(r => (
                   <line key={r} x1="0" y1={5 + r*5} x2="50" y2={5 + r*5}
@@ -74,7 +74,7 @@ export default function CommercialAnim() {
                 {/* Glint */}
                 {animated && (
                   <rect x="4" y="3" width="8" height="4" rx="2"
-                    fill="#FBB034" opacity="0">
+                    fill="#FFFFFF" opacity="0">
                     <animate attributeName="opacity"
                       values="0;0.6;0" dur="4s"
                       begin={`${(col * 3 + row) * 0.4}s`}
@@ -96,7 +96,7 @@ export default function CommercialAnim() {
             <line x1={x+25} y1="140" x2={x+25} y2="150"
               stroke="#D4920A" strokeWidth="1.5" strokeDasharray="3,2" opacity="0.5"/>
             {animated && (
-              <circle r="2.5" fill="#FBB034">
+              <circle r="2.5" fill="#FFFFFF">
                 <animateMotion dur="0.8s" begin={`${i*0.2}s`} repeatCount="indefinite"
                   path={`M${x+25} 138 L${x+25} 150`}/>
                 <animate attributeName="opacity" values="0;1;1;0" dur="0.8s"
@@ -108,16 +108,16 @@ export default function CommercialAnim() {
 
         {/* Grid tie meter */}
         <g transform="translate(290,175)">
-          <rect width="52" height="34" rx="4" fill="#221608" stroke="#FBB034" strokeWidth="0.7"/>
+          <rect width="52" height="34" rx="4" fill="#221608" stroke="#FFFFFF" strokeWidth="0.7"/>
           <text x="26" y="13" textAnchor="middle" fill="#9A8870" fontSize="6" fontFamily="monospace">GRID-TIE</text>
-          <text x="26" y="25" textAnchor="middle" fill="#FBB034" fontSize="10" fontFamily="monospace" fontWeight="bold">25kW</text>
+          <text x="26" y="25" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontFamily="monospace" fontWeight="bold">25kW</text>
         </g>
 
         {/* Stats overlay */}
         <g transform="translate(14,14)">
-          <rect width="106" height="52" rx="6" fill="#221608" stroke="#FBB034" strokeWidth="0.7" opacity="0.95"/>
+          <rect width="106" height="52" rx="6" fill="#221608" stroke="#FFFFFF" strokeWidth="0.7" opacity="0.95"/>
           <text x="8" y="18" fill="#9A8870" fontSize="7" fontFamily="monospace">COMMERCIAL</text>
-          <text x="8" y="32" fill="#FBB034" fontSize="12" fontFamily="monospace" fontWeight="bold">15 PANELS</text>
+          <text x="8" y="32" fill="#FFFFFF" fontSize="12" fontFamily="monospace" fontWeight="bold">15 PANELS</text>
           <text x="8" y="44" fill="#D4920A" fontSize="7" fontFamily="monospace">OUTPUT: 6.0kW peak</text>
         </g>
 

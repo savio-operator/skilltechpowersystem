@@ -63,7 +63,10 @@ export default function ChMachine() {
       <div ref={spacerRef} className="relative h-[500vh]">
         <div
           ref={stageRef}
-          className="h-screen overflow-hidden flex flex-col items-center justify-center bg-navy-deep"
+          // Decorative, scroll-pinned stage with no interactive elements. It can
+          // overlap the following section while pinned (pinSpacing:false), so it
+          // must never capture clicks meant for the cards below it.
+          className="pointer-events-none h-screen overflow-hidden flex flex-col items-center justify-center bg-navy-deep"
           style={{
             background:
               'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(0,0,0,0.06) 0%, transparent 70%), #FBB034',

@@ -64,7 +64,7 @@ export default function ChPromise() {
       <div ref={spacerRef} className="relative h-[300vh]">
         <div
           ref={stageRef}
-          className="relative flex h-screen items-center justify-center overflow-hidden bg-black"
+          className="pointer-events-none relative flex h-screen items-center justify-center overflow-hidden bg-black"
         >
           {/* Subtle ambient gold glow */}
           <div

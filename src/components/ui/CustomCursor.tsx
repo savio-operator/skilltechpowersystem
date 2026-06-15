@@ -56,8 +56,8 @@ export default function CustomCursor() {
         style={{ x: ringX, y: ringY }}
         animate={{
           scale: isHovering ? 1.6 : 1,
-          borderColor: isHovering ? 'rgba(26,43,67,1)' : 'rgba(26,43,67,0.4)',
-          backgroundColor: isHovering ? 'rgba(26,43,67,0.15)' : 'rgba(26,43,67,0.05)',
+          borderColor: isHovering ? 'rgba(26,24,40,1)' : 'rgba(26,24,40,0.4)',
+          backgroundColor: isHovering ? 'rgba(26,24,40,0.15)' : 'rgba(26,24,40,0.05)',
         }}
         transition={{ duration: 0.2 }}
       />

@@ -1385,7 +1385,7 @@ function MapArc<T extends MapArcDatum = MapArcDatum>({
         source: sourceId,
         layout: DEFAULT_ARC_LAYOUT,
         paint: {
-          "line-color": "rgba(26,43,67, 0)",
+          "line-color": "rgba(26,24,40, 0)",
           "line-width": hitWidth,
           "line-opacity": 1,
         },

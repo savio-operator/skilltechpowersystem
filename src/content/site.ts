@@ -9,7 +9,7 @@ export const SITE = {
   teamSize:    4,
   legalType:   'Proprietorship' as const,
   email:       'skilltechpowersystem@gmail.com',
-  phone:       '', // TODO: confirm-with-client — add phone number
+  phone:       '+91 9847553200',
   address: {
     line1:    '',                              // TODO: confirm-with-client — exact street address
     city:     'Ernakulam',
@@ -24,7 +24,7 @@ export const SITE = {
     region: 'Muvattupuzha, Ernakulam, Kerala, India',
   },
   whatsapp: {
-    number:  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER  ?? '', // TODO: confirm-with-client
+    number:  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER  ?? '919847553200',
     message: process.env.NEXT_PUBLIC_WHATSAPP_DEFAULT_MESSAGE
                ?? "Hi%2C%20I%27d%20like%20a%20free%20solar%20assessment%20for%20my%20home.",
   },

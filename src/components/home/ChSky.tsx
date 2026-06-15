@@ -25,14 +25,16 @@ export default function ChSky() {
         style={shouldReduce ? {} : { y: bgY }}
       >
         <div className="absolute inset-0 bg-cinematic-sky" />
-        <Image
-          src={HOME.hero.image}
-          alt={HOME.hero.imageAlt}
-          fill
-          priority
-          className="object-cover"
-          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
-        />
+        {HOME.hero.image && (
+          <Image
+            src={HOME.hero.image}
+            alt={HOME.hero.imageAlt}
+            fill
+            priority
+            className="object-cover"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+          />
+        )}
         {/* Layered dark gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-navy-deep/20 via-transparent to-navy-deep/75" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />

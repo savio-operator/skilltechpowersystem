@@ -35,13 +35,15 @@ export default function ChInvitation() {
         style={shouldReduce ? {} : { y: bgY }}
       >
         <div className="absolute inset-0 bg-cinematic-dusk" />
-        <Image
-          src={HOME.footer.image}
-          alt={HOME.footer.imageAlt}
-          fill
-          className="object-cover opacity-35"
-          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
-        />
+        {HOME.footer.image && (
+          <Image
+            src={HOME.footer.image}
+            alt={HOME.footer.imageAlt}
+            fill
+            className="object-cover opacity-35"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/80 via-[#050810]/30 to-transparent" />
       </motion.div>
 

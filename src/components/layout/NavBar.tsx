@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -18,18 +19,38 @@ interface NavBarProps {
 }
 
 export function NavBar({ items, className }: NavBarProps) {
-  const [activeTab, setActiveTab] = useState(items[0].name)
-  const [isMobile, setIsMobile] = useState(false)
+  const pathname = usePathname()
+  const [activeUrl, setActiveUrl] = useState(items[0].url)
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
+    // On a sub-page, highlight the nav item whose route matches.
+    const pageMatch = items.find((it) => it.url === pathname)
+    if (pageMatch) {
+      setActiveUrl(pageMatch.url)
+      return
+    }
+    // On the home page, scroll-spy across the in-page section anchors so the
+    // active item follows your scroll position.
+    if (pathname !== "/") return
+
+    const anchored = items
+      .filter((it) => it.url.startsWith("/#"))
+      .map((it) => ({ url: it.url, id: it.url.slice(2) }))
+
+    const onScroll = () => {
+      const marker = window.scrollY + window.innerHeight * 0.35
+      let current = items[0].url // default: Home (top of page)
+      for (const { url, id } of anchored) {
+        const el = document.getElementById(id)
+        if (el && el.offsetTop <= marker) current = url
+      }
+      setActiveUrl(current)
     }
 
-    handleResize()
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [pathname, items])
 
   return (
     <div
@@ -41,13 +62,13 @@ export function NavBar({ items, className }: NavBarProps) {
       <div className="flex items-center gap-3 bg-background/5 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
         {items.map((item) => {
           const Icon = item.icon
-          const isActive = activeTab === item.name
+          const isActive = activeUrl === item.url
 
           return (
             <Link
               key={item.name}
               href={item.url}
-              onClick={() => setActiveTab(item.name)}
+              onClick={() => setActiveUrl(item.url)}
               className={cn(
                 "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
                 "text-foreground/80 hover:text-primary",

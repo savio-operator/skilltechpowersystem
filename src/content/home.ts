@@ -7,7 +7,7 @@ export const HOME = {
     badge:    'EST. 2015',
     headline: ['The power', 'comes from', 'above.'],
     sub:      'Complete power-systems company — solar, lightning protection, earthing, battery backup & AMC',
-    image:    '/images/cinematic/hero-rooftop-desktop.png',  // TODO: confirm-with-client — swap for real golden-hour roof photo
+    image:    '',  // intentionally no photo — hero uses the cinematic gradient only
     imageAlt: 'Rooftop solar installation at golden hour, Ernakulam Kerala',
   },
 
@@ -84,7 +84,7 @@ export const HOME = {
 
   footer: {
     promise: 'Sun above. Savings below.',
-    image:    '/images/cinematic/invitation-dusk-home.png',   // TODO: confirm-with-client — real dusk/golden-hour photo
+    image:    '',   // intentionally no photo — footer uses the cinematic gradient only
     imageAlt: 'Kerala rooftop at dusk with solar panels',
   },
 } as const

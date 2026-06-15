@@ -87,7 +87,7 @@ export default function ChFAQ() {
     : FAQS
 
   return (
-    <section id="ch-faq" className="relative overflow-hidden section-invert py-20 md:py-28">
+    <section id="ch-faq" className="relative z-10 overflow-hidden section-invert py-20 md:py-28">
       {/* Background spiral */}
       <div
         className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-40 [mask-image:radial-gradient(circle_at_center,rgba(0,0,0,1),rgba(0,0,0,0.15)_55%,transparent_75%)]"

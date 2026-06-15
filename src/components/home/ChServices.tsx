@@ -13,7 +13,7 @@ export default function ChServices() {
   const shouldReduce = useReducedMotion()
 
   return (
-    <section ref={ref} id="ch-services" className="bg-navy-deep py-20 md:py-28">
+    <section ref={ref} id="ch-services" className="relative z-10 bg-navy-deep py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <p className="chapter-eyebrow">CH.03b / EVERYTHING WE DO</p>
         <h2

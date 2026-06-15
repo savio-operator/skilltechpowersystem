@@ -141,6 +141,9 @@ export default function SolarPanel3D() {
       camera={{ position: [0, 0, 6], fov: 42 }}
       dpr={[1, 1.5]}
       gl={{ antialias: true, alpha: true }}
+      // Purely decorative + scroll-driven — must never intercept clicks on
+      // content that may overlap it (e.g. while the section is pinned).
+      className="pointer-events-none"
       style={{ background: 'transparent' }}
     >
       <Scene />

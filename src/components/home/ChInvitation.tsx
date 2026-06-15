@@ -1,6 +1,6 @@
 'use client'
 import { useRef } from 'react'
-import { motion, useInView, useReducedMotion } from 'framer-motion'
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SITE } from '@/content/site'
@@ -15,6 +15,9 @@ export default function ChInvitation() {
   const shouldReduce = useReducedMotion()
   const waHref = `https://wa.me/${SITE.whatsapp.number}?text=${SITE.whatsapp.message}`
 
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const bgY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
+
   const fadeUp = (delay = 0) =>
     shouldReduce
       ? {}
@@ -25,9 +28,13 @@ export default function ChInvitation() {
         }
 
   return (
-    <footer id="ch-invitation" ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Dusk bg */}
-      <div className="absolute inset-0 bg-cinematic-dusk">
+    <footer id="ch-invitation" ref={ref} className="relative z-10 min-h-screen flex items-center overflow-hidden">
+      {/* Parallax background */}
+      <motion.div
+        className="absolute inset-0"
+        style={shouldReduce ? {} : { y: bgY }}
+      >
+        <div className="absolute inset-0 bg-cinematic-dusk" />
         <Image
           src={HOME.footer.image}
           alt={HOME.footer.imageAlt}
@@ -35,8 +42,16 @@ export default function ChInvitation() {
           className="object-cover opacity-35"
           onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/70 via-transparent to-transparent" />
-      </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/80 via-[#050810]/30 to-transparent" />
+      </motion.div>
+
+      {/* Editorial top line */}
+      <motion.div
+        className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-amber/40 to-transparent"
+        initial={shouldReduce ? false : { scaleX: 0 }}
+        animate={isInView ? { scaleX: 1 } : {}}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+      />
 
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 md:px-10 pt-24 pb-[max(6rem,calc(env(safe-area-inset-bottom,0px)+6rem))] flex flex-col items-center text-center gap-8">
         {/* Logo */}
@@ -44,13 +59,13 @@ export default function ChInvitation() {
           <Image
             src="/images/cinematic/logo.png"
             alt="Skilltech Power System"
-            width={170}
-            height={111}
+            width={168}
+            height={112}
             className="h-14 w-auto"
           />
         </motion.div>
 
-        {/* Promise */}
+        {/* Promise headline */}
         <motion.p
           className="font-display font-black text-paper text-balance leading-none"
           style={{ fontSize: 'clamp(2.2rem, 7vw, 5rem)' }}
@@ -59,13 +74,13 @@ export default function ChInvitation() {
           {HOME.footer.promise}
         </motion.p>
 
-        {/* WhatsApp CTA */}
+        {/* WhatsApp CTA — magnetic-feel button */}
         <motion.a
           href={waHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2.5 bg-[#25D366] text-white font-bold rounded-lg shadow-[0_4px_24px_rgba(37,211,102,0.25)] px-8 py-4 text-base hover:shadow-[0_8px_36px_rgba(37,211,102,0.35)] transition-shadow"
-          whileHover={shouldReduce ? {} : { scale: 1.04, y: -2 }}
+          className="inline-flex items-center gap-2.5 bg-[#25D366] text-white font-bold rounded-xl px-8 py-4 text-base shadow-[0_4px_32px_rgba(37,211,102,0.3)] transition-shadow hover:shadow-[0_8px_48px_rgba(37,211,102,0.45)]"
+          whileHover={shouldReduce ? {} : { scale: 1.06, y: -3 }}
           whileTap={shouldReduce ? {} : { scale: 0.97 }}
           {...fadeUp(0.14)}
         >
@@ -73,23 +88,38 @@ export default function ChInvitation() {
           Start on WhatsApp
         </motion.a>
 
+        {/* Subtle sub-cta */}
+        <motion.p
+          className="font-mono text-[0.7rem] tracking-[0.12em] text-warm-grey/60 uppercase"
+          {...fadeUp(0.2)}
+        >
+          Free consultation · No obligations
+        </motion.p>
+
+        {/* Divider */}
+        <motion.div
+          className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"
+          {...fadeUp(0.22)}
+        />
+
         {/* Meta grid */}
         <motion.div
-          className="w-full grid grid-cols-1 sm:grid-cols-2 gap-8 text-left border-t border-white/6 pt-10 mt-2"
-          {...fadeUp(0.2)}
+          className="w-full grid grid-cols-1 sm:grid-cols-2 gap-8 text-left"
+          {...fadeUp(0.24)}
         >
           {/* Contact */}
           <div className="flex flex-col gap-3">
+            <span className="font-mono text-[0.62rem] tracking-[0.15em] text-amber uppercase mb-1">Contact</span>
             {[
-              { label: 'Email', val: SITE.email,             href: `mailto:${SITE.email}` },
-              { label: 'Phone', val: SITE.phone || '—',     href: SITE.phone ? `tel:${(SITE.phone as string).replace(/\s/g, '')}` : undefined },
-              { label: 'Area',  val: SITE.address.display,  href: undefined },
-              { label: 'Hours', val: SITE.hours,            href: undefined },
+              { label: 'Email', val: SITE.email,            href: `mailto:${SITE.email}` },
+              { label: 'Phone', val: SITE.phone || '—',    href: SITE.phone ? `tel:${(SITE.phone as string).replace(/\s/g, '')}` : undefined },
+              { label: 'Area',  val: SITE.address.display, href: undefined },
+              { label: 'Hours', val: SITE.hours,           href: undefined },
             ].map(({ label, val, href }) => (
               <div key={label} className="flex gap-4 items-baseline">
                 <span className="font-mono text-[0.62rem] tracking-[0.12em] text-warm-grey min-w-[48px]">{label}</span>
                 {href
-                  ? <a href={href} className="text-sm text-paper hover:text-amber transition-colors">{val}</a>
+                  ? <a href={href} className="text-sm text-paper hover:text-amber transition-colors duration-200">{val}</a>
                   : <span className="text-sm text-paper">{val}</span>
                 }
               </div>
@@ -98,10 +128,10 @@ export default function ChInvitation() {
 
           {/* Services */}
           <div>
-            <span className="block font-mono text-[0.62rem] tracking-[0.12em] text-warm-grey mb-3">Services</span>
+            <span className="block font-mono text-[0.62rem] tracking-[0.15em] text-amber uppercase mb-3">Services</span>
             <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
               {SERVICE_LABELS.map((name) => (
-                <span key={name} className="text-sm text-warm-grey">{name}</span>
+                <span key={name} className="text-sm text-warm-grey hover:text-paper transition-colors duration-200">{name}</span>
               ))}
             </div>
           </div>

@@ -22,7 +22,7 @@ export default function ChMath() {
     <section
       id="ch-math"
       ref={ref}
-      className="py-20 md:py-28 section-invert"
+      className="relative z-10 py-20 md:py-28 section-invert"
     >
       <div className="max-w-3xl mx-auto px-6 md:px-10">
         <motion.p className="chapter-eyebrow" {...fadeUp(0)}>

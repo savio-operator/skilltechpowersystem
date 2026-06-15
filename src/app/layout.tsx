@@ -3,6 +3,7 @@ import { Sora, Archivo, JetBrains_Mono } from 'next/font/google'
 import { LenisProvider } from '@/lib/lenis'
 import Header from '@/components/layout/Header'
 import WhatsAppFloat from '@/components/layout/WhatsAppFloat'
+import CustomCursor from '@/components/ui/CustomCursor'
 import { SITE } from '@/content/site'
 import '@/styles/globals.css'
 
@@ -96,6 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
       </head>
       <body className="bg-navy-deep text-paper antialiased">
+        <CustomCursor />
         <LenisProvider>
           <Header />
           {children}

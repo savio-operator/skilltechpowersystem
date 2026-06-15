@@ -22,29 +22,52 @@ export default function ChProof() {
         }
 
   return (
-    <section id="ch-proof" ref={ref} className="py-20 md:py-28 section-invert">
-      <div className="max-w-6xl mx-auto px-6 md:px-10">
+    <section id="ch-proof" ref={ref} className="relative z-10 py-20 md:py-28 section-invert overflow-hidden">
+      {/* Ambient radial glow */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 60% 40% at 50% 100%, rgba(251,176,52,0.06) 0%, transparent 60%)',
+        }}
+        aria-hidden="true"
+      />
 
+      <div className="max-w-6xl mx-auto px-6 md:px-10">
+        {/* Section eyebrow */}
         <motion.p className="chapter-eyebrow" {...fadeUp(0)}>
           {HOME.proof.eyebrow}
         </motion.p>
+
+        {/* Headline */}
         <motion.h2
-          className="font-display font-black text-balance mb-14 max-w-2xl"
+          className="font-display font-black text-balance mb-5 max-w-2xl"
           style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}
           {...fadeUp(0.06)}
         >
           {HOME.proof.headline}
         </motion.h2>
 
+        {/* Editorial divider */}
+        <motion.div
+          className="h-[1px] bg-gradient-to-r from-amber/50 via-amber/20 to-transparent mb-14 max-w-xs"
+          initial={shouldReduce ? false : { scaleX: 0, originX: 0 }}
+          animate={isInView ? { scaleX: 1 } : {}}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+        />
+
         {/* Counters */}
         <motion.div
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20"
           {...fadeUp(0.1)}
         >
-          {HOME.proof.counters.map((c) => (
-            <div
+          {HOME.proof.counters.map((c, i) => (
+            <motion.div
               key={c.id}
-              className="border border-white/6 rounded-lg p-5 bg-white/[0.02]"
+              className="border border-white/6 rounded-xl p-5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-amber/20 transition-all duration-300"
+              initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.12 + i * 0.08 }}
             >
               <OdometerCounter
                 target={c.target}
@@ -53,7 +76,7 @@ export default function ChProof() {
                 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' } as React.CSSProperties}
               />
               <span className="text-warm-grey text-xs leading-snug">{c.label}</span>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
 
@@ -80,15 +103,17 @@ export default function ChProof() {
             {TESTIMONIALS.map((t, i) => (
               <motion.div
                 key={t.id}
-                className="rounded-xl border border-white/6 bg-white/[0.02] p-6 flex flex-col gap-4"
+                className="rounded-xl border border-white/6 bg-white/[0.02] p-6 flex flex-col gap-4 hover:border-amber/20 hover:bg-white/[0.04] transition-all duration-300"
                 initial={shouldReduce ? false : { opacity: 0, y: 24 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.28 + i * 0.1 }}
               >
-                <p className="text-warm-grey text-sm leading-relaxed italic">
-                  &ldquo;{t.quote}&rdquo;
+                {/* Quote mark */}
+                <span className="font-display text-4xl leading-none text-amber/40 select-none" aria-hidden="true">&ldquo;</span>
+                <p className="text-warm-grey text-sm leading-relaxed italic -mt-4">
+                  {t.quote}&rdquo;
                 </p>
-                <div>
+                <div className="mt-auto border-t border-white/5 pt-4">
                   <span className="block text-paper text-sm font-semibold">{t.name}</span>
                   <span className="block font-mono text-[0.65rem] text-warm-grey tracking-wider mt-0.5">
                     {t.location} · {t.system} · {t.year}

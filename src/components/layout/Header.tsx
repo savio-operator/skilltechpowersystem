@@ -2,18 +2,26 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Home, Sun, Calculator, Images, Info, Phone } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/cn'
 import { SITE } from '@/content/site'
 import { NavBar } from './NavBar'
+import { Home, Sun, Calculator, Images, Info, Phone } from 'lucide-react'
 
 const NAV_ITEMS = [
-  { name: 'Home',      url: '/',           icon: Home },
-  { name: 'Systems',   url: '/#ch-machine', icon: Sun },
-  { name: 'Savings',   url: '/#ch-math',    icon: Calculator },
-  { name: 'Testimonials', url: '/#ch-proof', icon: Images },
-  { name: 'About',     url: '/about',       icon: Info },
-  { name: 'Contact',   url: '/contact',     icon: Phone },
+  { name: 'Home',         url: '/',            icon: Home },
+  { name: 'Systems',      url: '/#ch-machine', icon: Sun },
+  { name: 'Savings',      url: '/#ch-math',    icon: Calculator },
+  { name: 'Testimonials', url: '/#ch-proof',   icon: Images },
+  { name: 'About',        url: '/about',       icon: Info },
+  { name: 'Contact',      url: '/contact',     icon: Phone },
+]
+
+const DESKTOP_LINKS = [
+  { name: 'Systems',  url: '/#ch-machine' },
+  { name: 'Savings',  url: '/#ch-math' },
+  { name: 'About',    url: '/about' },
+  { name: 'Contact',  url: '/contact' },
 ]
 
 export default function Header() {
@@ -31,43 +39,72 @@ export default function Header() {
 
   return (
     <>
-      {/* Top bar — logo (left) + WhatsApp CTA (right) */}
+      {/* Top bar */}
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-40 transition-all duration-300',
-          // Soft gradient fade (no hard-edged rectangular bar) once scrolled past the hero.
+          'fixed top-0 left-0 right-0 z-40 transition-all duration-500',
+          // Soft gradient fade on scroll (no hard-edged rectangular bar).
           scrolled
             ? 'bg-gradient-to-b from-black/85 via-black/55 to-transparent backdrop-blur-md py-3'
             : 'py-5',
         )}
       >
-        <div className="max-w-7xl mx-auto px-5 md:px-8 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 flex items-center justify-between gap-6">
+          {/* Logo */}
           <Link href="/" className="flex items-center shrink-0" aria-label="Skilltech Power System — home">
             <Image
               src="/images/cinematic/logo.png"
               alt="Skilltech Power System"
-              width={110}
+              width={108}
               height={72}
               priority
-              className="h-9 w-auto md:h-10"
+              className="h-9 w-auto md:h-10 transition-opacity duration-300"
             />
           </Link>
 
-          <a
+          {/* Desktop nav links */}
+          <nav className="hidden md:flex items-center gap-7" aria-label="Site navigation">
+            {DESKTOP_LINKS.map((link) => (
+              <NavLink key={link.name} href={link.url}>{link.name}</NavLink>
+            ))}
+          </nav>
+
+          {/* CTA */}
+          <motion.a
             href={waHref}
-            target="_blank" rel="noopener noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
             data-event="whatsapp-click"
-            className="flex items-center gap-2 px-4 py-2 bg-[#25D366] text-white text-sm font-semibold rounded-md hover:opacity-90 transition-opacity"
+            className="hidden xs:flex items-center gap-2 px-4 py-2 bg-[#25D366] text-white text-sm font-semibold rounded-md shadow-[0_0_20px_rgba(37,211,102,0.25)] transition-shadow hover:shadow-[0_0_32px_rgba(37,211,102,0.45)]"
+            whileHover={{ scale: 1.04, y: -1 }}
+            whileTap={{ scale: 0.97 }}
           >
             <WhatsAppIcon />
-            <span className="hidden xs:inline">WhatsApp</span>
-          </a>
+            <span>WhatsApp</span>
+          </motion.a>
         </div>
       </header>
 
-      {/* Tubelight navigation — floating pill (top on desktop, bottom on mobile) */}
+      {/* Tubelight navigation — floating pill (bottom on mobile) */}
       <NavBar items={NAV_ITEMS} />
     </>
+  )
+}
+
+/** Animated underline nav link */
+function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="relative group font-mono text-[0.72rem] tracking-[0.12em] uppercase text-warm-grey hover:text-paper transition-colors duration-300"
+    >
+      {children}
+      {/* Gold underline that grows from centre on hover */}
+      <span
+        className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-[1px] w-0 bg-amber group-hover:w-full transition-all duration-300 ease-out"
+        aria-hidden="true"
+      />
+    </Link>
   )
 }
 

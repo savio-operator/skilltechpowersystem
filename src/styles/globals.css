@@ -10,6 +10,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    /* Smooth colour transitions when section themes change */
+    --transition-color: color 0.3s ease, background-color 0.3s ease;
   }
 
   body {
@@ -18,6 +20,14 @@
     color: theme('colors.paper');
     overflow-x: hidden;
     padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Hide native cursor on desktop (the custom cursor replaces it) — but keep a
+     real cursor on form fields so the text caret / affordances stay usable. */
+  @media (pointer: fine) {
+    body, a, button, [role="button"] { cursor: none; }
+    input, textarea          { cursor: text; }
+    select, option, label    { cursor: pointer; }
   }
 
   /* Lenis smooth scroll */

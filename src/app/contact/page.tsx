@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { SITE } from '@/content/site'
 import { AREAS } from '@/content/areas'
 import { SERVICE_LIST } from '@/content/services'
+import { SocialIcons } from '@/components/ui/SocialIcons'
 
 const INITIAL = { name: '', phone: '', area: '', service: '', message: '', _hp: '' }
 
@@ -186,6 +187,12 @@ export default function ContactPage() {
               </div>
             </a>
           )}
+
+          {/* Social channels */}
+          <div className="flex flex-col items-start gap-3 pt-2">
+            <p className="font-mono text-[0.68rem] tracking-wider text-warm-grey uppercase">Follow us</p>
+            <SocialIcons />
+          </div>
         </div>
       </div>
     </main>

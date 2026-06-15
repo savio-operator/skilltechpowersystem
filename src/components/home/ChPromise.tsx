@@ -8,8 +8,14 @@ const COLORS = ['#FBB034', '#FBB034', '#FFFFFF']  // gold, gold, white
 export default function ChPromise() {
   const shouldReduce = useReducedMotion()
   const [index, setIndex] = useState(0)
+  const prevIndex = useRef(0)
   const spacerRef = useRef<HTMLDivElement>(null)
   const stageRef  = useRef<HTMLDivElement>(null)
+
+  // Direction the word should slide in/out: +1 scrolling down, -1 scrolling up.
+  // Computed from the previous index so the reverse scroll animates correctly.
+  const direction = index >= prevIndex.current ? 1 : -1
+  useEffect(() => { prevIndex.current = index }, [index])
 
   // Pinned, scroll-scrubbed word swap — same behaviour as the solar (Machine) section.
   useEffect(() => {
@@ -44,7 +50,7 @@ export default function ChPromise() {
 
   if (shouldReduce) {
     return (
-      <section id="ch-promise" className="flex min-h-[60vh] items-center justify-center bg-[#1A1828] py-24">
+      <section id="ch-promise" className="flex min-h-[60vh] items-center justify-center bg-black py-24">
         <p className="text-center font-display font-black leading-snug" style={{ fontSize: 'clamp(3rem,8vw,6rem)' }}>
           <span className="block text-[#FBB034]">This is something</span>
           <span className="block text-white">better.</span>
@@ -58,7 +64,7 @@ export default function ChPromise() {
       <div ref={spacerRef} className="relative h-[300vh]">
         <div
           ref={stageRef}
-          className="relative flex h-screen items-center justify-center overflow-hidden bg-[#1A1828]"
+          className="relative flex h-screen items-center justify-center overflow-hidden bg-black"
         >
           {/* Subtle ambient gold glow */}
           <div
@@ -83,14 +89,20 @@ export default function ChPromise() {
                 className="relative block overflow-hidden"
                 style={{ height: 'clamp(4rem, 11.5vw, 10.5rem)' }}
               >
-                <AnimatePresence mode="wait">
+                <AnimatePresence custom={direction}>
                   <motion.span
                     key={index}
+                    custom={direction}
                     className="absolute inset-x-0 flex justify-center"
                     style={{ color: COLORS[index] }}
-                    initial={{ y: '100%', opacity: 0 }}
-                    animate={{ y: '0%',   opacity: 1 }}
-                    exit={{    y: '-100%', opacity: 0 }}
+                    variants={{
+                      enter:  (d: number) => ({ y: `${d * 100}%`,  opacity: 0 }),
+                      center: { y: '0%', opacity: 1 },
+                      exit:   (d: number) => ({ y: `${-d * 100}%`, opacity: 0 }),
+                    }}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
                     transition={{ type: 'spring', stiffness: 60, damping: 18 }}
                   >
                     {WORDS[index]}

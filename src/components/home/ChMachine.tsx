@@ -66,7 +66,7 @@ export default function ChMachine() {
           className="h-screen overflow-hidden flex flex-col items-center justify-center bg-navy-deep"
           style={{
             background:
-              'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(26,24,40,0.06) 0%, transparent 70%), #FBB034',
+              'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(0,0,0,0.06) 0%, transparent 70%), #FBB034',
           }}
         >
           {/* Chapter label */}

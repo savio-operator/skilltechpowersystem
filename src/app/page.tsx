@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import ChSky        from '@/components/home/ChSky'
 import ChPromise    from '@/components/home/ChPromise'
 import ChMachine    from '@/components/home/ChMachine'
+import ChServices   from '@/components/home/ChServices'
 import ChMath       from '@/components/home/ChMath'
 import ChStorm      from '@/components/home/ChStorm'
 import ChProof      from '@/components/home/ChProof'
@@ -28,6 +29,7 @@ export default function HomePage() {
         <ChSky />
         <ChPromise />
         <ChMachine />
+        <ChServices />
         <ChMath />
         <ChStorm />
         <ChProof />

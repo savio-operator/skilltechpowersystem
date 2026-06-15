@@ -11,7 +11,7 @@ const NAV_ITEMS = [
   { name: 'Home',      url: '/',           icon: Home },
   { name: 'Systems',   url: '/#ch-machine', icon: Sun },
   { name: 'Savings',   url: '/#ch-math',    icon: Calculator },
-  { name: 'Portfolio', url: '/projects',    icon: Images },
+  { name: 'Testimonials', url: '/#ch-proof', icon: Images },
   { name: 'About',     url: '/about',       icon: Info },
   { name: 'Contact',   url: '/contact',     icon: Phone },
 ]
@@ -35,7 +35,10 @@ export default function Header() {
       <header
         className={cn(
           'fixed top-0 left-0 right-0 z-40 transition-all duration-300',
-          scrolled ? 'bg-navy/90 backdrop-blur-md py-3 shadow-lg' : 'py-5',
+          // Soft gradient fade (no hard-edged rectangular bar) once scrolled past the hero.
+          scrolled
+            ? 'bg-gradient-to-b from-black/85 via-black/55 to-transparent backdrop-blur-md py-3'
+            : 'py-5',
         )}
       >
         <div className="max-w-7xl mx-auto px-5 md:px-8 flex items-center justify-between">

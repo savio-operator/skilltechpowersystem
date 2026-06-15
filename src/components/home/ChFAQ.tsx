@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { useReducedMotion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { FAQS } from '@/content/faq'
 
 // Decorative golden-ratio spiral, recoloured for the light navy/gold theme.
@@ -141,8 +141,9 @@ export default function ChFAQ() {
 function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
   const [open, setOpen] = useState(false)
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#FBB034]/60">
+    <div className="group relative self-start overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#FBB034]/60">
       <button
+        type="button"
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center justify-between text-left"
         aria-expanded={open}
@@ -151,17 +152,24 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
           <span className="font-mono text-xs text-amber">{String(index).padStart(2, '0')}</span>
           <h3 className="font-display text-base font-semibold leading-tight text-paper md:text-lg">{q}</h3>
         </div>
-        <span className="ml-4 text-lg text-warm-grey transition group-hover:text-[#FBB034]">
+        <span className="ml-4 shrink-0 text-lg text-warm-grey transition group-hover:text-[#FBB034]">
           {open ? '–' : '+'}
         </span>
       </button>
-      <div
-        className={`grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(.4,0,.2,1)] ${open ? 'mt-3 grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
-      >
-        <div className="min-h-0 overflow-hidden">
-          <p className="text-sm leading-relaxed text-warm-grey">{a}</p>
-        </div>
-      </div>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="answer"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            className="overflow-hidden"
+          >
+            <p className="mt-3 text-sm leading-relaxed text-warm-grey">{a}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

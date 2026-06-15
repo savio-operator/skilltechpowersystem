@@ -63,25 +63,25 @@
   /* Cinematic section bgs — gold canvas with dark accents */
   .bg-cinematic-sky {
     background:
-      radial-gradient(ellipse 80% 60% at 60% 30%, rgba(26,24,40,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 80% at 20% 70%, rgba(26,24,40,0.04) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 60% at 60% 30%, rgba(0,0,0,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 20% 70%, rgba(0,0,0,0.04) 0%, transparent 70%),
       linear-gradient(160deg, #FDC558 0%, #FBB034 55%, #F0A81E 100%);
   }
   .bg-cinematic-storm {
     background:
-      radial-gradient(ellipse 70% 70% at 50% 20%, rgba(26,24,40,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 70% at 50% 20%, rgba(0,0,0,0.10) 0%, transparent 60%),
       linear-gradient(180deg, #FBB034 0%, #F0A81E 50%, #E59E12 100%);
   }
   .bg-cinematic-dusk {
     background:
-      radial-gradient(ellipse 80% 50% at 50% 80%, rgba(26,24,40,0.10) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(26,24,40,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 50% at 50% 80%, rgba(0,0,0,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(0,0,0,0.05) 0%, transparent 60%),
       linear-gradient(180deg, #FDC558 0%, #FBB034 60%, #F0A81E 100%);
   }
 
-  /* Solar panel cell (used by 3D fallback) — dark cell with gold sheen */
+  /* Solar panel cell (used by 3D fallback) — pure-black cell with gold sheen */
   .panel-cell {
-    @apply bg-[#1A1828] rounded-sm relative overflow-hidden;
+    @apply bg-black rounded-sm relative overflow-hidden;
   }
   .panel-cell::after {
     content: '';
@@ -94,7 +94,7 @@
      used inside are remapped to light + gold via these scoped overrides.
      Higher specificity (.section-invert .x) wins over the base utility. */
   .section-invert {
-    background-color: #1A1828;
+    background-color: #000000;
     color: #FBF8F0;
   }
   .section-invert .text-paper { color: #FBF8F0; }

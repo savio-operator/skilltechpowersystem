@@ -40,7 +40,7 @@ export const SERVICES: Record<string, Service> = {
       'Remote app monitoring included',
     ],
     pricing: 'Typical 5 kW residential system from ₹5 lakh (post-subsidy)',
-    image:    '/images/service-solar-installation.jpg',  // TODO: confirm-with-client
+    image:    '/images/cinematic/service-solar-rooftop.png',  // TODO: confirm-with-client
     imageAlt: 'Rooftop solar panel installation Kerala',
     faq: [
       {
@@ -295,7 +295,7 @@ export const SERVICES: Record<string, Service> = {
       'Dedicated circuit and earthing',
       'Smart charger options with app control',
     ],
-    image:    '/images/service-ev-charger.jpg',   // TODO: confirm-with-client
+    image:    '/images/cinematic/service-ev-charger.png',   // TODO: confirm-with-client
     imageAlt: 'Home EV charger installation Kerala',
     faq: [
       {
@@ -327,7 +327,7 @@ export const SERVICES: Record<string, Service> = {
       'Performance-linked contracts available',
     ],
     pricing: 'Typical commercial system from ₹10 lakh',
-    image:    '/images/service-commercial.jpg',   // TODO: confirm-with-client
+    image:    '/images/cinematic/service-solar-rooftop-alt.png',   // TODO: confirm-with-client
     imageAlt: 'Commercial rooftop solar installation Kerala',
     faq: [
       {

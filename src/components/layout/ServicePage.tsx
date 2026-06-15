@@ -4,6 +4,7 @@ import { SITE } from '@/content/site'
 import Link from 'next/link'
 import { Spotlight } from '@/components/ui/spotlight'
 import ServiceReveal from '@/components/ui/ServiceReveal'
+import ServiceVisual from '@/components/ui/ServiceVisual'
 
 interface Props {
   service: Service
@@ -51,15 +52,13 @@ export default function ServicePage({ service: s, animation }: Props) {
           <div className="h-[1px] bg-gradient-to-r from-amber/40 via-amber/15 to-transparent mb-8" />
         </ServiceReveal>
 
-        {/* Animation panel */}
-        {animation && (
-          <ServiceReveal delay={0.26}>
-            <div className="mb-10 relative rounded-2xl overflow-hidden border border-amber/10 shadow-[0_0_40px_rgba(251,176,52,0.06)]">
-              <Spotlight size={320} />
-              {animation}
-            </div>
-          </ServiceReveal>
-        )}
+        {/* Cinematic visual (falls back to the animated illustration) */}
+        <ServiceReveal delay={0.26}>
+          <div className="mb-10 relative rounded-2xl overflow-hidden border border-amber/10 shadow-[0_0_40px_rgba(251,176,52,0.06)]">
+            <Spotlight size={320} />
+            <ServiceVisual src={s.image} alt={s.imageAlt} fallback={animation} />
+          </div>
+        </ServiceReveal>
 
         {/* Description */}
         <ServiceReveal delay={0.3}>

@@ -12,7 +12,7 @@ const NAV_ITEMS = [
   { name: 'Home',         url: '/',            icon: Home },
   { name: 'Systems',      url: '/#ch-machine', icon: Sun },
   { name: 'Savings',      url: '/#ch-math',    icon: Calculator },
-  { name: 'Testimonials', url: '/#ch-proof',   icon: Images },
+  { name: 'Portfolio',    url: '/projects',     icon: Images },
   { name: 'About',        url: '/about',       icon: Info },
   { name: 'Contact',      url: '/contact',     icon: Phone },
 ]

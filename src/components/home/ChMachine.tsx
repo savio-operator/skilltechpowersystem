@@ -11,15 +11,17 @@ const SolarPanel3D = dynamic(() => import('@/components/ui/SolarPanel3D'), {
   loading: () => <SolarPanel3DFallback />,
 })
 
+// Cinematic scroll-pinned 3D panel. The component callouts that used to sit in
+// the right column now live in their own section below (ChSystems); the panel
+// is centred to fill the space.
 export default function ChMachine() {
   const spacerRef    = useRef<HTMLDivElement>(null)
   const stageRef     = useRef<HTMLDivElement>(null)
   const shouldReduce = useReducedMotion()
-  const [activeIdx,  setActiveIdx]  = useState(-1)
   const [labelVis,   setLabelVis]   = useState(false)
 
   useEffect(() => {
-    if (shouldReduce) { setActiveIdx(3); setLabelVis(true); return }
+    if (shouldReduce) { panelState.scrollProgress = 1; setLabelVis(true); return }
     if (!spacerRef.current || !stageRef.current) return
 
     Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
@@ -40,14 +42,8 @@ export default function ChMachine() {
               pin: stageRef.current,
               pinSpacing: false,
               onUpdate(self) {
-                const p = self.progress
-                panelState.scrollProgress = p
-                setLabelVis(p > 0.02)
-                if      (p >= 0.82) setActiveIdx(3)
-                else if (p >= 0.65) setActiveIdx(2)
-                else if (p >= 0.52) setActiveIdx(1)
-                else if (p >= 0.40) setActiveIdx(0)
-                else                setActiveIdx(-1)
+                panelState.scrollProgress = self.progress
+                setLabelVis(self.progress > 0.02)
               },
             },
           })
@@ -60,13 +56,10 @@ export default function ChMachine() {
 
   return (
     <section id="ch-machine">
-      <div ref={spacerRef} className="relative h-[500vh]">
+      <div ref={spacerRef} className="relative h-[300vh]">
         <div
           ref={stageRef}
-          // Decorative, scroll-pinned stage with no interactive elements. It can
-          // overlap the following section while pinned (pinSpacing:false), so it
-          // must never capture clicks meant for the cards below it.
-          // Inverted palette: navy stage with light ink (section-invert).
+          // Decorative, scroll-pinned stage with no interactive elements.
           className="section-invert pointer-events-none h-screen overflow-hidden flex flex-col items-center justify-center"
           style={{
             background:
@@ -83,35 +76,9 @@ export default function ChMachine() {
             {HOME.machine.eyebrow}
           </motion.div>
 
-          {/* Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 w-full max-w-5xl px-6 md:px-12 items-center">
-            {/* Panel */}
-            <div className="flex items-center justify-center h-[220px] xs:h-[270px] sm:h-[320px] md:h-[460px]">
-              <SolarPanel3D />
-            </div>
-
-            {/* Callouts */}
-            <div className="flex flex-col gap-5 md:gap-6">
-              {HOME.machine.callouts.map((c, i) => (
-                <motion.div
-                  key={c.num}
-                  className="flex gap-4"
-                  animate={{
-                    opacity: i <= activeIdx ? 1 : 0,
-                    x:       i <= activeIdx ? 0 : 28,
-                  }}
-                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <span className="font-mono text-[0.65rem] text-amber pt-1 shrink-0">{c.num}</span>
-                  <div>
-                    <strong className="block font-display font-bold text-[1rem] md:text-lg text-paper leading-tight">
-                      {c.title}
-                    </strong>
-                    <span className="text-warm-grey text-sm leading-relaxed">{c.desc}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          {/* Centred 3D panel */}
+          <div className="flex items-center justify-center w-full max-w-3xl px-6 h-[300px] xs:h-[360px] sm:h-[440px] md:h-[540px]">
+            <SolarPanel3D />
           </div>
         </div>
       </div>

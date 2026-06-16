@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react'
+import { SITE } from '@/content/site'
 
 type Msg = { role: 'user' | 'assistant'; content: string }
 
@@ -14,6 +15,9 @@ const SUGGESTIONS = [
   'How much subsidy can I get?',
   'How does KSEB net-metering work?',
 ]
+
+// After this many customer messages, hand off to a human on WhatsApp.
+const MAX_USER_MESSAGES = 8
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false)
@@ -36,6 +40,7 @@ export default function ChatWidget() {
   async function send(text: string) {
     const trimmed = text.trim()
     if (!trimmed || loading) return
+    if (messages.filter((m) => m.role === 'user').length >= MAX_USER_MESSAGES) return
     setInput('')
     const history = [...messages, { role: 'user' as const, content: trimmed }]
     setMessages([...history, { role: 'assistant', content: '' }])
@@ -98,7 +103,12 @@ export default function ChatWidget() {
   }
 
   const streaming = loading && messages[messages.length - 1]?.role === 'assistant' && messages[messages.length - 1]?.content === ''
+  const userCount = messages.filter((m) => m.role === 'user').length
+  const capped = userCount >= MAX_USER_MESSAGES
   const showSuggestions = messages.length === 1
+  const waHref = SITE.whatsapp.number
+    ? `https://wa.me/${SITE.whatsapp.number}?text=${SITE.whatsapp.message}`
+    : '/contact'
 
   return (
     <>
@@ -181,7 +191,7 @@ export default function ChatWidget() {
             </div>
 
             {/* Suggestion chips */}
-            {showSuggestions && (
+            {showSuggestions && !capped && (
               <div className="flex flex-wrap gap-2 border-t border-black/[0.06] px-3.5 py-2.5">
                 {SUGGESTIONS.map((s) => (
                   <button
@@ -196,31 +206,52 @@ export default function ChatWidget() {
               </div>
             )}
 
-            {/* Input */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                send(input)
-              }}
-              className="flex items-center gap-2 border-t border-black/[0.06] bg-white p-2.5"
-            >
-              <input
-                ref={inputRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about solar, subsidy, pricing…"
-                aria-label="Type your message"
-                className="h-10 flex-1 rounded-full border border-black/10 bg-[#1A1828]/[0.03] px-4 text-sm text-[#1A1828] outline-none transition placeholder:text-[#1A1828]/40 focus:border-[#1A1828]/30"
-              />
-              <button
-                type="submit"
-                disabled={!input.trim() || loading}
-                aria-label="Send message"
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F7B538] text-[#1A1828] transition disabled:cursor-not-allowed disabled:opacity-40 enabled:hover:brightness-95"
+            {/* Input — or, once the session cap is hit, a hand-off to WhatsApp */}
+            {capped ? (
+              <div className="border-t border-black/[0.06] bg-white px-3.5 py-3 text-center">
+                <p className="mb-2.5 text-[0.78rem] leading-relaxed text-[#1A1828]/70">
+                  Thanks for chatting! For a detailed quote or a free site survey, our team will help you directly.
+                </p>
+                <a
+                  href={waHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] py-2.5 text-sm font-bold text-white transition hover:brightness-95"
+                >
+                  Continue on WhatsApp
+                </a>
+              </div>
+            ) : (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  send(input)
+                }}
+                className="flex items-center gap-2 border-t border-black/[0.06] bg-white p-2.5"
               >
-                <Send size={18} />
-              </button>
-            </form>
+                <input
+                  ref={inputRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Ask about solar, subsidy, pricing…"
+                  aria-label="Type your message"
+                  className="h-10 flex-1 rounded-full border border-black/10 bg-[#1A1828]/[0.03] px-4 text-sm text-[#1A1828] outline-none transition placeholder:text-[#1A1828]/40 focus:border-[#1A1828]/30"
+                />
+                <button
+                  type="submit"
+                  disabled={!input.trim() || loading}
+                  aria-label="Send message"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F7B538] text-[#1A1828] transition disabled:cursor-not-allowed disabled:opacity-40 enabled:hover:brightness-95"
+                >
+                  <Send size={18} />
+                </button>
+              </form>
+            )}
+
+            {/* AI disclaimer */}
+            <p className="bg-white px-3.5 pb-2 text-center text-[0.6rem] leading-tight text-[#1A1828]/40">
+              Powered by AI · answers may be imperfect — please confirm details with our team.
+            </p>
           </motion.div>
         )}
       </AnimatePresence>

@@ -71,7 +71,8 @@ export function NavBar({ items, className }: NavBarProps) {
               onClick={() => setActiveUrl(item.url)}
               className={cn(
                 "relative cursor-pointer text-sm font-semibold px-3 py-2 sm:px-6 rounded-full transition-colors",
-                "text-foreground/80 hover:text-primary",
+                // Brand navy labels/icons (match the blue in the nav bar)
+                "text-[#1A1828]/70 hover:text-[#1A1828]",
                 isActive && "bg-muted text-primary",
               )}
             >

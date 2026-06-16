@@ -20,7 +20,7 @@ interface NavBarProps {
 
 // Sections with a dark #1A1828 background — the nav switches to light ink while
 // it sits over one of these so its labels/icons stay visible.
-const DARK_SECTIONS = new Set(['ch-promise', 'ch-machine', 'ch-math', 'ch-proof', 'ch-invitation'])
+const DARK_SECTIONS = new Set(['ch-promise', 'ch-machine', 'ch-services', 'ch-math', 'ch-proof', 'ch-invitation'])
 
 export function NavBar({ items, className }: NavBarProps) {
   const pathname = usePathname()

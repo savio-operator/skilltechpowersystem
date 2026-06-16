@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { cn } from '@/lib/cn'
 import { SITE } from '@/content/site'
 import { NavBar } from './NavBar'
@@ -15,13 +15,6 @@ const NAV_ITEMS = [
   { name: 'Portfolio',    url: '/projects',     icon: Images },
   { name: 'About',        url: '/about',       icon: Info },
   { name: 'Contact',      url: '/contact',     icon: Phone },
-]
-
-const DESKTOP_LINKS = [
-  { name: 'Systems',  url: '/#ch-machine' },
-  { name: 'Savings',  url: '/#ch-math' },
-  { name: 'About',    url: '/about' },
-  { name: 'Contact',  url: '/contact' },
 ]
 
 export default function Header() {
@@ -62,12 +55,9 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop nav links */}
-          <nav className="hidden md:flex items-center gap-7" aria-label="Site navigation">
-            {DESKTOP_LINKS.map((link) => (
-              <NavLink key={link.name} href={link.url}>{link.name}</NavLink>
-            ))}
-          </nav>
+          {/* Desktop nav lives in the floating tubelight pill (<NavBar/> below),
+              so the header keeps only the logo and CTA — no duplicate text links
+              sitting behind the pill. */}
 
           {/* CTA */}
           <motion.a
@@ -88,23 +78,6 @@ export default function Header() {
       {/* Tubelight navigation — floating pill (bottom on mobile) */}
       <NavBar items={NAV_ITEMS} />
     </>
-  )
-}
-
-/** Animated underline nav link */
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link
-      href={href}
-      className="relative group font-mono text-[0.72rem] tracking-[0.12em] uppercase text-warm-grey hover:text-paper transition-colors duration-300"
-    >
-      {children}
-      {/* Gold underline that grows from centre on hover */}
-      <span
-        className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-[1px] w-0 bg-amber group-hover:w-full transition-all duration-300 ease-out"
-        aria-hidden="true"
-      />
-    </Link>
   )
 }
 

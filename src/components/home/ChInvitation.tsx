@@ -44,7 +44,7 @@ export default function ChInvitation() {
             onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/80 via-[#050810]/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1828]/80 via-[#1A1828]/30 to-transparent" />
       </motion.div>
 
       {/* Editorial top line */}

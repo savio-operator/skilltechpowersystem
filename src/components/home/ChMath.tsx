@@ -1,20 +1,22 @@
 'use client'
 import { useRef } from 'react'
-import { motion, useInView, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import SavingsCalculator from '@/components/ui/SavingsCalculator'
 import { HOME } from '@/content/home'
 
 export default function ChMath() {
   const ref          = useRef<HTMLElement>(null)
-  const isInView     = useInView(ref, { once: true, amount: 0.2 })
   const shouldReduce = useReducedMotion()
 
+  // Reveal on mount, not scroll-gated: the IntersectionObserver reveal proved
+  // flaky on this GSAP/Lenis-heavy page and could leave the calculator hidden
+  // (and therefore un-interactable).
   const fadeUp = (delay = 0) =>
     shouldReduce
       ? {}
       : {
           initial:   { opacity: 0, y: 32 },
-          animate:   isInView ? { opacity: 1, y: 0 } : {},
+          animate:   { opacity: 1, y: 0 },
           transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1], delay },
         }
 

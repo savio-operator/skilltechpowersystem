@@ -18,9 +18,14 @@ interface NavBarProps {
   className?: string
 }
 
+// Sections with a dark #1A1828 background — the nav switches to light ink while
+// it sits over one of these so its labels/icons stay visible.
+const DARK_SECTIONS = new Set(['ch-promise', 'ch-machine', 'ch-math', 'ch-proof', 'ch-invitation'])
+
 export function NavBar({ items, className }: NavBarProps) {
   const pathname = usePathname()
   const [activeUrl, setActiveUrl] = useState(items[0].url)
+  const [onDark, setOnDark] = useState(false)
 
   useEffect(() => {
     // On a sub-page, highlight the nav item whose route matches. (Skip this on
@@ -28,6 +33,7 @@ export function NavBar({ items, className }: NavBarProps) {
     if (pathname !== "/") {
       const pageMatch = items.find((it) => it.url === pathname)
       if (pageMatch) setActiveUrl(pageMatch.url)
+      setOnDark(false)
       return
     }
 
@@ -45,17 +51,37 @@ export function NavBar({ items, className }: NavBarProps) {
         if (el && el.offsetTop <= marker) current = url
       }
       setActiveUrl(current)
+
+      // Adaptive ink: probe the section sitting where the nav bar renders
+      // (top on desktop, bottom on mobile) and flip to light ink over dark ones.
+      const probeY = window.matchMedia("(min-width: 640px)").matches ? 48 : window.innerHeight - 48
+      let dark = false
+      DARK_SECTIONS.forEach((id) => {
+        const el = document.getElementById(id)
+        if (!el) return
+        const r = el.getBoundingClientRect()
+        if (r.top <= probeY && r.bottom >= probeY) dark = true
+      })
+      setOnDark(dark)
     }
 
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
+    window.addEventListener("resize", onScroll)
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("resize", onScroll)
+    }
   }, [pathname, items])
 
   return (
     <div
       className={cn(
-        "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 mb-6 sm:pt-6",
+        // `sm:bottom-auto` is critical: without it, bottom-0 + sm:top-0 both
+        // apply on desktop and stretch this fixed wrapper to full viewport
+        // height — an invisible z-50 column that swallowed clicks down the
+        // centre of the page (calculator slider, footer CTA, middle cards).
+        "fixed bottom-0 sm:top-0 sm:bottom-auto left-1/2 -translate-x-1/2 z-50 mb-6 sm:pt-6",
         className,
       )}
     >
@@ -71,8 +97,8 @@ export function NavBar({ items, className }: NavBarProps) {
               onClick={() => setActiveUrl(item.url)}
               className={cn(
                 "relative cursor-pointer text-sm font-semibold px-3 py-2 sm:px-6 rounded-full transition-colors",
-                // Brand navy labels/icons (match the blue in the nav bar)
-                "text-[#1A1828]/70 hover:text-[#1A1828]",
+                // Adaptive ink: navy over light sections, light over dark ones
+                onDark ? "text-white/75 hover:text-white" : "text-[#1A1828]/70 hover:text-[#1A1828]",
                 isActive && "bg-muted text-primary",
               )}
             >

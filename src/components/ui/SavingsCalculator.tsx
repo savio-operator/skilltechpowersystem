@@ -70,7 +70,10 @@ export default function SavingsCalculator() {
             min={1000} max={20000} step={500}
             value={bill}
             onChange={handleChange}
-            className="absolute inset-0 w-full opacity-0 cursor-pointer h-11 -top-5"
+            // Lenis hijacks touchmove for smooth scroll, which blocks dragging
+            // the slider on touch devices — opt this control out.
+            data-lenis-prevent
+            className="absolute inset-0 w-full opacity-0 cursor-pointer h-11 -top-5 touch-none"
             aria-valuetext={`₹${fmt(bill)} per month`}
           />
         </div>

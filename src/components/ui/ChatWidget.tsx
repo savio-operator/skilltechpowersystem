@@ -46,7 +46,20 @@ export default function ChatWidget() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: history }),
       })
-      if (!res.ok || !res.body) throw new Error(String(res.status))
+      // Surface friendly server messages (rate limit / not configured) as a reply.
+      if (!res.ok) {
+        const note = (await res.text().catch(() => '')).trim()
+        setMessages((m) => {
+          const c = [...m]
+          c[c.length - 1] = {
+            role: 'assistant',
+            content: note || 'The assistant is unavailable right now — please try again shortly or reach us on WhatsApp.',
+          }
+          return c
+        })
+        return
+      }
+      if (!res.body) throw new Error('no body')
       const reader = res.body.getReader()
       const decoder = new TextDecoder()
       let acc = ''

@@ -22,6 +22,8 @@ function buildSystemPrompt(): string {
 
 HOW TO RESPOND
 - Be warm, concise and clear — usually 1-4 short sentences. Plain language, no jargon dumps.
+- When listing options or steps, use a few short bullet points instead of a long paragraph.
+- Where it helps, end with a light nudge to book a free survey or ask another question.
 - Use ₹ for money. Use the facts below; do NOT invent prices, dates, guarantees, or specifics you don't have.
 - If something needs a site visit or an exact quote, encourage a FREE roof survey and point them to WhatsApp${wa ? ` (${wa})` : ''} or the contact form at /contact.
 - If you don't know, say so honestly and suggest contacting the team.
@@ -46,10 +48,46 @@ ${faqs}`
 
 type ChatMessage = { role: 'user' | 'assistant'; content: string }
 
+// ── Best-effort per-IP rate limit ───────────────────────────────────────────
+// In-memory sliding window. Note: serverless instances each have their own
+// memory, so this caps bursts per instance rather than globally — for hard
+// guarantees use a shared store (Vercel KV / Upstash). Still a useful, free
+// guard against a single client hammering the endpoint.
+const RATE_WINDOW_MS = 60_000
+const RATE_MAX = 12 // messages per IP per minute
+const hits = new Map<string, number[]>()
+
+function clientIp(req: Request): string {
+  const fwd = req.headers.get('x-forwarded-for')
+  if (fwd) return fwd.split(',')[0]!.trim()
+  return req.headers.get('x-real-ip') ?? 'unknown'
+}
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS)
+  recent.push(now)
+  hits.set(ip, recent)
+  // Opportunistic cleanup so the map can't grow unbounded.
+  if (hits.size > 5000) {
+    hits.forEach((v, k) => {
+      if (!v.some((t) => now - t < RATE_WINDOW_MS)) hits.delete(k)
+    })
+  }
+  return recent.length > RATE_MAX
+}
+
 export async function POST(req: Request) {
   const key = process.env.GEMINI_API_KEY
   if (!key) {
     return new Response('The AI assistant is not configured yet.', { status: 503 })
+  }
+
+  if (isRateLimited(clientIp(req))) {
+    return new Response(
+      "You're sending messages a bit fast — please wait a moment, or reach us directly on WhatsApp.",
+      { status: 429, headers: { 'Retry-After': '30' } },
+    )
   }
 
   let body: unknown

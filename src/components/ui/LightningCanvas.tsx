@@ -13,6 +13,18 @@ export default function LightningCanvas({ flashRef }: Props) {
   const isInView     = useInView(sectionRef, { once: false, amount: 0.4 })
   const hasTriggered = useRef(false)
   const shouldReduce = useReducedMotion()
+  // Every pending timeout in the strike chain, so unmount can cancel them all.
+  const timers = useRef<Set<ReturnType<typeof setTimeout>>>(new Set())
+
+  const later = useCallback((fn: () => void, ms: number) => {
+    const id = setTimeout(() => { timers.current.delete(id); fn() }, ms)
+    timers.current.add(id)
+  }, [])
+
+  useEffect(() => {
+    const pending = timers.current
+    return () => { pending.forEach(clearTimeout); pending.clear() }
+  }, [])
 
   const jitter = (max: number) => (Math.random() - 0.5) * max
 
@@ -81,24 +93,24 @@ export default function LightningCanvas({ flashRef }: Props) {
 
       if (flashRef.current) {
         flashRef.current.style.opacity = '0.18'
-        setTimeout(() => { if (flashRef.current) flashRef.current.style.opacity = '0' }, 80)
+        later(() => { if (flashRef.current) flashRef.current.style.opacity = '0' }, 80)
       }
 
       canvas.style.opacity = '1'
-      setTimeout(() => {
+      later(() => {
         canvas.style.transition = 'opacity 0.18s'
         canvas.style.opacity    = '0'
-        setTimeout(() => {
+        later(() => {
           ctx.clearRect(0, 0, W, H)
           canvas.style.transition = ''
           canvas.style.opacity    = '1'
           if (strikesLeft > 1) {
-            setTimeout(() => strike(strikesLeft - 1), 300 + Math.random() * 900)
+            later(() => strike(strikesLeft - 1), 300 + Math.random() * 900)
           }
         }, 180)
       }, 60)
     },
-    [drawBolt, spawnBranches, flashRef]
+    [drawBolt, spawnBranches, flashRef, later]
   )
 
   useEffect(() => {
@@ -117,8 +129,8 @@ export default function LightningCanvas({ flashRef }: Props) {
     if (!isInView || shouldReduce) return
     if (hasTriggered.current) return
     hasTriggered.current = true
-    setTimeout(() => strike(3 + Math.floor(Math.random() * 3)), 600)
-  }, [isInView, strike, shouldReduce])
+    later(() => strike(3 + Math.floor(Math.random() * 3)), 600)
+  }, [isInView, strike, shouldReduce, later])
 
   // Reset trigger when section leaves view so it fires again on re-entry
   useEffect(() => {

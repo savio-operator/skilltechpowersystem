@@ -4,6 +4,7 @@ import { motion, useInView, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import LightningCanvas from '@/components/ui/LightningCanvas'
 import { HOME } from '@/content/home'
+import { mobileResponsiveSrc } from '@/lib/responsiveImages'
 
 export default function ChStorm() {
   const ref          = useRef<HTMLElement>(null)
@@ -12,6 +13,7 @@ export default function ChStorm() {
   const shouldReduce = useReducedMotion()
 
   const headline = HOME.storm.headline
+  const mobileStormImage = mobileResponsiveSrc(HOME.storm.image)
   // Split headline into lines for the reveal animation
   const lines = headline.split('. ').map((l, i, arr) => i < arr.length - 1 ? l + '.' : l)
 
@@ -23,13 +25,16 @@ export default function ChStorm() {
     >
       {/* Storm bg */}
       <div className="absolute inset-0 bg-cinematic-storm">
-        <Image
-          src={HOME.storm.image}
-          alt={HOME.storm.imageAlt}
-          fill
-          className="object-cover opacity-40"
-          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
-        />
+        <picture>
+          {mobileStormImage && <source media="(max-width: 767px)" srcSet={mobileStormImage} />}
+          <Image
+            src={HOME.storm.image}
+            alt={HOME.storm.imageAlt}
+            fill
+            className="object-cover opacity-40"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-b from-[#050810]/60 via-transparent to-[#050810]/60" />
       </div>
 

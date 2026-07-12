@@ -22,11 +22,17 @@ export default function ChPromise() {
     if (shouldReduce) return
     if (!spacerRef.current || !stageRef.current) return
 
+    // Cleanup must be returned from the effect itself — a `return` inside the
+    // promise callback is invisible to React and leaks the pinned ScrollTrigger
+    // on every navigation away from the home page.
+    let ctx: { revert: () => void } | null = null
+    let cancelled = false
     Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
       ([{ default: gsap }, { ScrollTrigger }]) => {
+        if (cancelled || !spacerRef.current) return
         gsap.registerPlugin(ScrollTrigger)
 
-        const ctx = gsap.context(() => {
+        ctx = gsap.context(() => {
           ScrollTrigger.create({
             trigger: spacerRef.current,
             start: 'top top',
@@ -42,10 +48,14 @@ export default function ChPromise() {
             },
           })
         }, spacerRef)
-
-        return () => ctx.revert()
       }
     )
+
+    return () => {
+      cancelled = true
+      ctx?.revert()
+      ctx = null
+    }
   }, [shouldReduce])
 
   if (shouldReduce) {

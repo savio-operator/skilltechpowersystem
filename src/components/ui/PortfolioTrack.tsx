@@ -3,6 +3,7 @@ import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { PROJECTS } from '@/content/projects'
 import Image from 'next/image'
+import { mobileResponsiveSrc } from '@/lib/responsiveImages'
 
 export default function PortfolioTrack() {
   const trackRef  = useRef<HTMLDivElement>(null)
@@ -53,7 +54,9 @@ export default function PortfolioTrack() {
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
     >
-      {PROJECTS.map((project) => (
+      {PROJECTS.map((project) => {
+        const mobileImage = mobileResponsiveSrc(project.image)
+        return (
         <motion.div
           key={project.id}
           className="shrink-0 w-[260px] md:w-[300px] rounded-xl overflow-hidden border border-white/6 bg-white/[0.03]"
@@ -77,13 +80,16 @@ export default function PortfolioTrack() {
               }}
             />
             {/* Real image (shown if file exists — next/image falls back to alt gracefully) */}
-            <Image
-              src={project.image}
-              alt={project.imageAlt}
-              fill
-              className="object-cover"
-              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
-            />
+            <picture>
+              {mobileImage && <source media="(max-width: 767px)" srcSet={mobileImage} />}
+              <Image
+                src={project.image}
+                alt={project.imageAlt}
+                fill
+                className="object-cover"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+              />
+            </picture>
           </div>
 
           <div className="p-4 flex flex-col gap-1">
@@ -94,7 +100,8 @@ export default function PortfolioTrack() {
             <span className="font-mono text-[0.68rem] text-warm-grey">{project.year}</span>
           </div>
         </motion.div>
-      ))}
+        )
+      })}
     </div>
   )
 }

@@ -87,7 +87,7 @@ export const SERVICES: Record<string, Service> = {
       'Annual inspection in first year',
     ],
     pricing: 'From ₹80,000 for a complete residential lightning & earthing system',
-    image:    '/images/service-lightning.jpg',   // TODO: confirm-with-client
+    image:    '/images/cinematic/service-lightning-arrester.png',   // TODO: confirm-with-client
     imageAlt: 'ESE lightning arrester installation Kerala rooftop',
     faq: [
       {
@@ -128,7 +128,7 @@ export const SERVICES: Record<string, Service> = {
       'Solar system earthing — panel frames, inverter, mounting structure',
       'Building earthing for homes and commercial premises',
     ],
-    image:    '/images/service-earthing.jpg',   // TODO: confirm-with-client
+    image:    '/images/cinematic/service-earthing-materials.png',   // TODO: confirm-with-client
     imageAlt: 'Earthing rod installation Kerala',
     faq: [
       {
@@ -199,7 +199,7 @@ export const SERVICES: Record<string, Service> = {
       'Professional installation with safety checks',
       'AMC support available',
     ],
-    image:    '/images/service-battery-inverter.jpg',   // TODO: confirm-with-client
+    image:    '/images/cinematic/service-battery-inverter.png',   // TODO: confirm-with-client
     imageAlt: 'Home inverter battery installation Kerala',
     faq: [
       {
@@ -232,7 +232,7 @@ export const SERVICES: Record<string, Service> = {
       'Priority WhatsApp support — anytime',
     ],
     pricing: 'From ₹3,000/year for residential systems', // TODO: confirm-with-client — final pricing
-    image:    '/images/service-amc.jpg',   // TODO: confirm-with-client
+    image:    '/images/cinematic/service-panel-maintenance.png',   // TODO: confirm-with-client
     imageAlt: 'Solar panel maintenance and cleaning Kerala',
     faq: [
       {
@@ -266,7 +266,7 @@ export const SERVICES: Record<string, Service> = {
       'Backup electric element for overcast days',
       'Roof or ground mounting',
     ],
-    image:    '/images/service-solar-water-heater.jpg',   // TODO: confirm-with-client
+    image:    '/images/cinematic/service-solar-water-heater.png',   // TODO: confirm-with-client
     imageAlt: 'Solar water heater installation Kerala rooftop',
     faq: [
       {

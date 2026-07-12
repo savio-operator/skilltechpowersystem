@@ -43,7 +43,11 @@ export function NavBar({ items, className }: NavBarProps) {
       .filter((it) => it.url.startsWith("/#"))
       .map((it) => ({ url: it.url, id: it.url.slice(2) }))
 
-    const onScroll = () => {
+    // rAF-throttled so the per-section measurements run at most once per frame.
+    let ticking = false
+    let raf = 0
+    const compute = () => {
+      ticking = false
       const marker = window.scrollY + window.innerHeight * 0.35
       let current = items[0].url // default: Home (top of page)
       for (const { url, id } of anchored) {
@@ -64,13 +68,19 @@ export function NavBar({ items, className }: NavBarProps) {
       })
       setOnDark(dark)
     }
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      raf = requestAnimationFrame(compute)
+    }
 
-    onScroll()
+    compute()
     window.addEventListener("scroll", onScroll, { passive: true })
     window.addEventListener("resize", onScroll)
     return () => {
       window.removeEventListener("scroll", onScroll)
       window.removeEventListener("resize", onScroll)
+      cancelAnimationFrame(raf)
     }
   }, [pathname, items])
 

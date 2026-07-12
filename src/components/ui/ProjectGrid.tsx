@@ -1,6 +1,7 @@
 'use client'
 import Image from 'next/image'
 import { PROJECTS } from '@/content/projects'
+import { mobileResponsiveSrc } from '@/lib/responsiveImages'
 
 const TYPE_LABELS: Record<string, string> = {
   'grid-tie': 'Grid-tie', hybrid: 'Hybrid', 'off-grid': 'Off-grid', commercial: 'Commercial',
@@ -9,19 +10,24 @@ const TYPE_LABELS: Record<string, string> = {
 export default function ProjectGrid() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      {PROJECTS.map((p) => (
+      {PROJECTS.map((p) => {
+        const mobileImage = mobileResponsiveSrc(p.image)
+        return (
         <div key={p.id} className="rounded-xl overflow-hidden border border-white/6 bg-white/[0.02]">
           <div
             className="relative h-48"
             style={{ background: `linear-gradient(145deg, hsl(${p.hue},30%,12%), hsl(${p.hue},50%,8%))` }}
           >
-            <Image
-              src={p.image}
-              alt={p.imageAlt}
-              fill
-              className="object-cover"
-              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
-            />
+            <picture>
+              {mobileImage && <source media="(max-width: 767px)" srcSet={mobileImage} />}
+              <Image
+                src={p.image}
+                alt={p.imageAlt}
+                fill
+                className="object-cover"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+              />
+            </picture>
           </div>
           <div className="p-4">
             <span className="block font-mono text-[0.65rem] tracking-wider text-amber mb-1">
@@ -31,7 +37,8 @@ export default function ProjectGrid() {
             <span className="block font-mono text-[0.65rem] text-warm-grey mt-1">{p.year}</span>
           </div>
         </div>
-      ))}
+        )
+      })}
     </div>
   )
 }

@@ -4,7 +4,7 @@
 // calls run inside maps, but the letter count is stable per mount, so hook order
 // is preserved — the rules-of-hooks lint is disabled intentionally for this file.
 
-import React, { CSSProperties, forwardRef, useRef } from "react"
+import React, { CSSProperties, forwardRef, useEffect, useRef } from "react"
 import { motion, useAnimationFrame, useMotionValue, useTransform } from "framer-motion"
 import { useMousePositionRef } from "@/hooks/use-mouse-position-ref"
 
@@ -75,24 +75,41 @@ const TextCursorProximity = forwardRef<HTMLSpanElement, TextProps>(
       }
     }
 
+    // Letter centres are static relative to the container, so measure them once
+    // (and again on resize / after web-font swap) instead of calling
+    // getBoundingClientRect per letter per frame — ~30 forced reflows/frame.
+    const letterCenters = useRef<({ x: number; y: number } | null)[]>([])
+    useEffect(() => {
+      const measure = () => {
+        const container = containerRef.current
+        if (!container) return
+        const containerRect = container.getBoundingClientRect()
+        letterCenters.current = letterRefs.current.map((el) => {
+          if (!el) return null
+          const rect = el.getBoundingClientRect()
+          return {
+            x: rect.left + rect.width / 2 - containerRect.left,
+            y: rect.top + rect.height / 2 - containerRect.top,
+          }
+        })
+      }
+      measure()
+      document.fonts?.ready.then(measure).catch(() => {})
+      window.addEventListener("resize", measure)
+      return () => window.removeEventListener("resize", measure)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [label])
+
+    const lastMouse = useRef({ x: NaN, y: NaN })
     useAnimationFrame(() => {
-      if (!containerRef.current) return
-      const containerRect = containerRef.current.getBoundingClientRect()
+      const { x: mouseX, y: mouseY } = mousePositionRef.current
+      // Nothing to update while the cursor is still.
+      if (mouseX === lastMouse.current.x && mouseY === lastMouse.current.y) return
+      lastMouse.current = { x: mouseX, y: mouseY }
 
-      letterRefs.current.forEach((letterRef, index) => {
-        if (!letterRef) return
-
-        const rect = letterRef.getBoundingClientRect()
-        const letterCenterX = rect.left + rect.width / 2 - containerRect.left
-        const letterCenterY = rect.top + rect.height / 2 - containerRect.top
-
-        const distance = calculateDistance(
-          mousePositionRef.current.x,
-          mousePositionRef.current.y,
-          letterCenterX,
-          letterCenterY
-        )
-
+      letterCenters.current.forEach((center, index) => {
+        if (!center) return
+        const distance = calculateDistance(mouseX, mouseY, center.x, center.y)
         const proximity = calculateFalloff(distance)
         letterProximities.current[index].set(proximity)
       })

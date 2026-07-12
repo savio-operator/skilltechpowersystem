@@ -38,7 +38,10 @@ export default function Header() {
           'fixed top-0 left-0 right-0 z-40 transition-all duration-500',
           // Soft gradient fade on scroll (no hard-edged rectangular bar).
           scrolled
-            ? 'bg-gradient-to-b from-black/85 via-black/55 to-transparent backdrop-blur-md py-3'
+            // blur only on md+: a full-width backdrop-filter over animating
+            // content re-blurs every scrolled frame on mobile GPUs; the
+            // gradient alone provides the contrast there.
+            ? 'bg-gradient-to-b from-black/85 via-black/55 to-transparent md:backdrop-blur-md py-3'
             : 'py-5',
         )}
       >

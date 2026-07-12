@@ -52,7 +52,7 @@ export default function CustomCursor() {
 
       {/* Outer ring — springy trail, grows + glows over interactive elements. */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[9998] -ml-4 -mt-4 h-8 w-8 rounded-full border bg-amber/5 backdrop-blur-[1px]"
+        className="pointer-events-none fixed top-0 left-0 z-[9998] -ml-4 -mt-4 h-8 w-8 rounded-full border bg-amber/5"
         style={{ x: ringX, y: ringY }}
         animate={{
           scale: isHovering ? 1.6 : 1,

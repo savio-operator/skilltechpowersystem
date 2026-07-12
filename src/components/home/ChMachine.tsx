@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { HOME } from '@/content/home'
 import { panelState } from '@/lib/panelState'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { SolarPanel3DFallback } from '@/components/ui/SolarPanel3D'
 
 const SolarPanel3D = dynamic(() => import('@/components/ui/SolarPanel3D'), {
@@ -21,6 +22,8 @@ export default function ChMachine() {
   const calloutsRef  = useRef<HTMLDivElement>(null)
   const shouldReduce = useReducedMotion()
   const [labelVis,   setLabelVis]   = useState(false)
+  // Drives the r3f frameloop: render only while the pinned section is active.
+  const [panelActive, setPanelActive] = useState(true)
   // Skip the WebGL canvas on small / touch / reduced-motion devices — the
   // continuous useFrame render is the main source of mobile frame drops.
   const [lite, setLite] = useState(false)
@@ -37,64 +40,62 @@ export default function ChMachine() {
     if (shouldReduce) { panelState.scrollProgress = 1; setLabelVis(true); return }
     if (!spacerRef.current || !stageRef.current) return
 
-    // Cleanup must be returned from the effect itself — a `return` inside the
-    // promise callback is invisible to React and leaks the pinned ScrollTrigger
-    // on every navigation away from the home page.
-    let ctx: { revert: () => void } | null = null
-    let cancelled = false
-    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
-      ([{ default: gsap }, { ScrollTrigger }]) => {
-        if (cancelled || !spacerRef.current) return
-        gsap.registerPlugin(ScrollTrigger)
+    const ctx = gsap.context(() => {
+      const proxy = { v: 0 }
 
-        ctx = gsap.context(() => {
-          const proxy = { v: 0 }
+      gsap.to(proxy, {
+        v: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: spacerRef.current,
+          start: 'top top',
+          end: 'bottom bottom',
+          // scrub:true — Lenis's eased scroll is already the smoothing layer;
+          // stacking a 1.2s scrub on top compounds to ~2.4s of lag inside the
+          // pin, which reads as "stuck".
+          scrub: true,
+          pin: stageRef.current,
+          pinSpacing: false,
+          anticipatePin: 1,
+          refreshPriority: 1,
+          onUpdate(self) {
+            panelState.scrollProgress = self.progress
+            setLabelVis(self.progress > 0.02)
+          },
+          // Pause the 3D render loop while this chapter is offscreen.
+          onToggle(self) {
+            setPanelActive(self.isActive)
+          },
+        },
+      })
 
-          gsap.to(proxy, {
-            v: 1,
+      // Callouts reveal one by one as the pinned panel plays through —
+      // scrubbed to scroll so they track finger position, not a timer.
+      const items = calloutsRef.current?.querySelectorAll<HTMLElement>('[data-callout]')
+      if (items?.length) {
+        gsap.fromTo(items,
+          { autoAlpha: 0, y: 26 },
+          {
+            autoAlpha: 1,
+            y: 0,
             ease: 'none',
+            stagger: 0.16,
             scrollTrigger: {
               trigger: spacerRef.current,
               start: 'top top',
-              end: 'bottom bottom',
-              scrub: 1.2,
-              pin: stageRef.current,
-              pinSpacing: false,
-              onUpdate(self) {
-                panelState.scrollProgress = self.progress
-                setLabelVis(self.progress > 0.02)
-              },
+              end: '75% bottom',
+              scrub: true,
             },
-          })
-
-          // Callouts reveal one by one as the pinned panel plays through —
-          // scrubbed to scroll so they track finger position, not a timer.
-          const items = calloutsRef.current?.querySelectorAll<HTMLElement>('[data-callout]')
-          if (items?.length) {
-            gsap.fromTo(items,
-              { autoAlpha: 0, y: 26 },
-              {
-                autoAlpha: 1,
-                y: 0,
-                ease: 'none',
-                stagger: 0.16,
-                scrollTrigger: {
-                  trigger: spacerRef.current,
-                  start: 'top top',
-                  end: '75% bottom',
-                  scrub: 1.2,
-                },
-              }
-            )
           }
-        }, spacerRef)
+        )
       }
-    )
+    }, spacerRef)
+    // Re-measure once the pin exists so start/end match the painted layout.
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh())
 
     return () => {
-      cancelled = true
-      ctx?.revert()
-      ctx = null
+      cancelAnimationFrame(raf)
+      ctx.revert()
     }
   }, [shouldReduce])
 
@@ -124,7 +125,7 @@ export default function ChMachine() {
           <div className="flex h-full w-full max-w-6xl flex-col items-center justify-center gap-3 px-5 pt-12 pb-6 md:flex-row md:gap-10 md:px-10 md:pt-16">
             {/* 3D panel */}
             <div className="flex w-full flex-1 items-center justify-center h-[30vh] min-h-[190px] xs:h-[34vh] sm:h-[40vh] md:h-[540px] md:max-h-[70vh]">
-              {lite ? <SolarPanel3DFallback /> : <SolarPanel3D />}
+              {lite ? <SolarPanel3DFallback /> : <SolarPanel3D active={panelActive} />}
             </div>
 
             {/* Inside-the-system callouts — scrub-revealed */}

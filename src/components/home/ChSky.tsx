@@ -1,5 +1,5 @@
 'use client'
-import { useRef, type RefObject } from 'react'
+import { useEffect, useRef, useState, type RefObject } from 'react'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import { HOME } from '@/content/home'
@@ -8,6 +8,12 @@ import TextCursorProximity from '@/components/ui/text-cursor-proximity'
 export default function ChSky() {
   const ref          = useRef<HTMLElement>(null)
   const shouldReduce = useReducedMotion()
+  // Cursor-proximity headline only makes sense (and only pays for itself) with
+  // a mouse — on touch devices it runs per-letter layout reads for nothing.
+  const [finePointer, setFinePointer] = useState(false)
+  useEffect(() => {
+    setFinePointer(window.matchMedia('(pointer: fine)').matches)
+  }, [])
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -18,7 +24,7 @@ export default function ChSky() {
   const contentY  = useTransform(scrollYProgress, [0, 0.6], ['0%', '-8%'])
 
   return (
-    <section ref={ref} id="ch-sky" className="relative h-screen min-h-[600px] overflow-hidden flex items-center">
+    <section ref={ref} id="ch-sky" className="relative h-[100svh] md:h-screen min-h-[600px] overflow-hidden flex items-center">
       {/* Background with parallax */}
       <motion.div
         className="absolute inset-0"
@@ -76,7 +82,7 @@ export default function ChSky() {
           className="font-display font-black leading-none tracking-tight mb-6 text-balance text-paper"
           style={{ fontSize: 'clamp(3rem, 9.5vw, 8.5rem)' }}
         >
-          {shouldReduce ? (
+          {shouldReduce || !finePointer ? (
             HOME.hero.headline.join(' ')
           ) : (
             <TextCursorProximity

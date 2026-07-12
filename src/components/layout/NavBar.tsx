@@ -43,44 +43,74 @@ export function NavBar({ items, className }: NavBarProps) {
       .filter((it) => it.url.startsWith("/#"))
       .map((it) => ({ url: it.url, id: it.url.slice(2) }))
 
-    // rAF-throttled so the per-section measurements run at most once per frame.
-    let ticking = false
-    let raf = 0
-    const compute = () => {
-      ticking = false
-      const marker = window.scrollY + window.innerHeight * 0.35
-      let current = items[0].url // default: Home (top of page)
-      for (const { url, id } of anchored) {
-        const el = document.getElementById(id)
-        if (el && el.offsetTop <= marker) current = url
-      }
-      setActiveUrl(current)
+    // Section geometry is measured once (and re-measured when the layout
+    // actually changes) so the per-frame scroll handler does ZERO layout reads
+    // — offsetTop/getBoundingClientRect per frame forces reflow while GSAP is
+    // dirtying transforms, a major scroll-jank source.
+    const desktopMq = window.matchMedia("(min-width: 640px)")
+    let sectionTops: { url: string; top: number }[] = []
+    let darkRanges: { top: number; bottom: number }[] = []
 
-      // Adaptive ink: probe the section sitting where the nav bar renders
-      // (top on desktop, bottom on mobile) and flip to light ink over dark ones.
-      const probeY = window.matchMedia("(min-width: 640px)").matches ? 48 : window.innerHeight - 48
-      let dark = false
+    const measure = () => {
+      const scrollY = window.scrollY
+      sectionTops = anchored.flatMap(({ url, id }) => {
+        const el = document.getElementById(id)
+        return el ? [{ url, top: el.getBoundingClientRect().top + scrollY }] : []
+      })
+      darkRanges = []
       DARK_SECTIONS.forEach((id) => {
         const el = document.getElementById(id)
         if (!el) return
         const r = el.getBoundingClientRect()
-        if (r.top <= probeY && r.bottom >= probeY) dark = true
+        darkRanges.push({ top: r.top + scrollY, bottom: r.bottom + scrollY })
       })
-      setOnDark(dark)
+    }
+
+    let ticking = false
+    let raf = 0
+    const compute = () => {
+      ticking = false
+      const scrollY = window.scrollY
+      const marker = scrollY + window.innerHeight * 0.35
+      let current = items[0].url // default: Home (top of page)
+      for (const { url, top } of sectionTops) {
+        if (top <= marker) current = url
+      }
+      setActiveUrl(current)
+
+      // Adaptive ink: probe the document position where the nav bar renders
+      // (top on desktop, bottom on mobile) and flip to light ink over dark ones.
+      const probeY = scrollY + (desktopMq.matches ? 48 : window.innerHeight - 48)
+      setOnDark(darkRanges.some((r) => r.top <= probeY && r.bottom >= probeY))
     }
     const onScroll = () => {
       if (ticking) return
       ticking = true
       raf = requestAnimationFrame(compute)
     }
+    const remeasure = () => {
+      measure()
+      onScroll()
+    }
 
+    measure()
     compute()
     window.addEventListener("scroll", onScroll, { passive: true })
-    window.addEventListener("resize", onScroll)
+    window.addEventListener("resize", remeasure)
+    // Content below can change height (FAQ accordion, brand cards expanding,
+    // late images/3D) — re-measure when the page's size actually changes.
+    let roRaf = 0
+    const ro = new ResizeObserver(() => {
+      cancelAnimationFrame(roRaf)
+      roRaf = requestAnimationFrame(remeasure)
+    })
+    ro.observe(document.body)
     return () => {
       window.removeEventListener("scroll", onScroll)
-      window.removeEventListener("resize", onScroll)
+      window.removeEventListener("resize", remeasure)
+      ro.disconnect()
       cancelAnimationFrame(raf)
+      cancelAnimationFrame(roRaf)
     }
   }, [pathname, items])
 

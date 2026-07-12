@@ -27,7 +27,11 @@ export default function ChFAQ() {
 
     const SIZE         = 560
     const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5))
-    const N            = SPIRAL.points
+    // Fewer animated dots on small screens — each dot carries two indefinite
+    // SMIL animations, and 520×2 of them is real main-thread work on phones.
+    const N = window.matchMedia('(max-width: 768px)').matches
+      ? Math.round(SPIRAL.points / 3)
+      : SPIRAL.points
     const DOT          = SPIRAL.dotRadius
     const CENTER       = SIZE / 2
     const MAX_R        = CENTER - 4 - DOT
@@ -80,6 +84,19 @@ export default function ChFAQ() {
 
     spiralRef.current.innerHTML = ''
     spiralRef.current.appendChild(svg)
+
+    // The SMIL animations repeat forever — pause them whenever the spiral is
+    // offscreen so they don't tick during the rest of the page's scroll.
+    let io: IntersectionObserver | null = null
+    if (!shouldReduce) {
+      svg.pauseAnimations()
+      io = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) svg.unpauseAnimations()
+        else svg.pauseAnimations()
+      })
+      io.observe(spiralRef.current)
+    }
+    return () => io?.disconnect()
   }, [shouldReduce])
 
   const filtered = query

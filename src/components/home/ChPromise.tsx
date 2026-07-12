@@ -1,6 +1,7 @@
 'use client'
 import { useRef, useEffect, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
 
 const WORDS  = ['cleaner.', 'greener.', 'better.']
 const COLORS = ['#FFFFFF', '#FFFFFF', '#F7B538']  // cleaner: white, greener: white, better: gold
@@ -22,39 +23,33 @@ export default function ChPromise() {
     if (shouldReduce) return
     if (!spacerRef.current || !stageRef.current) return
 
-    // Cleanup must be returned from the effect itself — a `return` inside the
-    // promise callback is invisible to React and leaks the pinned ScrollTrigger
-    // on every navigation away from the home page.
-    let ctx: { revert: () => void } | null = null
-    let cancelled = false
-    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
-      ([{ default: gsap }, { ScrollTrigger }]) => {
-        if (cancelled || !spacerRef.current) return
-        gsap.registerPlugin(ScrollTrigger)
-
-        ctx = gsap.context(() => {
-          ScrollTrigger.create({
-            trigger: spacerRef.current,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: true,
-            pin: stageRef.current,
-            pinSpacing: false,
-            onUpdate(self) {
-              const p = self.progress
-              if      (p >= 0.66) setIndex(2)
-              else if (p >= 0.33) setIndex(1)
-              else                setIndex(0)
-            },
-          })
-        }, spacerRef)
-      }
-    )
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: spacerRef.current,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: true,
+        pin: stageRef.current,
+        pinSpacing: false,
+        // Pre-apply the pin a frame early — Lenis drives ScrollTrigger with a
+        // frame of latency, so fast scrolls otherwise overshoot the pin start
+        // and snap back (the "stuck" feel at chapter entry).
+        anticipatePin: 1,
+        refreshPriority: 2,
+        onUpdate(self) {
+          const p = self.progress
+          if      (p >= 0.66) setIndex(2)
+          else if (p >= 0.33) setIndex(1)
+          else                setIndex(0)
+        },
+      })
+    }, spacerRef)
+    // Re-measure once the pin exists so start/end match the painted layout.
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh())
 
     return () => {
-      cancelled = true
-      ctx?.revert()
-      ctx = null
+      cancelAnimationFrame(raf)
+      ctx.revert()
     }
   }, [shouldReduce])
 
@@ -74,7 +69,7 @@ export default function ChPromise() {
       <div ref={spacerRef} className="relative h-[300vh]">
         <div
           ref={stageRef}
-          className="pointer-events-none relative flex h-screen items-center justify-center overflow-hidden bg-black"
+          className="pointer-events-none relative flex h-[100svh] md:h-screen items-center justify-center overflow-hidden bg-black"
         >
           {/* Subtle ambient gold glow */}
           <div

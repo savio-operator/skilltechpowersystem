@@ -135,11 +135,14 @@ export function SolarPanel3DFallback() {
   )
 }
 
-export default function SolarPanel3D() {
+export default function SolarPanel3D({ active = true }: { active?: boolean }) {
   return (
     <Canvas
       camera={{ position: [0, 0, 6], fov: 42 }}
       dpr={[1, 1.5]}
+      // Stop the 60fps render loop while the pinned section is offscreen —
+      // otherwise the canvas keeps GPU + main thread busy for the whole session.
+      frameloop={active ? 'always' : 'never'}
       gl={{ antialias: true, alpha: true }}
       // Purely decorative + scroll-driven — must never intercept clicks on
       // content that may overlap it (e.g. while the section is pinned).

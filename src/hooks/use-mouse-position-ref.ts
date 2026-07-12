@@ -11,6 +11,10 @@ export function useMousePositionRef(
   const positionRef = useRef({ x: 0, y: 0 })
 
   useEffect(() => {
+    // Touch devices get nothing from cursor proximity, and the touchmove
+    // handler's getBoundingClientRect forces layout on every scroll frame.
+    if (window.matchMedia('(pointer: coarse)').matches) return
+
     const update = (x: number, y: number) => {
       if (containerRef?.current) {
         const rect = containerRef.current.getBoundingClientRect()
@@ -21,16 +25,10 @@ export function useMousePositionRef(
     }
 
     const handleMouse = (e: MouseEvent) => update(e.clientX, e.clientY)
-    const handleTouch = (e: TouchEvent) => {
-      const t = e.touches[0]
-      if (t) update(t.clientX, t.clientY)
-    }
 
-    window.addEventListener('mousemove', handleMouse)
-    window.addEventListener('touchmove', handleTouch)
+    window.addEventListener('mousemove', handleMouse, { passive: true })
     return () => {
       window.removeEventListener('mousemove', handleMouse)
-      window.removeEventListener('touchmove', handleTouch)
     }
   }, [containerRef])
 

@@ -3,8 +3,8 @@ import { SERVICES } from '@/content/services'
 import { FAQS } from '@/content/faq'
 import { HOME } from '@/content/home'
 
-// Gemini-backed customer assistant. Server-only: GEMINI_API_KEY never reaches
-// the client. Streams plain-text deltas back to the chat widget.
+// Gemini-backed customer assistant. Server-only: the Gemini API key never
+// reaches the client. Streams plain-text deltas back to the chat widget.
 // Stable alias — pinned 2.5-flash is closed to new API projects (404s on this key).
 const MODEL = 'gemini-flash-latest'
 const ENDPOINT = (key: string) =>
@@ -79,7 +79,7 @@ function isRateLimited(ip: string): boolean {
 }
 
 export async function POST(req: Request) {
-  const key = process.env.GEMINI_API_KEY
+  const key = process.env.GEMINI_KEY_FOR_SKILLTECH ?? process.env.GEMINI_API_KEY
   if (!key) {
     return new Response('The AI assistant is not configured yet.', { status: 503 })
   }

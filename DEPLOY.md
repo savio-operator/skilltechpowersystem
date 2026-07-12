@@ -89,7 +89,7 @@ Add each variable from `.env.local.example`:
 | `RESEND_API_KEY` | Yes (for email) | Free at resend.com |
 | `CONTACT_FROM_EMAIL` | Yes | Verified sender domain |
 | `CONTACT_RECIPIENT_EMAIL` | Yes | skilltechpowersystem@gmail.com |
-| `GEMINI_API_KEY` | **Yes (for chat assistant)** | Google AI Studio API key; server-only |
+| `GEMINI_KEY_FOR_SKILLTECH` | **Yes (for chat assistant)** | Google AI Studio API key; server-only |
 | `NEXT_PUBLIC_GA4_ID` | Optional | Google Analytics 4 |
 | `NEXT_PUBLIC_VERCEL_ANALYTICS` | Optional | Set to `true` to enable |
 

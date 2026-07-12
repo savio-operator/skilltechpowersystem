@@ -11,6 +11,7 @@ interface NavItem {
   name: string
   url: string
   icon: LucideIcon
+  activePaths?: string[]
 }
 
 interface NavBarProps {
@@ -31,7 +32,7 @@ export function NavBar({ items, className }: NavBarProps) {
     // On a sub-page, highlight the nav item whose route matches. (Skip this on
     // the home page, where "/" would match Home and short-circuit scroll-spy.)
     if (pathname !== "/") {
-      const pageMatch = items.find((it) => it.url === pathname)
+      const pageMatch = items.find((it) => it.url === pathname || it.activePaths?.includes(pathname))
       if (pageMatch) setActiveUrl(pageMatch.url)
       setOnDark(false)
       return

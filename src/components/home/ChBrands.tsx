@@ -29,32 +29,33 @@ export default function ChBrands() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {BRAND_LIST.map((b, i) => {
             const isOpen = open === b.slug
+            const wideCard = isOpen || b.slug === 'escoltrix'
             return (
               <motion.div
                 key={b.slug}
                 initial={shouldReduce ? false : { opacity: 0, y: 24 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: i * 0.05 }}
-                className={isOpen ? 'sm:col-span-2 lg:col-span-3' : ''}
+                className={wideCard ? 'sm:col-span-2 lg:col-span-3' : ''}
               >
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? null : b.slug)}
                   aria-expanded={isOpen}
-                  className="group flex h-full w-full flex-col rounded-2xl border border-black/15 bg-black/[0.04] p-6 text-left transition hover:border-black/40 hover:bg-black/[0.07]"
+                  className="group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-lg border border-black/15 bg-black/[0.04] p-5 text-left transition hover:border-black/40 hover:bg-black/[0.07] md:p-6"
                 >
-                  <div className="mb-3 flex items-center justify-between gap-3">
-                    <span className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-warm-grey">
+                  <div className="mb-3 flex min-w-0 flex-col items-start gap-2 md:flex-row md:justify-between">
+                    <span className="min-w-0 break-words font-mono text-[0.62rem] uppercase leading-relaxed tracking-[0.16em] text-warm-grey">
                       {b.origin}
                     </span>
-                    <span className="shrink-0 rounded-full border border-black/20 px-2.5 py-0.5 font-mono text-[0.6rem] uppercase tracking-wider text-paper">
+                    <span className="max-w-full shrink-0 rounded-md border border-black/20 px-2.5 py-1 font-mono text-[0.6rem] uppercase leading-relaxed tracking-wider text-paper md:text-right">
                       {b.category}
                     </span>
                   </div>
                   <h3 className="mb-2 font-display text-lg font-bold leading-tight text-paper">
                     {b.shortName}
                   </h3>
-                  <p className="mb-4 flex-1 text-sm leading-relaxed text-warm-grey">
+                  <p className="mb-4 max-w-5xl flex-1 text-sm leading-relaxed text-warm-grey">
                     {b.blurb}
                   </p>
 

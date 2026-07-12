@@ -5,7 +5,8 @@ import { HOME } from '@/content/home'
 
 // Gemini-backed customer assistant. Server-only: GEMINI_API_KEY never reaches
 // the client. Streams plain-text deltas back to the chat widget.
-const MODEL = 'gemini-2.5-flash'
+// Stable alias — pinned 2.5-flash is closed to new API projects (404s on this key).
+const MODEL = 'gemini-flash-latest'
 const ENDPOINT = (key: string) =>
   `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:streamGenerateContent?alt=sse&key=${key}`
 

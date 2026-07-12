@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import ChSky        from '@/components/home/ChSky'
 import ChPromise    from '@/components/home/ChPromise'
 import ChMachine    from '@/components/home/ChMachine'
-import ChSystems    from '@/components/home/ChSystems'
 import ChServices   from '@/components/home/ChServices'
 import ChMath       from '@/components/home/ChMath'
 import ChStorm      from '@/components/home/ChStorm'
+import ChBrands     from '@/components/home/ChBrands'
 import ChProof      from '@/components/home/ChProof'
 import ChFAQ        from '@/components/home/ChFAQ'
 import ChInvitation from '@/components/home/ChInvitation'
@@ -30,10 +30,10 @@ export default function HomePage() {
         <ChSky />
         <ChPromise />
         <ChMachine />
-        <ChSystems />
         <ChServices />
         <ChMath />
         <ChStorm />
+        <ChBrands />
         <ChProof />
         <ChFAQ />
         <ChInvitation />

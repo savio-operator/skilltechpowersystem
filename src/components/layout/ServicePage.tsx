@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Spotlight } from '@/components/ui/spotlight'
 import ServiceReveal from '@/components/ui/ServiceReveal'
 import ServiceVisual from '@/components/ui/ServiceVisual'
+import BrandStrip from '@/components/ui/BrandStrip'
 
 interface Props {
   service: Service
@@ -92,6 +93,9 @@ export default function ServicePage({ service: s, animation }: Props) {
             </ServiceReveal>
           ))}
         </ul>
+
+        {/* Brands we source from */}
+        <BrandStrip serviceSlug={s.slug} />
 
         {/* FAQ */}
         {s.faq.length > 0 && (

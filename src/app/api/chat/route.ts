@@ -9,6 +9,18 @@ import { HOME } from '@/content/home'
 const MODEL = 'gemini-flash-latest'
 const ENDPOINT = (key: string) =>
   `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:streamGenerateContent?alt=sse&key=${key}`
+const GEMINI_ENV_NAMES = [
+  'GEMINI_KEY_FOR_SKILLTECH',
+  'GEMINI_API_KEY',
+  'GOOGLE_GENERATIVE_AI_API_KEY',
+  'GOOGLE_AI_API_KEY',
+] as const
+
+function geminiApiKey(): string | undefined {
+  return GEMINI_ENV_NAMES
+    .map((name) => process.env[name]?.trim())
+    .find((value): value is string => Boolean(value))
+}
 
 function buildSystemPrompt(): string {
   const services = Object.values(SERVICES)
@@ -79,9 +91,12 @@ function isRateLimited(ip: string): boolean {
 }
 
 export async function POST(req: Request) {
-  const key = process.env.GEMINI_KEY_FOR_SKILLTECH ?? process.env.GEMINI_API_KEY
+  const key = geminiApiKey()
   if (!key) {
-    return new Response('The AI assistant is not configured yet.', { status: 503 })
+    return new Response(
+      `The AI assistant is not configured yet. Add one server environment variable: ${GEMINI_ENV_NAMES.join(', ')}.`,
+      { status: 503 },
+    )
   }
 
   if (isRateLimited(clientIp(req))) {

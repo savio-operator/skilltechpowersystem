@@ -10,11 +10,11 @@ import { Home, Sun, Calculator, Images, Info, Phone } from 'lucide-react'
 
 const NAV_ITEMS = [
   { name: 'Home',         url: '/',            icon: Home },
-  { name: 'Systems',      url: '/#ch-machine', icon: Sun },
-  { name: 'Savings',      url: '/#ch-math',    icon: Calculator },
-  { name: 'Portfolio',    url: '/#ch-proof',    icon: Images, activePaths: ['/projects'] },
-  { name: 'About',        url: '/about',       icon: Info },
-  { name: 'Contact',      url: '/contact',     icon: Phone },
+  { name: 'Systems',      url: '/#ch-machine', icon: Sun,        homeSectionId: 'ch-machine' },
+  { name: 'Savings',      url: '/#ch-math',    icon: Calculator, homeSectionId: 'ch-math' },
+  { name: 'Portfolio',    url: '/projects',    icon: Images,     homeSectionId: 'ch-proof' },
+  { name: 'About',        url: '/about',       icon: Info,       homeSectionId: 'ch-faq' },
+  { name: 'Contact',      url: '/contact',     icon: Phone,      homeSectionId: 'ch-invitation' },
 ]
 
 export default function Header() {

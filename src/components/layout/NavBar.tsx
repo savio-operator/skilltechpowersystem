@@ -12,6 +12,7 @@ interface NavItem {
   url: string
   icon: LucideIcon
   activePaths?: string[]
+  homeSectionId?: string
 }
 
 interface NavBarProps {
@@ -41,8 +42,11 @@ export function NavBar({ items, className }: NavBarProps) {
     // On the home page, scroll-spy across the in-page section anchors so the
     // active item follows your scroll position.
     const anchored = items
-      .filter((it) => it.url.startsWith("/#"))
-      .map((it) => ({ url: it.url, id: it.url.slice(2) }))
+      .map((it) => ({
+        url: it.url,
+        id: it.homeSectionId ?? (it.url.startsWith("/#") ? it.url.slice(2) : null),
+      }))
+      .filter((it): it is { url: string; id: string } => Boolean(it.id))
 
     // Section geometry is measured once (and re-measured when the layout
     // actually changes) so the per-frame scroll handler does ZERO layout reads

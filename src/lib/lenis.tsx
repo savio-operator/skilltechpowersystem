@@ -24,6 +24,12 @@ export function LenisProvider({ children }: { children: ReactNode }) {
   // intermediate scrolls don't overwrite the position we're restoring to.
   const restoring = useRef(false)
 
+  const savePosition = (path = currentPath.current, y = window.scrollY) => {
+    if (restoring.current) return
+    positions.current.set(path, y)
+    try { sessionStorage.setItem(storageKey(path), String(y)) } catch {}
+  }
+
   useEffect(() => {
     // Next App Router can otherwise restore the previous scroll position, which
     // fires before the pinned triggers rebuild and fights Lenis; we manage
@@ -32,7 +38,10 @@ export function LenisProvider({ children }: { children: ReactNode }) {
       window.history.scrollRestoration = 'manual'
     }
     // Mark Back/Forward navigations so we restore their scroll rather than reset.
-    const onPop = () => { navType.current = 'pop' }
+    const onPop = () => {
+      savePosition()
+      navType.current = 'pop'
+    }
     window.addEventListener('popstate', onPop)
 
     const instance = new Lenis({
@@ -45,18 +54,33 @@ export function LenisProvider({ children }: { children: ReactNode }) {
 
     // Keep ScrollTrigger in sync and record the live position for the CURRENT
     // path (memory + sessionStorage, so it survives a reload of the other page).
-    let lastSaved = -1
     const onScroll = () => {
       ScrollTrigger.update()
-      if (restoring.current) return
-      const y = window.scrollY
-      positions.current.set(currentPath.current, y)
-      if (Math.abs(y - lastSaved) > 4) {
-        lastSaved = y
-        try { sessionStorage.setItem(storageKey(currentPath.current), String(y)) } catch {}
-      }
+      savePosition()
     }
     instance.on('scroll', onScroll)
+
+    // Save before App Router starts replacing content. Relying only on route
+    // effect cleanup is too late on some navigations: Next may already have
+    // reset window.scrollY before the previous pathname is written.
+    const onClickCapture = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+      const anchor = (event.target as Element | null)?.closest?.('a[href]')
+      if (!(anchor instanceof HTMLAnchorElement)) return
+      const url = new URL(anchor.href)
+      if (url.origin !== window.location.origin) return
+      savePosition()
+    }
+    document.addEventListener('click', onClickCapture, true)
+
+    // Native scroll is still the source of truth for back/forward and hash
+    // jumps; capture it even if Lenis coalesces or skips an event.
+    let nativeRaf = 0
+    const onNativeScroll = () => {
+      cancelAnimationFrame(nativeRaf)
+      nativeRaf = requestAnimationFrame(() => savePosition())
+    }
+    window.addEventListener('scroll', onNativeScroll, { passive: true })
 
     const tick = (time: number) => instance.raf(time * 1000)
     gsap.ticker.add(tick)
@@ -68,6 +92,9 @@ export function LenisProvider({ children }: { children: ReactNode }) {
 
     return () => {
       window.removeEventListener('popstate', onPop)
+      document.removeEventListener('click', onClickCapture, true)
+      window.removeEventListener('scroll', onNativeScroll)
+      cancelAnimationFrame(nativeRaf)
       gsap.ticker.remove(tick)
       instance.destroy()
       lenisRef.current = null

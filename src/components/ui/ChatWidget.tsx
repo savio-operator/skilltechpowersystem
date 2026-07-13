@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react'
 import { SITE } from '@/content/site'
@@ -184,7 +184,9 @@ export default function ChatWidget() {
                         : 'max-w-[88%] rounded-2xl rounded-bl-sm border border-black/[0.06] bg-white px-3.5 py-2.5 text-sm leading-relaxed text-[#1A1828] shadow-sm'
                     }
                   >
-                    {m.content || (streaming && i === messages.length - 1 ? <TypingDots /> : null)}
+                    {m.content ? (
+                      m.role === 'assistant' ? <AssistantMessage content={m.content} /> : m.content
+                    ) : streaming && i === messages.length - 1 ? <TypingDots /> : null}
                   </div>
                 </div>
               ))}
@@ -257,6 +259,37 @@ export default function ChatWidget() {
       </AnimatePresence>
     </>
   )
+}
+
+function AssistantMessage({ content }: { content: string }) {
+  return (
+    <div className="space-y-1.5">
+      {content.split('\n').map((line, index) => {
+        const bullet = line.match(/^\s*(?:[-*•])\s+(.+)$/)
+        if (bullet) {
+          return (
+            <div key={index} className="flex gap-2">
+              <span aria-hidden="true" className="mt-0.5 text-[#F7B538]">•</span>
+              <span>{formatInlineText(bullet[1])}</span>
+            </div>
+          )
+        }
+
+        return line ? <p key={index}>{formatInlineText(line)}</p> : <div key={index} className="h-1" />
+      })}
+    </div>
+  )
+}
+
+// The model occasionally uses Markdown emphasis. Render the small safe subset
+// we support instead of exposing literal ** markers in the customer-facing UI.
+function formatInlineText(text: string): ReactNode[] {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={index} className="font-semibold">{part.slice(2, -2)}</strong>
+    }
+    return part
+  })
 }
 
 function TypingDots() {

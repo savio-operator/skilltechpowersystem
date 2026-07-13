@@ -3,7 +3,6 @@ import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { PROJECTS } from '@/content/projects'
 import Image from 'next/image'
-import { mobileResponsiveSrc } from '@/lib/responsiveImages'
 
 export default function PortfolioTrack() {
   const trackRef  = useRef<HTMLDivElement>(null)
@@ -55,7 +54,6 @@ export default function PortfolioTrack() {
       onTouchMove={onTouchMove}
     >
       {PROJECTS.map((project) => {
-        const mobileImage = mobileResponsiveSrc(project.image)
         return (
         <motion.div
           key={project.id}
@@ -80,16 +78,14 @@ export default function PortfolioTrack() {
               }}
             />
             {/* Real image (shown if file exists — next/image falls back to alt gracefully) */}
-            <picture>
-              {mobileImage && <source media="(max-width: 767px)" srcSet={mobileImage} />}
-              <Image
-                src={project.image}
-                alt={project.imageAlt}
-                fill
-                className="object-cover"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
-              />
-            </picture>
+            <Image
+              src={project.image}
+              alt={project.imageAlt}
+              fill
+              sizes="(max-width: 768px) 260px, 300px"
+              className="object-cover"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+            />
           </div>
 
           <div className="p-4 flex flex-col gap-1">

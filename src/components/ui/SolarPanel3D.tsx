@@ -119,7 +119,7 @@ function Scene() {
 export function SolarPanel3DFallback() {
   return (
     <div
-      className="w-[240px] h-[360px] rounded-sm"
+      className="w-[min(240px,55vw)] h-[min(360px,45vh)] rounded-sm"
       style={{
         background: '#101525',
         border: '12px solid #232a42',

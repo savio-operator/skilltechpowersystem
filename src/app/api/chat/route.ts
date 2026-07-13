@@ -5,8 +5,8 @@ import { HOME } from '@/content/home'
 
 // Gemini-backed customer assistant. Server-only: the Gemini API key never
 // reaches the client. Streams plain-text deltas back to the chat widget.
-// Stable alias — pinned 2.5-flash is closed to new API projects (404s on this key).
-const MODEL = 'gemini-flash-latest'
+// Gemini 2.0 Flash — fast, cheap, supports streaming.
+const MODEL = 'gemini-2.0-flash'
 const ENDPOINT = (key: string) =>
   `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:streamGenerateContent?alt=sse&key=${key}`
 const GEMINI_ENV_NAMES = [
@@ -146,8 +146,6 @@ export async function POST(req: Request) {
           temperature: 0.6,
           maxOutputTokens: 700,
           topP: 0.95,
-          // 2.5-flash is a thinking model; disable it for snappy chat replies.
-          thinkingConfig: { thinkingBudget: 0 },
         },
       }),
     })

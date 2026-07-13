@@ -122,14 +122,14 @@ export default function ChMachine() {
           </motion.div>
 
           {/* Panel + callouts: stacked on mobile, side-by-side from md up */}
-          <div className="flex h-full w-full max-w-6xl flex-col items-center justify-center gap-3 px-5 pt-12 pb-6 md:flex-row md:gap-10 md:px-10 md:pt-16">
+          <div className="flex h-full w-full max-w-6xl flex-col items-center justify-center gap-2 px-5 pt-8 pb-4 md:flex-row md:gap-10 md:px-10 md:pt-16 md:pb-6">
             {/* 3D panel */}
-            <div className="flex w-full flex-1 items-center justify-center h-[30vh] min-h-[190px] xs:h-[34vh] sm:h-[40vh] md:h-[540px] md:max-h-[70vh]">
+            <div className="flex w-full flex-1 items-center justify-center h-[25vh] min-h-[160px] max-h-[240px] xs:h-[30vh] sm:h-[36vh] md:h-[540px] md:max-h-[70vh]">
               {lite ? <SolarPanel3DFallback /> : <SolarPanel3D active={panelActive} />}
             </div>
 
             {/* Inside-the-system callouts — scrub-revealed */}
-            <div ref={calloutsRef} className="w-full max-w-md shrink-0 md:w-[380px] md:max-w-none">
+            <div ref={calloutsRef} className="w-full max-w-md shrink-0 overflow-y-auto max-h-[40vh] md:w-[380px] md:max-w-none md:max-h-none md:overflow-visible">
               <p data-callout className="chapter-eyebrow !mb-2 md:!mb-3">
                 CH.03a / INSIDE THE SYSTEM
               </p>

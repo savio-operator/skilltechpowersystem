@@ -92,7 +92,7 @@ export default function ChPromise() {
               {/* Scroll-driven word */}
               <span
                 className="relative block overflow-hidden"
-                style={{ height: 'clamp(4rem, 11.5vw, 10.5rem)' }}
+                style={{ height: 'clamp(4.5rem, 12vw, 11rem)' }}
               >
                 <AnimatePresence custom={direction}>
                   <motion.span

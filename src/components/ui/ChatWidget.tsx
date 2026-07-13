@@ -117,7 +117,7 @@ export default function ChatWidget() {
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? 'Close chat assistant' : 'Open chat assistant'}
-        className="fixed right-5 bottom-6 max-md:bottom-24 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-[#1A1828] text-white shadow-[0_8px_30px_rgba(26,24,40,0.35)] ring-1 ring-white/10"
+        className="fixed right-5 bottom-6 max-md:bottom-[7rem] z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-[#1A1828] text-white shadow-[0_8px_30px_rgba(26,24,40,0.35)] ring-1 ring-white/10"
         whileHover={shouldReduce ? undefined : { scale: 1.06 }}
         whileTap={shouldReduce ? undefined : { scale: 0.94 }}
       >
@@ -151,8 +151,8 @@ export default function ChatWidget() {
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ type: 'spring', stiffness: 260, damping: 24 }}
             className="fixed z-[60] flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_24px_70px_rgba(26,24,40,0.28)]
-                       right-4 bottom-44 max-md:bottom-40 max-md:left-4 max-md:right-4
-                       w-[min(92vw,384px)] h-[min(70vh,560px)] max-md:w-auto max-md:h-[min(72vh,560px)]"
+                       right-4 bottom-24 max-md:bottom-[7.5rem] max-md:left-4 max-md:right-4
+                       w-[min(92vw,384px)] h-[min(70vh,560px)] max-md:w-auto max-md:h-[calc(100dvh-9.5rem)]"
           >
             {/* Header */}
             <div className="flex items-center gap-3 bg-[#1A1828] px-4 py-3 text-white">

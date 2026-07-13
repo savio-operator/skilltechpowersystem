@@ -4,36 +4,36 @@
 // certificates) before publishing prominently.
 
 export interface BrandProduct {
-  name:        string
+  name: string
   description: string
-  specs:       string[]
+  specs: string[]
 }
 
 export interface Brand {
-  slug:           string
-  name:           string
-  shortName:      string
-  origin:         string   // country / HQ, client-facing
-  category:       string
-  website:        string
-  blurb:          string   // 1–2 sentence brand-card copy
-  summary:        string   // longer copy for a brand detail block
-  whyItMatters:   string   // Kerala trust angle
+  slug: string
+  name: string
+  shortName: string
+  origin: string   // country / HQ, client-facing
+  category: string
+  website: string
+  blurb: string   // 1–2 sentence brand-card copy
+  summary: string   // longer copy for a brand detail block
+  whyItMatters: string   // Kerala trust angle
   certifications: string[]
-  products:       BrandProduct[]
-  serviceSlugs:   string[] // maps to SERVICES slugs in services.ts
-  keywords:       string[]
+  products: BrandProduct[]
+  serviceSlugs: string[] // maps to SERVICES slugs in services.ts
+  keywords: string[]
 }
 
 export const BRANDS: Record<string, Brand> = {
 
   eceSolar: {
-    slug:      'ece-solar',
-    name:      'ECE Solar (ECE India Pvt. Ltd.)',
+    slug: 'ece-solar',
+    name: 'ECE Solar (ECE India Pvt. Ltd.)',
     shortName: 'ECE Solar',
-    origin:    'India — Amravati, Maharashtra',
-    category:  'Solar Modules',
-    website:   'https://ecesolar.in/products/topcon/',
+    origin: 'India — Amravati, Maharashtra',
+    category: 'Solar Modules',
+    website: 'https://ecesolar.in/products/topcon/',
     blurb:
       'Made-in-India N-Type TOPCon solar modules (565–650 Wp) from a 2 GW facility in Maharashtra, carrying BIS and ALMM marks — panels that degrade slower and keep performing through decades of Kerala monsoons and coastal humidity.',
     summary:
@@ -75,12 +75,12 @@ export const BRANDS: Record<string, Brand> = {
   },
 
   adaniSolar: {
-    slug:      'adani-solar',
-    name:      'Adani Solar',
+    slug: 'adani-solar',
+    name: 'Adani Solar',
     shortName: 'Adani',
-    origin:    'India — Mundra, Gujarat',
-    category:  'Solar Modules',
-    website:   'https://www.adanisolar.com/',
+    origin: 'India — Mundra, Gujarat',
+    category: 'Solar Modules',
+    website: 'https://www.adanisolar.com/',
     blurb:
       'India’s leading Tier-1 solar manufacturer. Adani Solar produces high-efficiency N-Type TOPCon and Mono PERC modules in its massive Mundra facility. Recognized globally as a PVEL Top Performer, these panels are engineered specifically to withstand India’s diverse and harsh climates.',
     summary:
@@ -112,13 +112,50 @@ export const BRANDS: Record<string, Brand> = {
     ],
   },
 
+  utlSolar: {
+    slug: 'utl-solar',
+    name: 'UTL Solar',
+    shortName: 'UTL',
+    origin: 'India — Noida, Uttar Pradesh',
+    category: 'Solar Modules',
+    website: 'https://www.upsinverter.com/utl/solar-panel/',
+    blurb:
+      'A value-focused Indian solar manufacturer under Fujiyama Power Systems, producing Mono PERC and N-Type TOPCon modules from its Noida facility. UTL modules are engineered for Indian climate extremes, operating stably between –40°C and +85°C, with a wide range built for both residential and off-grid rooftop use.',
+    summary:
+      'UTL Solar is the solar manufacturing division of Fujiyama Power Systems Ltd., a Delhi-headquartered company expanding into a 10 GW facility in Ratlam, Madhya Pradesh. They cover the full residential range — from compact 165–275W panels for small rooftops and off-grid setups, up to 555–590W+ bifacial TOPCon modules for larger systems. Positioned as an affordable, DCR-compliant alternative to Tier-1 conglomerate brands.',
+    whyItMatters:
+      'UTL offers DCR-compliant modules eligible for up to ₹78,000 under the PM Surya Ghar: Muft Bijli Yojana subsidy scheme, plus a 27-year performance and 10-year product warranty. It is not positioned or verified as a BloombergNEF Tier-1 / PVEL Top Performer brand — its edge is price-to-performance and subsidy eligibility, not conglomerate-grade bankability.',
+    certifications: ['BIS', 'ALMM', 'DCR-Compliant'],
+    products: [
+      {
+        name: 'N-Type TOPCon Modules',
+        description:
+          'High-efficiency panels ranging from 275W to 590W+, with lower light-induced degradation, better thermal performance, and longer lifespan than standard P-Type panels. Includes bifacial variants for higher energy yield.',
+        specs: ['Up to 21–22% efficiency', 'Bifacial gain on reflective surfaces', '25-year linear power warranty'],
+      },
+      {
+        name: 'Mono PERC (Monofacial & Bifacial)',
+        description:
+          'Core residential lineup spanning 165W–555W, using 5BB and half-cut cell technology. Includes a 555W dual-glass bifacial DCR module built with 144 half-cut cells for subsidy-eligible installations.',
+        specs: ['Up to 21.51% efficiency (555W dual-glass)', 'PID-resistant', 'Positive power tolerance 0~+3%'],
+      },
+    ],
+    serviceSlugs: ['solar-installation', 'off-grid-hybrid', 'commercial'],
+    keywords: [
+      'UTL solar panels Kerala',
+      'UTL TOPCon solar modules',
+      'DCR compliant solar panels',
+      'affordable solar panels India',
+    ],
+  },
+
   escoltrix: {
-    slug:      'escoltrix',
-    name:      'Escoltrix',
+    slug: 'escoltrix',
+    name: 'Escoltrix',
     shortName: 'Escoltrix',
-    origin:    'USA (Escoltrix LLC) · India operations, Delhi',
-    category:  'Earthing, Lightning & Surge Protection',
-    website:   'https://escoltrix.com',
+    origin: 'USA (Escoltrix LLC) · India operations, Delhi',
+    category: 'Earthing, Lightning & Surge Protection',
+    website: 'https://escoltrix.com',
     blurb:
       'A complete IEC 62305-based protection chain — ESE and Franklin air terminals, copper-bonded earth rods, backfill compound and coordinated SPDs — plus Ardo exothermic welding that fuses every earthing joint into a permanent molecular bond that can never loosen or corrode underground.',
     summary:
@@ -171,13 +208,161 @@ export const BRANDS: Record<string, Brand> = {
     ],
   },
 
+  waaree: {
+    slug: 'waaree',
+    name: 'Waaree Energies',
+    shortName: 'Waaree',
+    origin: 'India — Mumbai, Maharashtra',
+    category: 'Solar Modules',
+    website: 'https://www.waaree.com/',
+    blurb:
+      'India\u2019s largest solar PV module manufacturer, with 13.3 GW of operational capacity across five Indian facilities plus a new Texas plant. Waaree has held Tier-1 Bloomberg NEF status for 35 consecutive quarters, backed by a top-ranking PV Evolution Labs (PVEL) reliability score.',
+    summary:
+      'Waaree Energies is a Mumbai-headquartered, three-decade-old solar manufacturer and India\u2019s market leader by shipped volume, accounting for over 10% of modules delivered in India in 2024. It runs five manufacturing facilities in India and a 3.2 GW assembly plant in Brookshire, Texas, giving it a genuine global supply footprint beyond most domestic peers.',
+    whyItMatters:
+      'Waaree combines the two things that matter most for a 25-year rooftop investment: manufacturing scale and sustained Tier-1 bankability. Every module is ALMM-approved and passes through an in-house testing lab with over 50 compliance checks, making it a safe default recommendation where financing or government subsidy eligibility is part of the decision.',
+    certifications: ['Tier-1 (BloombergNEF, 35 consecutive quarters)', 'PVEL Top Performer', 'BIS', 'ALMM', 'IEC', 'UL'],
+    products: [
+      {
+        name: 'N-Type TOPCon Modules',
+        description:
+          'High-wattage modules up to 700W+, including bifacial and dual-glass variants. Lower temperature coefficient and slower year-on-year degradation than Mono PERC, with strong low-light performance.',
+        specs: ['Up to 21%+ efficiency', '-0.4% YoY degradation vs -0.55% for Mono PERC', '30-year power output warranty', '12-year product warranty'],
+      },
+      {
+        name: 'Mono PERC (Arka Series)',
+        description:
+          'Established monocrystalline PERC line with half-cut cell variants, covering residential to utility-scale deployments. Positioned as the reliable, higher-volume workhorse range beneath the TOPCon lineup.',
+        specs: ['25-year performance warranty', 'Half-cut cell configurations available', 'Bifacial and monofacial options'],
+      },
+    ],
+    serviceSlugs: ['solar-installation', 'commercial'],
+    keywords: [
+      'Waaree solar panels Kerala',
+      'Waaree TOPCon modules',
+      'Tier 1 solar modules India',
+      'ALMM approved solar panels',
+    ],
+  },
+
+  luminousSolar: {
+    slug: 'luminous-solar',
+    name: 'Luminous Power Technologies',
+    shortName: 'Luminous',
+    origin: 'India — Rudrapur, Uttarakhand',
+    category: 'Solar Modules',
+    website: 'https://www.luminousindia.com/',
+    blurb:
+      'A well-established Indian electricals brand that entered TOPCon manufacturing early, running a fully automated 250 MW plant in Rudrapur (expandable to 1 GW). Luminous is one of only 10 ALMM-listed manufacturers in India currently producing TOPCon modules, alongside its established Mono PERC half-cut range.',
+    summary:
+      'Luminous is better known in India as a power/inverter and battery brand, which gives it strong existing retail and dealer distribution — a different route to market than pure-play module manufacturers. Its Rudrapur facility produces polycrystalline, monocrystalline, N-type, and TOPCon panels in both monofacial and bifacial formats, positioning it as a fast-follower on next-gen cell technology rather than a first-mover.',
+    whyItMatters:
+      'Luminous\u2019s brand recognition and dealer network in India are stronger than most pure solar manufacturers\u2019, which matters for residential trust and after-sales service. But it lacks the Tier-1 BloombergNEF / PVEL Top Performer distinctions that Adani and Waaree carry — its credibility rests on brand familiarity and BIS/IS-IEC certification rather than independent bankability rankings.',
+    certifications: ['BIS (IS/IEC standards)', 'ALMM', 'PID Resistance Certified'],
+    products: [
+      {
+        name: 'N-Type TOPCon Half-Cut Modules',
+        description:
+          'Bifacial TOPCon panels up to 585W/24V with half-cut cell design, anti-reflective coating, and back surface field (BSF) for improved light absorption. Built for high-temperature performance and low-light conditions.',
+        specs: ['585W / 24V', '25-year performance warranty', 'PID-resistant', 'Advanced EVA encapsulation'],
+      },
+      {
+        name: 'Mono PERC Half-Cut Modules',
+        description:
+          'Core residential range (370W–445W+) using half-cut mono PERC cells to reduce resistive losses and improve durability. Positioned as the value-for-reliability tier beneath Luminous\u2019s TOPCon lineup.',
+        specs: ['High torsion-resistant aluminum frame', 'PID resistance', 'Suited to standard rooftop installs'],
+      },
+    ],
+    serviceSlugs: ['solar-installation', 'off-grid-hybrid'],
+    keywords: [
+      'Luminous solar panels Kerala',
+      'Luminous TOPCon modules',
+      'Luminous solar rooftop panels',
+      'ALMM approved solar panels',
+    ],
+  },
+
+  premierEnergies: {
+    slug: 'premier-energies',
+    name: 'Premier Energies',
+    shortName: 'Premier Energies',
+    origin: 'India — Hyderabad, Telangana',
+    category: 'Solar Modules',
+    website: 'https://www.premierenergies.com/',
+    blurb:
+      'Hyderabad-headquartered, integrated cell-and-module manufacturer and the first Indian company to produce TOPCon cells. India\u2019s first LEED Gold-certified solar manufacturing facility, with 2 GW cell and 4 GW module capacity, and Tier-1 status under BloombergNEF.',
+    summary:
+      'Founded in 1995, Premier Energies went public via IPO and is now scaling aggressively — adding 4 GW of TOPCon cell and module capacity at its Hyderabad site. It was the first Indian company to indigenously manufacture both bifacial Mono PERC cells (2022) and N-type TOPCon cells, giving it a genuine technology-leadership claim rather than a fast-follower one.',
+    whyItMatters:
+      'Premier Energies sits in the same Tier-1, PLI-scheme cohort as Adani and Waaree — it\u2019s bankable for institutional and lender-backed projects, not just residential retail. Its TOPCon line offers some of the highest efficiencies and longest warranties on the Indian market, making it a strong technical peer to Adani where the buyer cares about hard specs over brand conglomerate weight.',
+    certifications: ['Tier-1 (BloombergNEF)', 'BIS', 'ALMM', 'IEC', 'LEED Gold Facility'],
+    products: [
+      {
+        name: 'N-Type TOPCon Bifacial Modules',
+        description:
+          '10-busbar, 182mm and 210mm (G12R) half-cut cell TOPCon modules ranging 555W–630W, in DCR and non-DCR variants, with 3.2mm tempered glass and transparent or dual-glass backsheet options.',
+        specs: ['Up to 22.83% efficiency', '30-year performance warranty', '12-year product warranty', '-0.29 to -0.30%/\u00b0C temp coefficient'],
+      },
+      {
+        name: 'Mono PERC (M10) Modules',
+        description:
+          'Monofacial and bifacial (transparent backsheet or dual-glass) M10 Mono PERC modules with cell efficiency up to 23.2%, manufactured on one of the industry\u2019s most automated PERC lines.',
+        specs: ['Up to 23% cell efficiency', 'Monofacial & bifacial configurations', 'Handles M10/M12/multi-busbar cells'],
+      },
+    ],
+    serviceSlugs: ['solar-installation', 'commercial'],
+    keywords: [
+      'Premier Energies solar panels Kerala',
+      'Premier TOPCon modules',
+      'Tier 1 solar modules India',
+      'high efficiency solar panels India',
+    ],
+  },
+
+  emmvee: {
+    slug: 'emmvee',
+    name: 'Emmvee Photovoltaic Power',
+    shortName: 'Emmvee',
+    origin: 'India — Bengaluru, Karnataka',
+    category: 'Solar Modules',
+    website: 'https://www.emmveepv.com/',
+    blurb:
+      'Bengaluru-based, second-largest pure-play integrated solar cell-and-module manufacturer in India by capacity (10.3 GW modules, 2.94 GW cells). One of the first Indian companies to adopt TOPCon cell manufacturing, and the only Indian company to pass all seven Kiwa PVEL 2024 Reliability Scorecard categories.',
+    summary:
+      'Founded in 1992, Emmvee has 30+ years of operating history and runs four manufacturing units across Karnataka, with R&D ties to Fraunhofer ISE and a US sales office. TOPCon already makes up the majority of revenue (~69% in FY2025 vs ~30% Mono PERC), showing the company has fully shifted its core business toward next-gen cell technology rather than treating it as a side line.',
+    whyItMatters:
+      'Emmvee\u2019s PVEL clean sweep is a genuinely rare reliability signal — most Tier-1 Indian brands pass some, not all, PVEL categories. Combined with a 5.36 GW order backlog and ALMM enlistment, it\u2019s bankable for both DCR government schemes (PM-KUSUM, rooftop subsidy) and larger commercial orders, positioning it as a credible alternative to Adani/Waaree on technical merit rather than conglomerate size.',
+    certifications: ['ALMM', 'Kiwa PVEL 2024 Reliability Scorecard (all 7 categories)', 'BIS', 'IEC'],
+    products: [
+      {
+        name: 'N-Type TOPCon Modules (Bifacial & Monofacial)',
+        description:
+          'High-efficiency TOPCon modules on M10 wafers, 560W-580W+ (roadmap to 650W), with 16-busbar half-cut cell designs. Bifacial variants use transparent backsheets for up to 30% extra yield from reflected light.',
+        specs: ['Up to 23.42% conversion efficiency (bifacial)', 'Up to 22.45% (monofacial)', 'Rated to 5,400 Pa mechanical load', '108/120/132/144 cell configurations'],
+      },
+      {
+        name: 'Mono PERC Modules',
+        description:
+          'Bifacial and monofacial Mono PERC cut-cell modules from the Unit II 867 MW line, covering the 395W\u2013550W range for standard residential and commercial rooftop use.',
+        specs: ['395\u2013550 Wp range', 'Bifacial & monofacial formats', 'ALMM-enlisted'],
+      },
+    ],
+    serviceSlugs: ['solar-installation', 'commercial'],
+    keywords: [
+      'Emmvee solar panels Kerala',
+      'Emmvee TOPCon modules',
+      'PVEL reliable solar panels',
+      'ALMM approved solar panels',
+    ],
+  },
+
   citel: {
-    slug:      'citel',
-    name:      'CITEL',
+    slug: 'citel',
+    name: 'CITEL',
     shortName: 'CITEL',
-    origin:    'France — est. 1937',
-    category:  'Surge Protection Devices',
-    website:   'https://citel.in/en',
+    origin: 'France — est. 1937',
+    category: 'Surge Protection Devices',
+    website: 'https://citel.in/en',
     blurb:
       'A French specialist that has done nothing but surge protection since 1937 — even manufacturing its own gas discharge tubes — with IEC 61643, UL 1449 and TUV-certified SPDs for mains panels and dedicated DC protection that shields solar inverters from lightning-induced surges.',
     summary:
@@ -219,12 +404,12 @@ export const BRANDS: Record<string, Brand> = {
   },
 
   gravin: {
-    slug:      'gravin-earthing',
-    name:      'Gravin Earthing & Lightning Protection System (P) Ltd.',
+    slug: 'gravin-earthing',
+    name: 'Gravin Earthing & Lightning Protection System (P) Ltd.',
     shortName: 'Gravin Earthing',
-    origin:    'India — Chennai, Tamil Nadu',
-    category:  'Earthing & Lightning Protection',
-    website:   'https://gravinearthing.com',
+    origin: 'India — Chennai, Tamil Nadu',
+    category: 'Earthing & Lightning Protection',
+    website: 'https://gravinearthing.com',
     blurb:
       'An ISO 9001:2015-certified Chennai manufacturer of copper-bonded earth rods, ESE lightning arresters and earth-enhancing backfill compound — proven, branded earthing hardware built for the parts of your protection system you’ll never see again after installation.',
     summary:
@@ -267,12 +452,12 @@ export const BRANDS: Record<string, Brand> = {
   },
 
   dehn: {
-    slug:      'dehn',
-    name:      'DEHN',
+    slug: 'dehn',
+    name: 'DEHN',
     shortName: 'DEHN',
-    origin:    'Germany — est. 1910',
-    category:  'Lightning & Surge Protection, Earthing',
-    website:   'https://www.dehn.in/en-in',
+    origin: 'Germany — est. 1910',
+    category: 'Lightning & Surge Protection, Earthing',
+    website: 'https://www.dehn.in/en-in',
     blurb:
       'The German company that invented the surge protection device in 1954 and remains the global benchmark — every DEHN arrester and SPD is tested with real lightning currents up to 400 kA in its own laboratories, to IEC 62305 and IEC 61643 standards, with VDE, KEMA and UL approvals.',
     summary:
@@ -316,7 +501,7 @@ export const BRANDS: Record<string, Brand> = {
 }
 
 export const BRANDS_SECTION = {
-  eyebrow:  'SOURCES / THE BRANDS WE BUILD WITH',
+  eyebrow: 'SOURCES / THE BRANDS WE BUILD WITH',
   headline: 'We don’t compromise on what goes into your installation.',
   intro:
     "Kerala's climate is unforgiving on electrical systems — some of the highest lightning activity in India, months of monsoon rain, and salty coastal air that corrodes cheap hardware within a few years. That's why every panel, earth rod, arrester and surge protector we install comes from manufacturers we've vetted — from century-old German and French specialists to ISO-certified, ALMM-listed Indian makers — all engineered to international standards like IEC 62305 and IEC 61643.",

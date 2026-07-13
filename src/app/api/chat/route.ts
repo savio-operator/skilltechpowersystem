@@ -5,8 +5,8 @@ import { HOME } from '@/content/home'
 
 // Gemini-backed customer assistant. Server-only: the Gemini API key never
 // reaches the client. Streams plain-text deltas back to the chat widget.
-// Gemini 2.0 Flash — fast, cheap, supports streaming.
-const MODEL = 'gemini-2.0-flash'
+// Gemini 3.1 Flash Lite — available on the free tier for this API key
+const MODEL = 'gemini-3.1-flash-lite'
 const ENDPOINT = (key: string) =>
   `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:streamGenerateContent?alt=sse&key=${key}`
 const GEMINI_ENV_NAMES = [

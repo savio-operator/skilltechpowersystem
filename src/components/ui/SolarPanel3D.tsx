@@ -41,14 +41,16 @@ function PanelMesh() {
     groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetX, 0.06)
     groupRef.current.scale.setScalar(THREE.MathUtils.lerp(groupRef.current.scale.x, targetS, 0.06))
 
-    // Cell shimmer wave — diagonal sweep across cells
-    matRefs.current.forEach((mat, i) => {
-      if (!mat) return
-      const col = i % COLS
-      const row = Math.floor(i / COLS)
-      const phase = col * 0.45 + row * 0.28
-      mat.emissiveIntensity = Math.max(0, Math.sin(t * 1.1 - phase)) * 0.45
-    })
+    // Cell shimmer wave — diagonal sweep across cells (desktop only to save mobile battery/fps)
+    if (window.innerWidth >= 768) {
+      matRefs.current.forEach((mat, i) => {
+        if (!mat) return
+        const col = i % COLS
+        const row = Math.floor(i / COLS)
+        const phase = col * 0.45 + row * 0.28
+        mat.emissiveIntensity = Math.max(0, Math.sin(t * 1.1 - phase)) * 0.45
+      })
+    }
   })
 
   return (
@@ -139,7 +141,7 @@ export default function SolarPanel3D({ active = true }: { active?: boolean }) {
   return (
     <Canvas
       camera={{ position: [0, 0, 6], fov: 42 }}
-      dpr={[1, 1.5]}
+      dpr={[1, 1]}
       // Stop the 60fps render loop while the pinned section is offscreen —
       // otherwise the canvas keeps GPU + main thread busy for the whole session.
       frameloop={active ? 'always' : 'never'}

@@ -74,6 +74,44 @@ export const BRANDS: Record<string, Brand> = {
     ],
   },
 
+  adaniSolar: {
+    slug:      'adani-solar',
+    name:      'Adani Solar',
+    shortName: 'Adani',
+    origin:    'India — Mundra, Gujarat',
+    category:  'Solar Modules',
+    website:   'https://www.adanisolar.com/',
+    blurb:
+      'India’s leading Tier-1 solar manufacturer. Adani Solar produces high-efficiency N-Type TOPCon and Mono PERC modules in its massive Mundra facility. Recognized globally as a PVEL Top Performer, these panels are engineered specifically to withstand India’s diverse and harsh climates.',
+    summary:
+      'Adani Solar is the solar manufacturing arm of the Adani Group and one of the largest vertically integrated solar companies in India. Operating out of a state-of-the-art gigawatt-scale hub in Mundra, Gujarat, they produce everything from polysilicon to finished modules. They are consistently ranked as a Tier-1 manufacturer by BloombergNEF and a Top Performer by Kiwa PVEL.',
+    whyItMatters:
+      'When investing in a rooftop system designed to last 25 years, the financial stability and manufacturing quality of the panel brand is paramount. Adani Solar offers proven Tier-1 bankability, ALMM/BIS certifications for government subsidies, and a robust warranty backed by one of India’s largest conglomerates.',
+    certifications: ['Tier-1 (BloombergNEF)', 'PVEL Top Performer', 'BIS', 'ALMM', 'IEC', 'UL', 'ISO'],
+    products: [
+      {
+        name: 'N-Type TOPCon Modules',
+        description:
+          'Next-generation high-efficiency panels (often exceeding 22%) that degrade slower and perform better in high temperatures compared to standard P-Type panels. Ideal for maximizing output on limited Kerala roof space.',
+        specs: ['M10 / G12 Wafers', 'Multi-Busbar (MBB) & Half-Cut Cells', 'Excellent anti-PID performance'],
+      },
+      {
+        name: 'Mono PERC Bifacial & Monofacial',
+        description:
+          'Highly reliable and battle-tested solar modules that offer excellent cost-to-performance ratios for residential and commercial installations.',
+        specs: ['Strong performance in low-light conditions', 'High resistance to salt mist and ammonia'],
+      },
+    ],
+    serviceSlugs: ['solar-installation', 'commercial'],
+    keywords: [
+      'Adani solar panels Kerala',
+      'Tier 1 solar modules',
+      'ALMM approved Adani panels',
+      'Adani TOPCon solar',
+      'Best solar panels in India',
+    ],
+  },
+
   escoltrix: {
     slug:      'escoltrix',
     name:      'Escoltrix',

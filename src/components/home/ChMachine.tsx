@@ -128,7 +128,7 @@ export default function ChMachine() {
             </div>
 
             {/* Inside-the-system callouts — scrub-revealed */}
-            <div ref={calloutsRef} className="w-full max-w-md shrink-0 overflow-y-auto max-h-[40vh] md:w-[380px] md:max-w-none md:max-h-none md:overflow-visible">
+            <div ref={calloutsRef} className="pointer-events-auto w-full max-w-md shrink-0 overflow-y-auto max-h-[40vh] md:w-[380px] md:max-w-none md:max-h-none md:overflow-visible">
               <p data-callout className="chapter-eyebrow !mb-2 md:!mb-3">
                 CH.03a / INSIDE THE SYSTEM
               </p>

@@ -20,7 +20,6 @@ export default function ChPromise() {
 
   // Pinned, scroll-scrubbed word swap — same behaviour as the solar (Machine) section.
   useEffect(() => {
-    if (shouldReduce) return
     if (!spacerRef.current || !stageRef.current) return
 
     const ctx = gsap.context(() => {
@@ -51,18 +50,9 @@ export default function ChPromise() {
       cancelAnimationFrame(raf)
       ctx.revert()
     }
-  }, [shouldReduce])
+  }, [])
 
-  if (shouldReduce) {
-    return (
-      <section id="ch-promise" className="flex min-h-[60vh] items-center justify-center bg-black py-24">
-        <p className="text-center font-display font-black leading-snug" style={{ fontSize: 'clamp(3rem,8vw,6rem)' }}>
-          <span className="block text-[#FFFFFF]">This is something</span>
-          <span className="block text-[#F7B538]">better.</span>
-        </p>
-      </section>
-    )
-  }
+
 
   return (
     <section id="ch-promise">

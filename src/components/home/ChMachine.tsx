@@ -29,7 +29,7 @@ export default function ChMachine() {
   const [lite, setLite] = useState(false)
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 768px), (pointer: coarse), (prefers-reduced-motion: reduce)')
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
     const update = () => setLite(mq.matches)
     update()
     mq.addEventListener('change', update)
@@ -37,7 +37,6 @@ export default function ChMachine() {
   }, [])
 
   useEffect(() => {
-    if (shouldReduce) { panelState.scrollProgress = 1; setLabelVis(true); return }
     if (!spacerRef.current || !stageRef.current) return
 
     const ctx = gsap.context(() => {
@@ -97,7 +96,7 @@ export default function ChMachine() {
       cancelAnimationFrame(raf)
       ctx.revert()
     }
-  }, [shouldReduce])
+  }, [])
 
   return (
     <section id="ch-machine">

@@ -115,6 +115,7 @@ export default function ChInvitation() {
             {[
               { label: 'Email', val: SITE.email,            href: `mailto:${SITE.email}` },
               { label: 'Phone', val: SITE.phone || '—',    href: SITE.phone ? `tel:${(SITE.phone as string).replace(/\s/g, '')}` : undefined },
+              { label: 'Phone', val: SITE.secondaryPhone,  href: `tel:${SITE.secondaryPhone.replace(/\s/g, '')}` },
               { label: 'Area',  val: SITE.address.display, href: undefined },
               { label: 'Hours', val: SITE.hours,           href: undefined },
             ].map(({ label, val, href }) => (

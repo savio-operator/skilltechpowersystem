@@ -10,13 +10,14 @@ export const SITE = {
   legalType:   'Proprietorship' as const,
   email:       'skilltechpowersystem@gmail.com',
   phone:       '+91 9847553200',
+  secondaryPhone: '+91 9562093951',
   address: {
-    line1:    '',                              // TODO: confirm-with-client — exact street address
-    city:     'Ernakulam',
+    line1:    'PO Junction, Arakuzha road',
+    city:     'Muvattupuzha',
     district: 'Ernakulam',
     state:    'Kerala',
     pin:      '',                              // TODO: confirm-with-client — PIN code
-    display:  'Ernakulam District, Kerala',   // shown on site until full address confirmed
+    display:  'PO Junction, Arakuzha road, Muvattupuzha',
   },
   geo: {
     lat:    9.9816,   // Muvattupuzha, Ernakulam

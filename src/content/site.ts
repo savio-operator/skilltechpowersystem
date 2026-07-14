@@ -2,45 +2,45 @@
 // Server-only secrets (API keys) live in .env.local only.
 
 export const SITE = {
-  name:        'Skilltech Power System',
-  tagline:     'Sun above. Savings below.',
+  name: 'Skilltech Power System',
+  tagline: 'Sun above. Savings below.',
   established: '2015',
   founderExperience: '15+ years',
-  teamSize:    4,
-  legalType:   'Proprietorship' as const,
-  email:       'skilltechpowersystem@gmail.com',
-  phone:       '+91 9847553200',
+  teamSize: 4,
+  legalType: 'Proprietorship' as const,
+  email: 'skilltechpowersystem@gmail.com',
+  phone: '+91 9847553200, +91 9539467559',
   secondaryPhone: '+91 9562093951',
   address: {
-    line1:    'PO Junction, Arakuzha road',
-    city:     'Muvattupuzha',
+    line1: 'PO Junction, Arakuzha road',
+    city: 'Muvattupuzha',
     district: 'Ernakulam',
-    state:    'Kerala',
-    pin:      '',                              // TODO: confirm-with-client — PIN code
-    display:  'PO Junction, Arakuzha road, Muvattupuzha',
+    state: 'Kerala',
+    pin: '',                              // TODO: confirm-with-client — PIN code
+    display: 'PO Junction, Arakuzha road, Muvattupuzha',
   },
   geo: {
-    lat:    9.9816,   // Muvattupuzha, Ernakulam
-    lng:    76.5719,
+    lat: 9.9816,   // Muvattupuzha, Ernakulam
+    lng: 76.5719,
     region: 'Muvattupuzha, Ernakulam, Kerala, India',
   },
   whatsapp: {
-    number:  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER  ?? '919847553200',
+    number: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '919847553200',
     message: process.env.NEXT_PUBLIC_WHATSAPP_DEFAULT_MESSAGE
-               ?? "Hi%2C%20I%27d%20like%20a%20free%20solar%20assessment%20for%20my%20home.",
+      ?? "Hi%2C%20I%27d%20like%20a%20free%20solar%20assessment%20for%20my%20home.",
   },
-  siteUrl:  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://skilltechpowersystem.in',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://skilltechpowersystem.in',
   social: {
-    facebook:  '', // TODO: confirm-with-client
+    facebook: '', // TODO: confirm-with-client
     instagram: '', // TODO: confirm-with-client
-    youtube:   '', // TODO: confirm-with-client
+    youtube: '', // TODO: confirm-with-client
   },
   certifications: [
     'MNRE Channel Partner',
     'KSEB Empanelled Contractor',
     // 'ISO 9001:2015',  // TODO: confirm-with-client before re-enabling
   ],
-  hours:    'Mon–Sat, 9 am – 6 pm IST',
+  hours: 'Mon–Sat, 9 am – 6 pm IST',
   // Seasonal demand note: lightning-arrester enquiries spike April–June (pre-monsoon)
   peakSeason: { service: 'Lightning Arrester', months: 'April–June' },
 } as const
